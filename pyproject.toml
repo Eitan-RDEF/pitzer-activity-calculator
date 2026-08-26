@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pitzer-activity-calculator"
+version = "0.1.0"
+description = "A transparent, engineer-friendly Pitzer activity calculator powered by PHREEQC."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "phreeqc==1.1.1",
+  "streamlit>=1.42,<2",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8,<10",
+  "ruff>=0.9,<1",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+exclude = ["legacy"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]

@@ -1,0 +1,48 @@
+# Validation plan
+
+The app is not ready for public engineering use until the following evidence exists.
+
+## 1. Software correctness
+
+- Unit tests cover validation, species mapping, deterministic PHREEQC input, and output
+  parsing failures.
+- Native PHREEQC smoke tests run on the deployment Python and Linux environment.
+- Every user-visible output has a stable definition, unit, and formatting rule.
+- Malformed, extreme, nonfinite, and imbalanced inputs fail or warn predictably.
+
+## 2. Reference calculations
+
+Create versioned fixtures for at least:
+
+- pure or near-pure water;
+- dilute and concentrated NaCl;
+- CaCl₂ and MgCl₂ brines;
+- Na₂SO₄ and mixed chloride/sulfate solutions;
+- a seawater-like mixture;
+- carbonate-bearing solutions across several pH values;
+- one intentionally charge-imbalanced analysis;
+- boundary temperatures within the supported range.
+
+For each case, retain the source, exact input, expected output, tolerance, PHREEQC version,
+and database checksum.
+
+## 3. Independent comparison
+
+- Compare reproducible cases against PHREEQC run independently of this UI.
+- Where compatible, compare mean coefficients or water activity with published data or a
+  second trusted implementation.
+- Investigate discrepancies instead of widening tolerances without explanation.
+
+## 4. Scientific review
+
+- Confirm database provenance and parameter coverage.
+- Review single-ion convention wording.
+- Define defensible temperature, pressure, composition, and concentration limits.
+- Review charge-balance and redox warnings with an experienced geochemist or chemical
+  thermodynamicist.
+
+## 5. Release gate
+
+The first public release requires all critical tests to pass in CI, a completed third-party
+notice, an application license, privacy wording, and a visible beta/limitations statement.
+

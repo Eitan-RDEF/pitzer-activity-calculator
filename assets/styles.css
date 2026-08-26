@@ -1,0 +1,20 @@
+.block-container {
+  max-width: 1180px;
+  padding-top: 2.25rem;
+  padding-bottom: 4rem;
+}
+
+.app-tagline {
+  color: #475569;
+  font-size: 1.08rem;
+  margin-top: -0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+[data-testid="stMetric"] {
+  background: #ffffff;
+  border: 1px solid #dbe7e4;
+  border-radius: 0.75rem;
+  padding: 0.8rem 1rem;
+}
+

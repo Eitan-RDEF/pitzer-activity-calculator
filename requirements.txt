@@ -1,0 +1,3 @@
+# Streamlit Community Cloud installs the local project and its dependencies.
+-e .
+
