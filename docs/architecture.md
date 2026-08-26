@@ -5,6 +5,25 @@
 Keep the chemistry engine independent from Streamlit so it can be validated, reused by a
 future API or batch workflow, and tested without a browser.
 
+## Suggested reading order
+
+Future maintainers and coding agents should begin with:
+
+1. `docs/version-1-product-definition.md` for approved scope and non-goals;
+2. this file for dependency direction and ownership boundaries;
+3. `src/pitzer_calculator/domain/species.py` for exposed components and curated result
+   definitions;
+4. `src/pitzer_calculator/engine/validation.py`,
+   `src/pitzer_calculator/engine/input_builder.py`, and
+   `src/pitzer_calculator/engine/phreeqc.py` for the calculation path;
+5. `src/pitzer_calculator/reference_cases.py` for the reviewed validation-data boundary;
+6. `src/pitzer_calculator/ui/main.py` only after the scientific path is understood.
+
+Module and object docstrings explain ownership and non-obvious contracts. Comments are
+reserved for external-library behavior, scientific conventions, or framework workarounds;
+they should not restate straightforward code. Tests use descriptive behavior names instead
+of repetitive docstrings.
+
 ## Dependency direction
 
 ```text

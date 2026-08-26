@@ -13,10 +13,14 @@ class ConcentrationUnit(str, Enum):
 
     @property
     def to_molal_factor(self) -> float:
+        """Return the multiplier that converts this unit to mol/kg water."""
+
         return 1.0 if self is ConcentrationUnit.MOL_PER_KGW else 1e-3
 
     @property
     def display_label(self) -> str:
+        """Return the Unicode label used in user-facing controls and tables."""
+
         return self.value.replace("H2O", "H₂O")
 
 
@@ -91,6 +95,8 @@ class CalculationResult:
 
     @property
     def charge_balance_status(self) -> str:
+        """Classify absolute charge-balance error using the documented UI thresholds."""
+
         absolute_error = abs(self.charge_balance_error_percent)
         if absolute_error <= 2:
             return "good"

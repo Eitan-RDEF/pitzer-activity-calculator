@@ -29,6 +29,8 @@ ACTIVE_SPECIES_FLOOR = 1e-90
 
 
 def _first_float(output: Mapping[str, Any], column: str) -> float:
+    """Extract the first scalar from a PHREEQC selected-output column."""
+
     try:
         values = output[column]
         return float(values[0])
@@ -37,6 +39,8 @@ def _first_float(output: Mapping[str, Any], column: str) -> float:
 
 
 def _extract_species(output: Mapping[str, Any]) -> tuple[SpeciesResult, ...]:
+    """Convert selected-output columns into active aqueous-species results."""
+
     results: list[SpeciesResult] = []
     for index, definition in enumerate(AQUEOUS_SPECIES):
         molality = _first_float(output, species_column(index, "m"))
@@ -61,6 +65,8 @@ def _extract_species(output: Mapping[str, Any]) -> tuple[SpeciesResult, ...]:
 def _extract_mean_coefficients(
     output: Mapping[str, Any], species: tuple[SpeciesResult, ...]
 ) -> tuple[MeanActivityCoefficient, ...]:
+    """Return curated mean coefficients whose defining ions are both active."""
+
     active = {item.name for item in species if item.molality > ACTIVE_SPECIES_FLOOR}
     return tuple(
         MeanActivityCoefficient(

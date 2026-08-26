@@ -37,6 +37,8 @@ MANUAL_COMPOSITION = ""
 
 
 def _display_number(value: float, significant_digits: int = 6) -> str:
+    """Format a result compactly without changing the stored numeric value."""
+
     return format(value, f".{significant_digits}g")
 
 
@@ -75,6 +77,8 @@ def _apply_reference_case(cases_by_id: dict[str, ReferenceCase]) -> None:
 
 
 def _reference_output_table(case: ReferenceCase) -> list[dict[str, Any]]:
+    """Build display-only rows from a reference case's published outputs."""
+
     return [
         {
             "Published property": row.property,
@@ -162,6 +166,8 @@ def _component_grid(
     unit: ConcentrationUnit,
     columns_per_row: int = 4,
 ) -> dict[str, float]:
+    """Render one responsive component group and return its entered values."""
+
     values: dict[str, float] = {}
     for row_start in range(0, len(components), columns_per_row):
         columns = st.columns(columns_per_row)
@@ -191,6 +197,8 @@ def _component_grid(
 
 
 def _composition_inputs(unit: ConcentrationUnit) -> dict[str, float]:
+    """Render core and conditional analytical totals with progressive disclosure."""
+
     values: dict[str, float] = {}
     for group in (CATION_GROUP, ANION_ACID_BASE_GROUP):
         with st.expander(group, expanded=True):
@@ -218,6 +226,8 @@ def _composition_inputs(unit: ConcentrationUnit) -> dict[str, float]:
 
 
 def _species_rows(result: Any) -> list[dict[str, Any]]:
+    """Translate species results into the table schema owned by the UI."""
+
     return [
         {
             "Species": item.name,
@@ -234,6 +244,8 @@ def _species_rows(result: Any) -> list[dict[str, Any]]:
 
 
 def _render_charge_status(result: Any) -> None:
+    """Render the charge diagnostic without modifying the submitted composition."""
+
     value = abs(result.charge_balance_error_percent)
     if result.charge_balance_status == "good":
         st.success(f"Charge balance: good ({value:.3g}% absolute error; target ≤2%).")
@@ -244,6 +256,8 @@ def _render_charge_status(result: Any) -> None:
 
 
 def _render_downloads(solution: SolutionInput, result: Any, warnings: tuple[str, ...]) -> None:
+    """Expose stateless, reproducible exports for the completed calculation."""
+
     report = calculation_report(solution, result, warnings)
     first, second, third, fourth = st.columns(4)
     first.download_button(
@@ -277,6 +291,8 @@ def _render_downloads(solution: SolutionInput, result: Any, warnings: tuple[str,
 
 
 def _render_results(solution: SolutionInput, result: Any, warnings: tuple[str, ...]) -> None:
+    """Render the result summary, detailed tabs, assumptions, and downloads."""
+
     st.subheader("Calculation results")
     _render_charge_status(result)
 
@@ -374,6 +390,8 @@ def _render_results(solution: SolutionInput, result: Any, warnings: tuple[str, .
 
 
 def render_app() -> None:
+    """Compose the complete single-page Streamlit workflow."""
+
     apply_styles()
 
     st.title(APP_NAME)

@@ -6,6 +6,8 @@ from pitzer_calculator.config import ASSETS_DIR
 
 
 def apply_styles() -> None:
+    """Inject project-owned CSS when the versioned stylesheet is available."""
+
     css_path = ASSETS_DIR / "styles.css"
     if css_path.is_file():
         css = css_path.read_text(encoding="utf-8")

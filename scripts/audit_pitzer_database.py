@@ -28,6 +28,8 @@ PARAMETER_ARITY = {
 
 @dataclass(frozen=True, slots=True)
 class MasterComponent:
+    """One `SOLUTION_MASTER_SPECIES` entry and its source line."""
+
     name: str
     master_species: str
     line: int
@@ -35,6 +37,8 @@ class MasterComponent:
 
 @dataclass(frozen=True, slots=True)
 class ParameterEntry:
+    """One parsed Pitzer interaction entry with its coefficient series."""
+
     block: str
     species: tuple[str, ...]
     coefficients: tuple[float, ...]
@@ -42,11 +46,15 @@ class ParameterEntry:
 
     @property
     def is_temperature_dependent(self) -> bool:
+        """Return whether any coefficient beyond the constant term is active."""
+
         return len(self.coefficients) > 1 and any(value != 0 for value in self.coefficients[1:])
 
 
 @dataclass(frozen=True, slots=True)
 class MeanGammaDefinition:
+    """One database-defined stoichiometric mean activity coefficient."""
+
     name: str
     cation: str
     cation_stoichiometry: int
@@ -57,6 +65,8 @@ class MeanGammaDefinition:
 
 @dataclass(frozen=True, slots=True)
 class DatabaseInventory:
+    """Reproducible provenance and parsed scientific inventory for `pitzer.dat`."""
+
     path: str
     byte_length: int
     sha256: str
@@ -66,6 +76,8 @@ class DatabaseInventory:
     mean_gammas: tuple[MeanGammaDefinition, ...]
 
     def as_dict(self) -> dict[str, Any]:
+        """Return the stable JSON-serializable audit schema."""
+
         parameter_counts: dict[str, dict[str, int]] = {}
         for block in PARAMETER_ARITY:
             entries = [entry for entry in self.parameter_entries if entry.block == block]
@@ -97,6 +109,8 @@ class DatabaseInventory:
 
 
 def _data_lines(lines: list[str], start_header: str, end_header: str) -> list[tuple[int, str]]:
+    """Return uncommented data lines between two PHREEQC section headers."""
+
     collecting = False
     result: list[tuple[int, str]] = []
     for line_number, raw in enumerate(lines, 1):
@@ -112,6 +126,8 @@ def _data_lines(lines: list[str], start_header: str, end_header: str) -> list[tu
 
 
 def parse_master_components(lines: list[str]) -> tuple[MasterComponent, ...]:
+    """Parse analytical components from `SOLUTION_MASTER_SPECIES`."""
+
     components = []
     for line_number, text in _data_lines(
         lines, "SOLUTION_MASTER_SPECIES", "SOLUTION_SPECIES"
@@ -123,6 +139,8 @@ def parse_master_components(lines: list[str]) -> tuple[MasterComponent, ...]:
 
 
 def parse_parameter_entries(lines: list[str]) -> tuple[ParameterEntry, ...]:
+    """Parse supported interaction blocks from the database's `PITZER` section."""
+
     entries: list[ParameterEntry] = []
     block: str | None = None
     in_pitzer = False
@@ -159,6 +177,8 @@ def parse_parameter_entries(lines: list[str]) -> tuple[ParameterEntry, ...]:
 
 
 def parse_mean_gammas(lines: list[str]) -> tuple[MeanGammaDefinition, ...]:
+    """Parse curated electrolyte definitions from `MEAN_GAMMAS`."""
+
     definitions = []
     for line_number, text in _data_lines(lines, "MEAN_GAMMAS", "END"):
         tokens = text.split()
@@ -178,6 +198,8 @@ def parse_mean_gammas(lines: list[str]) -> tuple[MeanGammaDefinition, ...]:
 
 
 def audit_database(path: Path) -> DatabaseInventory:
+    """Read the database without altering its bytes and build a typed inventory."""
+
     raw = path.read_bytes()
     encoding = "cp1252"
     lines = raw.decode(encoding).splitlines()
@@ -193,6 +215,8 @@ def audit_database(path: Path) -> DatabaseInventory:
 
 
 def _human_summary(inventory: DatabaseInventory) -> str:
+    """Render a compact terminal summary of an inventory."""
+
     data = inventory.as_dict()
     lines = [
         f"Database: {data['path']}",
@@ -212,6 +236,8 @@ def _human_summary(inventory: DatabaseInventory) -> str:
 
 
 def main() -> None:
+    """Run the read-only database audit command-line interface."""
+
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("database", type=Path, help="Path to pitzer.dat")
     parser.add_argument("--json", action="store_true", help="Print the full inventory as JSON")
@@ -226,4 +252,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

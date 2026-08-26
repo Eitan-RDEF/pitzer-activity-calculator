@@ -13,6 +13,8 @@ class InputValidationError(ValueError):
 
 @dataclass(frozen=True, slots=True)
 class ValidationReport:
+    """Non-blocking scientific warnings produced after an input passes validation."""
+
     warnings: tuple[str, ...] = ()
 
 

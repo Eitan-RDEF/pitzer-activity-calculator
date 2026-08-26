@@ -1,3 +1,8 @@
+/*
+ * Streamlit does not expose a complete theming API, so this stylesheet uses stable-looking
+ * data-testid selectors for presentation only. Recheck the local and deployed UI after a
+ * Streamlit upgrade; scientific behavior must remain in Python, never in these selectors.
+ */
 :root {
   --color-accent: #0f766e;
   --color-accent-dark: #0b5f59;

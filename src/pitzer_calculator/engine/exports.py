@@ -10,6 +10,8 @@ from pitzer_calculator.domain.species import COMPONENT_BY_KEY, COMPONENTS
 
 
 def _number(value: float) -> str:
+    """Format deterministic export precision independently from the UI."""
+
     return format(value, ".15g")
 
 

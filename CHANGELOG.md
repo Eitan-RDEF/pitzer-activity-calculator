@@ -7,6 +7,11 @@ uses semantic versioning.
 
 ## [Unreleased]
 
+### Removed
+
+- Retired the obsolete Tkinter prototype so the repository has one maintained application
+  path and one source of scientific behavior.
+
 ## [1.0.0] - 2026-08-27
 
 ### Added

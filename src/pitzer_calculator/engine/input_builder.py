@@ -16,6 +16,8 @@ def species_column(index: int, quantity: str) -> str:
 
 
 def mean_gamma_column(key: str) -> str:
+    """Return the stable selected-output heading for a mean coefficient."""
+
     return f"mean_{key.lower()}"
 
 
@@ -89,4 +91,3 @@ def phreeqc_name_for(key: str) -> str:
     """Expose the supported-component mapping for exports and diagnostics."""
 
     return COMPONENT_BY_KEY[key].phreeqc_name
-

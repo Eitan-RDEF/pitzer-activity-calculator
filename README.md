@@ -67,7 +67,7 @@ pytest tests/integration
 │   └── integration/              # Native PHREEQC smoke and reference tests
 ├── docs/                      # Product, scientific, validation, deployment docs
 ├── assets/                    # Project-owned visual assets and CSS
-├── legacy/                    # Preserved desktop prototype
+├── scripts/                   # Reproducible database-audit utilities
 └── .github/workflows/         # Automated quality checks
 ```
 

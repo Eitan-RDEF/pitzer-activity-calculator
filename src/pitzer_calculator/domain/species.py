@@ -17,6 +17,8 @@ ANION_ACID_BASE_GROUP = "Anions and acid–base components"
 
 @dataclass(frozen=True, slots=True)
 class ComponentDefinition:
+    """Product metadata and PHREEQC mapping for one analytical input total."""
+
     key: str
     label: str
     phreeqc_name: str
@@ -29,12 +31,16 @@ class ComponentDefinition:
 
 @dataclass(frozen=True, slots=True)
 class AqueousSpeciesDefinition:
+    """Selected-output identity and integer charge for an aqueous species."""
+
     name: str
     charge: int
 
 
 @dataclass(frozen=True, slots=True)
 class MeanElectrolyteDefinition:
+    """Curated PHREEQC mean-gamma definition exposed in application results."""
+
     key: str
     label: str
     cation: str

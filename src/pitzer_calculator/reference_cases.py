@@ -64,6 +64,8 @@ class PublishedOutputRow:
 
 
 def _parse_case(raw_case: Mapping[str, Any]) -> ReferenceCase:
+    """Validate and convert one JSON case at the application-data boundary."""
+
     inputs = raw_case["input"]
     if inputs["composition_unit"] != "mol/kg_H2O":
         raise ValueError(
