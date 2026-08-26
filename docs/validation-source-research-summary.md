@@ -15,7 +15,11 @@ simple for the user:
 1. The user selects a reviewed reference case.
 2. The app fills the analytical inputs and clearly shows any assumptions.
 3. The user presses **Calculate with Pitzer**.
-4. The result is compared with the published reference, with a direct source link.
+4. The normal results appear unchanged. Published values and the direct source link remain
+   available in a compact **Reference data** expander if the user wants to consult them.
+
+Version 1 does not need a comparison screen, calculated differences, tolerances, or pass/fail
+judgments.
 
 The library must distinguish two evidence classes:
 
@@ -27,15 +31,15 @@ The library must distinguish two evidence classes:
 An implementation benchmark is useful, but it is not experimental validation. The UI must
 never merge these categories under an unexplained “validated” label.
 
-The initial research set contains 16 normalized comparison points:
+The initial research set contains 16 normalized reference points:
 
 - four source-cleared USGS implementation benchmarks that have been reproduced with the
   current engine/database pair;
 - twelve NaCl and KCl evaluated reference points from Hamer and Wu (1972) that remain
   blocked from public use pending a specific reuse review and a defensible fixed-pH mapping.
 
-All records remain research-only. No comparison tolerance has been approved, and
-`release_eligible` is therefore `false` for every case.
+All records remain research-only. Rights, source-to-app mapping, and promotion review are
+not complete, so `release_eligible` remains `false` for every case.
 
 ## Why source-to-app mapping is not automatic
 
@@ -118,7 +122,7 @@ All four cases were run on 2026-08-26 with:
 
 The database is the pinned 2026-01-05 USGS repository file, not the database originally
 distributed with the older PHRQPITZ report. Historical/current differences are therefore
-expected and must be investigated rather than concealed with a broad tolerance.
+expected and are retained as internal scientific findings rather than public UI behavior.
 
 ### Reference and current results
 
@@ -150,11 +154,12 @@ expected and must be investigated rather than concealed with a broad tolerance.
 - Ionic-strength differences are consistent with source rounding.
 - The largest observed discrepancy is the NaCl mean coefficient at 0 degrees C:
   `-0.0141641844` in absolute gamma.
-- These comparisons show successful reproduction of the overall states, but they do not yet
-  justify pass/fail thresholds.
+- These comparisons show successful reproduction of the overall states. The public library
+  will not turn this observation into a pass/fail judgment.
 - Likely contributors include database revisions, parameter temperature dependence,
   historical implementation details, source rounding, and the conversion from an equilibrium
-  path to a re-entered fixed final state. Each must be checked before assigning tolerances.
+  path to a re-entered fixed final state. These are internal scientific questions and do not
+  require a user-facing comparison feature.
 
 ## Blocked Hamer-Wu reference candidates
 
@@ -199,13 +204,15 @@ The lowest-burden credible implementation is a reference-case selector, not an a
 validation engine. Selecting a case should:
 
 - fill only the normal calculator fields;
-- show the source, evidence class, conditions, and app-added assumptions;
 - leave calculation under the user's control;
-- show reference and calculated values side by side after calculation;
-- display absolute and relative differences without declaring pass/fail until an approved
-  tolerance exists;
-- link directly to the source;
-- keep limitations visible but concise.
+- leave the existing results interface unchanged;
+- provide a compact **Reference data** expander containing the published values, source,
+  evidence class, conditions, and app-added assumptions;
+- link directly to the source.
+
+The app should not calculate differences, show a side-by-side comparison table, assign
+tolerances, or declare pass/fail. The user decides whether and how to consult the reference
+values.
 
 Recommended labels are **Experimental/evaluated reference** and **Software benchmark**.
 Avoid labels such as “certified,” “proven,” or an unqualified “validated.”
@@ -227,7 +234,7 @@ It is not yet accurate to say:
 - a universal concentration or ionic-strength limit has been established;
 - the selected USGS cases prove mineral-equilibrium capability;
 - every value hosted by NIST or NASA is automatically free to redistribute;
-- the current differences pass an accepted scientific tolerance.
+- the current historical/current-model differences have a single confirmed cause.
 
 ## Required release gate
 
@@ -241,10 +248,11 @@ Before any case is loaded by the UI, record all of the following:
 - exact source-to-app mapping;
 - all app-added pH, redox, charge-balance, and phase assumptions;
 - independently checked transcription;
-- current PHREEQC engine version and database checksum;
-- reproduced outputs and deltas;
-- evidence-based tolerances;
+- a successful internal smoke calculation with the pinned engine/database pair;
 - evidence-class label and concise user warning.
+
+Internal scientific records may retain engine version, database checksum, and reproduction
+notes. Those fields do not belong in the public case file or user interface.
 
 Until every gate is complete, keep `release_eligible: false` and do not make the runtime load
 the record.
@@ -261,15 +269,16 @@ the record.
 6. Extend collection to CaCl2, MgCl2, Na2SO4, and mixed chloride/sulfate solutions.
 7. Add seawater-like and carbonate-bearing cases only after the pH, alkalinity or total
    inorganic carbon, charge-balance, and phase mappings are exact.
-8. Have the final classifications and tolerances reviewed by a qualified electrolyte-
-   thermodynamics or geochemistry specialist.
-9. Only then connect approved records to the Streamlit case selector and comparison view.
+8. Have the final classifications and source-to-app mappings reviewed by a qualified
+   electrolyte-thermodynamics or geochemistry specialist.
+9. Only then connect approved records to the Streamlit case selector and compact
+   **Reference data** expander.
 
 ## Repository records
 
 - Source metadata and rights review:
   `data/examples/research/validation_sources.json`
-- Normalized inputs, reference values, reproduction outputs, and deltas:
+- Normalized inputs, reference values, and internal reproduction notes:
   `data/examples/research/validation_library_seed.json`
 - Collection and release rules: `docs/validation-data-collection.md`
 - Broader validation plan: `docs/validation-plan.md`

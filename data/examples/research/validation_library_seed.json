@@ -3,14 +3,14 @@
   "reviewed_on": "2026-08-26",
   "runtime_status": "research_only_not_loaded_by_application",
   "notes": [
-    "Release-eligible records still require numerical reproduction with the bundled PHREEQC version and pitzer.dat checksum.",
-    "No acceptance tolerance is assigned until the old and current model implementations have been compared.",
-    "Candidate reference values remain unavailable to the public UI while a blocker is open."
+    "Candidate reference values remain unavailable to the public UI while a blocker is open.",
+    "Internal reproduction metadata supports maintainers and is not part of the public library schema.",
+    "The public library will not store differences, tolerances, pass/fail labels, or research status."
   ],
   "cases": [
     {
       "id": "usgs_1988_tp3_nacl_caso4_phase_boundary_25c",
-      "status": "reproduced_pending_tolerance_review",
+      "status": "internally_reproduced_pending_promotion_review",
       "source_reuse_cleared": true,
       "release_eligible": false,
       "validation_category": "implementation_benchmark",
@@ -54,17 +54,8 @@
           "mean_activity_coefficients": {
             "NaCl": 0.9451978378
           }
-        },
-        "app_minus_reference": {
-          "water_activity": 0.0000165546,
-          "osmotic_coefficient": 0.0000496071,
-          "ionic_strength_mol_per_kg_H2O": -0.000001268,
-          "mean_activity_coefficients": {
-            "NaCl": 0.0029178378
-          }
         }
       },
-      "comparison_tolerance": null,
       "caveats": [
         "This is a published software benchmark rather than an independent experiment.",
         "The report used an unscaled single-ion convention; water activity, osmotic coefficient, and neutral-salt mean coefficient are the preferred comparisons.",
@@ -73,7 +64,7 @@
     },
     {
       "id": "usgs_1988_tp4_halite_saturation_0c",
-      "status": "reproduced_pending_tolerance_review",
+      "status": "internally_reproduced_pending_promotion_review",
       "source_reuse_cleared": true,
       "release_eligible": false,
       "validation_category": "implementation_benchmark",
@@ -114,17 +105,8 @@
           "mean_activity_coefficients": {
             "NaCl": 0.9136458156
           }
-        },
-        "app_minus_reference": {
-          "water_activity": 0.0002162008,
-          "osmotic_coefficient": -0.0015643573,
-          "ionic_strength_mol_per_kg_H2O": -0.0000279817,
-          "mean_activity_coefficients": {
-            "NaCl": -0.0141641844
-          }
         }
       },
-      "comparison_tolerance": null,
       "caveats": [
         "This is a published software benchmark rather than an independent experiment.",
         "The app re-enters the published final aqueous state and does not calculate halite solubility."
@@ -132,7 +114,7 @@
     },
     {
       "id": "usgs_1988_tp4_halite_saturation_25c",
-      "status": "reproduced_pending_tolerance_review",
+      "status": "internally_reproduced_pending_promotion_review",
       "source_reuse_cleared": true,
       "release_eligible": false,
       "validation_category": "implementation_benchmark",
@@ -173,17 +155,8 @@
           "mean_activity_coefficients": {
             "NaCl": 1.0039294064
           }
-        },
-        "app_minus_reference": {
-          "water_activity": -0.0002698535,
-          "osmotic_coefficient": 0.0014898765,
-          "ionic_strength_mol_per_kg_H2O": -0.000023938,
-          "mean_activity_coefficients": {
-            "NaCl": 0.0046394064
-          }
         }
       },
-      "comparison_tolerance": null,
       "caveats": [
         "This is a published software benchmark rather than an independent experiment.",
         "The app re-enters the published final aqueous state and does not calculate halite solubility."
@@ -191,7 +164,7 @@
     },
     {
       "id": "usgs_1988_tp4_halite_saturation_100c",
-      "status": "reproduced_pending_tolerance_review",
+      "status": "internally_reproduced_pending_promotion_review",
       "source_reuse_cleared": true,
       "release_eligible": false,
       "validation_category": "implementation_benchmark",
@@ -232,17 +205,8 @@
           "mean_activity_coefficients": {
             "NaCl": 0.9128035504
           }
-        },
-        "app_minus_reference": {
-          "water_activity": -0.0003005463,
-          "osmotic_coefficient": 0.0019512241,
-          "ionic_strength_mol_per_kg_H2O": -0.0000464652,
-          "mean_activity_coefficients": {
-            "NaCl": 0.0026835504
-          }
         }
       },
-      "comparison_tolerance": null,
       "caveats": [
         "This is a published software benchmark rather than an independent experiment.",
         "The app re-enters the published final aqueous state and does not calculate halite solubility.",
@@ -273,7 +237,6 @@
         {"molality": 4.0, "osmotic_coefficient": 1.116, "mean_activity_coefficient": 0.783},
         {"molality": 6.0, "osmotic_coefficient": 1.27, "mean_activity_coefficient": 0.986}
       ],
-      "comparison_tolerance": null,
       "blockers": [
         "Confirm permission to redistribute the selected values in a public application.",
         "Define and test the fixed-pH convention needed to map a binary salt-water reference to the app input model."
@@ -303,7 +266,6 @@
         {"molality": 4.0, "osmotic_coefficient": 0.965, "mean_activity_coefficient": 0.576},
         {"molality": 4.803, "osmotic_coefficient": 0.99, "mean_activity_coefficient": 0.589, "state": "reported_saturation"}
       ],
-      "comparison_tolerance": null,
       "blockers": [
         "Confirm permission to redistribute the selected values in a public application.",
         "Define and test the fixed-pH convention needed to map a binary salt-water reference to the app input model."

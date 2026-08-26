@@ -26,6 +26,9 @@ Create versioned fixtures for at least:
 For each case, retain the source, exact input, expected output, tolerance, PHREEQC version,
 and database checksum.
 
+These tolerances belong to automated regression and scientific validation tests. They are not
+part of the public reference library and must not produce user-facing pass/fail judgments.
+
 ## 3. Independent comparison
 
 - Compare reproducible cases against PHREEQC run independently of this UI.
@@ -45,4 +48,3 @@ and database checksum.
 
 The first public release requires all critical tests to pass in CI, a completed third-party
 notice, an application license, privacy wording, and a visible beta/limitations statement.
-

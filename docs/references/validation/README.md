@@ -2,8 +2,8 @@
 
 This folder preserves source material used during the scientific-validation research. A file
 being archived here does not mean that its data are approved for the public validation
-library. Scientific compatibility, reuse rights, transcription, reproduction, and comparison
-tolerances are separate release gates.
+library. Scientific compatibility, reuse rights, transcription, and source-to-app mapping are
+separate release gates. The public library will not implement tolerances or pass/fail grading.
 
 ## Archived PDFs
 

@@ -2,10 +2,13 @@
 
 ## Purpose
 
-The future validation library will let a user select a sourced composition, load it into the
-calculator, press **Calculate with Pitzer**, and compare the app result with the published
-reference. The calculation remains user-triggered; the library supplies reviewed inputs,
-reference values, definitions, and source links.
+The future reference library will let a user select a sourced composition, load it into the
+calculator, and press **Calculate with Pitzer**. The normal result interface remains
+unchanged. Published values, definitions, assumptions, and a direct source link remain
+available in a compact **Reference data** expander for users who want to consult them.
+
+Version 1 will not add a comparison view, show calculated differences, assign tolerances,
+or declare pass/fail. Interpretation remains with the user.
 
 The research records are stored under `data/examples/research/`. They are not loaded by the
 application until every release gate below is satisfied.
@@ -34,13 +37,56 @@ A case can enter the public library only when all of the following are recorded:
 - any app-added assumption, especially fixed pH, redox state, charge treatment, or absence
   of solids;
 - independently checked transcription;
-- reproduction result using the pinned PHREEQC version and bundled `pitzer.dat` checksum;
-- a justified comparison tolerance that reflects source precision and model differences;
 - a user-facing explanation of whether the record is experimental evidence or a software
-  benchmark.
+  benchmark;
+- a successful internal smoke calculation confirming that the mapped input is accepted by
+  the pinned engine/database pair.
 
-If any item is missing, `release_eligible` remains `false` or the status remains
-`source_cleared_pending_reproduction`.
+Research-only status and reproduction notes may be retained outside the public library to
+support maintainers. They are not part of the user-facing case format.
+
+The approved production record should contain only:
+
+- case identifier, name, and short description;
+- input conditions and analytical composition;
+- published reference outputs;
+- evidence class;
+- citation, direct source link, and exact table/page/record locator;
+- assumptions and limitations.
+
+It should not contain calculated differences, tolerances, pass/fail labels, or research status.
+
+A production case should follow this conceptual shape:
+
+```json
+{
+  "id": "source_case_identifier",
+  "title": "Human-readable case name",
+  "evidence_type": "experimental_or_evaluated_reference",
+  "source": {
+    "citation": "Full citation",
+    "url": "https://source.example",
+    "locator": "Table 1, page 10"
+  },
+  "input": {
+    "temperature_c": 25.0,
+    "pressure_atm": 1.0,
+    "known_ph": 7.0,
+    "composition_unit": "mol/kg_H2O",
+    "components": {"Na": 1.0, "Cl": 1.0}
+  },
+  "published_outputs": {
+    "mean_activity_coefficients": {"NaCl": 0.657},
+    "water_activity": 0.9668,
+    "osmotic_coefficient": 0.936
+  },
+  "assumptions": ["Any mapping assumption added by the app"]
+}
+```
+
+Selecting this case prefills `input`. The **Reference data** expander renders
+`published_outputs`, `source`, and `assumptions`. Pressing **Calculate with Pitzer** follows
+the existing calculation path and renders the existing results interface.
 
 ## Initial collection (2026-08-26)
 
@@ -55,10 +101,10 @@ The first normalized seed contains:
 All four USGS states were reproduced on 2026-08-26 with PHREEQC
 `3.8.6-17100-x64` and database SHA-256
 `3640e62aee63a118f800b115b46a2760576e63e05e1792022315a28f75dbe9bb`.
-The seed records both current outputs and app-minus-reference deltas. No pass/fail tolerance
-has been assigned yet: the largest observed difference is in the 0 degrees C saturated-NaCl
-mean coefficient, while water activity and osmotic-coefficient results remain close. This must
-be investigated as a database/version or method difference before a release threshold is set.
+The seed currently retains internal reproduction outputs for scientific traceability. These
+are research metadata and will not be copied into the public library. The observed historical
+differences are documented in `validation-source-research-summary.md`; the app will neither
+calculate nor display them.
 
 The USGS records are good first engineering benchmarks because their reported final aqueous
 states can be re-entered using components already exposed by the app. The original mineral
@@ -80,11 +126,12 @@ a promising discovery source, but every record needs its own scientific and righ
 
 ## Next collection priority
 
-1. Investigate the historical/current-model deltas and define evidence-based tolerances for
-   the four USGS cases.
+1. Investigate the historical/current-model differences as internal scientific work; do not
+   turn them into a public pass/fail feature.
 2. Locate source-cleared experimental NaCl and KCl data with explicit property definitions
    and uncertainty.
 3. Add CaCl2, MgCl2, Na2SO4, and mixed chloride/sulfate cases.
 4. Add seawater-like and carbonate-bearing cases only when pH, alkalinity or total carbon,
    charge balance, and phase assumptions map exactly to the app.
-5. Expose only reviewed cases in the UI, with a direct source link beside the comparison.
+5. Expose only reviewed cases in the selector, with their source values and link in a compact
+   **Reference data** expander.
