@@ -1,0 +1,77 @@
+{
+  "schema_version": "0.1.0",
+  "reviewed_on": "2026-08-26",
+  "purpose": "Research inventory for a future source-linked validation library. This file is not loaded by the application.",
+  "sources": [
+    {
+      "id": "usgs-phrqpitz-1988",
+      "citation": "Plummer, L. N., Parkhurst, D. L., Fleming, G. W., and Dunkle, S. A. (1988), A computer program incorporating Pitzer's equations for calculation of geochemical reactions in brines, U.S. Geological Survey Water-Resources Investigations Report 88-4153.",
+      "url": "https://doi.org/10.3133/wri884153",
+      "document_url": "https://pubs.usgs.gov/wri/1988/4153/report.pdf",
+      "publisher": "U.S. Geological Survey",
+      "source_type": "published_implementation_benchmark",
+      "reuse_status": "public_domain_with_attribution",
+      "reuse_evidence_url": "https://www.usgs.gov/faqs/are-usgs-reportspublications-copyrighted",
+      "reuse_note": "USGS states that USGS-authored or produced reports and data are in the U.S. public domain and asks users to acknowledge USGS. Third-party items remain excluded unless separately cleared.",
+      "scientific_role": "Implementation benchmark, not independent experimental validation.",
+      "app_compatibility": "partial",
+      "app_compatibility_note": "Published final aqueous states from test problems 3 and 4 can be re-entered as fixed-composition speciation cases. Mineral-equilibrium steps themselves are outside the app scope.",
+      "release_eligible": true
+    },
+    {
+      "id": "hamer-wu-1972",
+      "citation": "Hamer, W. J., and Wu, Y.-C. (1972), Osmotic coefficients and mean activity coefficients of uni-univalent electrolytes in water at 25 degrees C, Journal of Physical and Chemical Reference Data, 1, 1047-1100.",
+      "url": "https://doi.org/10.1063/1.3253108",
+      "document_url": "https://srd.nist.gov/JPCRD/jpcrd15.pdf",
+      "publisher": "National Bureau of Standards and American Institute of Physics",
+      "source_type": "evaluated_reference_data",
+      "reuse_status": "review_required",
+      "reuse_evidence_url": "https://www.nist.gov/open/copyright-fair-use-and-licensing-statements-srd-data-software-and-technical-series-publications",
+      "reuse_note": "NIST distinguishes protected Standard Reference Data, NIST-authored works, and third-party works. The exact status of redistributing this journal compilation in an app has not yet been confirmed.",
+      "scientific_role": "Independent evaluated reference values derived from experimental literature.",
+      "app_compatibility": "requires_declared_pH_convention",
+      "app_compatibility_note": "The binary salt-water tables do not prescribe pH, while the app requires a fixed pH input. A documented neutral-pH convention and sensitivity check are required before release.",
+      "release_eligible": false
+    },
+    {
+      "id": "nasa-nbs-10002-1969",
+      "citation": "Wu, Y.-C., and Hamer, W. J. (1969), Osmotic coefficients and mean activity coefficients of a series of uni-univalent electrolytes in aqueous solutions at 25 degrees C, Electrochemical Data Part XIII, NBS Report 10002, NASA-CR-106045.",
+      "url": "https://ntrs.nasa.gov/citations/19690029307",
+      "document_url": "https://ntrs.nasa.gov/api/citations/19690029307/downloads/19690029307.pdf",
+      "publisher": "National Bureau of Standards for NASA",
+      "source_type": "evaluated_reference_data",
+      "reuse_status": "review_required_due_to_conflicting_notices",
+      "reuse_evidence_url": "https://ntrs.nasa.gov/citations/19690029307",
+      "reuse_note": "The NTRS catalog says Work of the US Government, Public Use Permitted, but the report title page contains an older reproduction restriction. Resolve that conflict before redistribution.",
+      "scientific_role": "Potential independent evaluated reference source for future electrolyte components.",
+      "app_compatibility": "not_currently_compatible",
+      "app_compatibility_note": "The tabulated salts require analytical anions such as nitrate, perchlorate, chlorate, bromate, thiocyanate, phosphate, or arsenate that the current UI does not expose.",
+      "release_eligible": false
+    },
+    {
+      "id": "nasa-nsrds-nbs-24-1968",
+      "citation": "Hamer, W. J. (1968), Theoretical Mean Activity Coefficients of Strong Electrolytes in Aqueous Solutions from 0 to 100 degrees C, NSRDS-NBS 24, NASA-CR-109356.",
+      "url": "https://ntrs.nasa.gov/citations/19700013983",
+      "publisher": "National Bureau of Standards",
+      "source_type": "theoretical_reference_tables",
+      "reuse_status": "public_use_permitted_per_ntrs",
+      "scientific_role": "Screened source; unsuitable as independent Pitzer validation.",
+      "app_compatibility": "not_applicable",
+      "app_compatibility_note": "The tables are generic charge-type predictions from simpler electrolyte equations, not salt-specific experimental observations.",
+      "release_eligible": false
+    },
+    {
+      "id": "nist-thermoml-archive",
+      "citation": "NIST ThermoML Archive, Thermodynamics Research Center.",
+      "url": "https://trc.nist.gov/ThermoML/Browse",
+      "publisher": "National Institute of Standards and Technology",
+      "source_type": "machine_readable_literature_archive",
+      "reuse_status": "record_by_record_review_required",
+      "reuse_evidence_url": "https://www.nist.gov/open/copyright-fair-use-and-licensing-statements-srd-data-software-and-technical-series-publications",
+      "scientific_role": "Promising discovery source for experimental properties and uncertainty metadata.",
+      "app_compatibility": "to_be_assessed_per_record",
+      "app_compatibility_note": "Each candidate record needs component, basis, temperature, pressure, property-definition, and rights checks.",
+      "release_eligible": false
+    }
+  ]
+}

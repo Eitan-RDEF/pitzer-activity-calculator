@@ -1,0 +1,313 @@
+{
+  "schema_version": "0.1.0",
+  "reviewed_on": "2026-08-26",
+  "runtime_status": "research_only_not_loaded_by_application",
+  "notes": [
+    "Release-eligible records still require numerical reproduction with the bundled PHREEQC version and pitzer.dat checksum.",
+    "No acceptance tolerance is assigned until the old and current model implementations have been compared.",
+    "Candidate reference values remain unavailable to the public UI while a blocker is open."
+  ],
+  "cases": [
+    {
+      "id": "usgs_1988_tp3_nacl_caso4_phase_boundary_25c",
+      "status": "reproduced_pending_tolerance_review",
+      "source_reuse_cleared": true,
+      "release_eligible": false,
+      "validation_category": "implementation_benchmark",
+      "title": "NaCl-CaSO4 solution at the gypsum-anhydrite phase boundary",
+      "source": {
+        "source_id": "usgs-phrqpitz-1988",
+        "test_problem": 3,
+        "table": 11,
+        "printed_pages": "75-82",
+        "pdf_pages": "81-88"
+      },
+      "source_setup": "PHRQPITZ dissolved NaCl into a gypsum-equilibrated solution until the anhydrite boundary was reached. The final published aqueous state is normalized here for re-entry without solids.",
+      "app_input": {
+        "temperature_c": 25.0,
+        "pressure_atm": 1.0,
+        "known_ph": 6.7203,
+        "composition_unit": "mol/kg_H2O",
+        "components": {
+          "Na": 5.573737,
+          "Cl": 5.573737,
+          "Ca": 0.04801542,
+          "S_VI": 0.04801542
+        }
+      },
+      "reference_results": {
+        "water_activity": 0.7773,
+        "osmotic_coefficient": 1.2436,
+        "ionic_strength_mol_per_kg_H2O": 5.7658,
+        "mean_activity_coefficients": {
+          "NaCl": 0.94228
+        }
+      },
+      "reproduction": {
+        "run_on": "2026-08-26",
+        "engine_version": "3.8.6-17100-x64",
+        "database_sha256": "3640e62aee63a118f800b115b46a2760576e63e05e1792022315a28f75dbe9bb",
+        "app_results": {
+          "water_activity": 0.7773165546,
+          "osmotic_coefficient": 1.2436496071,
+          "ionic_strength_mol_per_kg_H2O": 5.765798732,
+          "mean_activity_coefficients": {
+            "NaCl": 0.9451978378
+          }
+        },
+        "app_minus_reference": {
+          "water_activity": 0.0000165546,
+          "osmotic_coefficient": 0.0000496071,
+          "ionic_strength_mol_per_kg_H2O": -0.000001268,
+          "mean_activity_coefficients": {
+            "NaCl": 0.0029178378
+          }
+        }
+      },
+      "comparison_tolerance": null,
+      "caveats": [
+        "This is a published software benchmark rather than an independent experiment.",
+        "The report used an unscaled single-ion convention; water activity, osmotic coefficient, and neutral-salt mean coefficient are the preferred comparisons.",
+        "The app does not reproduce the mineral-equilibrium path, only the reported final aqueous composition."
+      ]
+    },
+    {
+      "id": "usgs_1988_tp4_halite_saturation_0c",
+      "status": "reproduced_pending_tolerance_review",
+      "source_reuse_cleared": true,
+      "release_eligible": false,
+      "validation_category": "implementation_benchmark",
+      "title": "Halite-saturated NaCl solution at 0 degrees C",
+      "source": {
+        "source_id": "usgs-phrqpitz-1988",
+        "test_problem": 4,
+        "table": 13,
+        "printed_pages": "83-89",
+        "pdf_pages": "89-95"
+      },
+      "app_input": {
+        "temperature_c": 0.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0322,
+        "composition_unit": "mol/kg_H2O",
+        "components": {
+          "Na": 6.093272,
+          "Cl": 6.093272
+        }
+      },
+      "reference_results": {
+        "water_activity": 0.7577,
+        "osmotic_coefficient": 1.2641,
+        "ionic_strength_mol_per_kg_H2O": 6.0933,
+        "mean_activity_coefficients": {
+          "NaCl": 0.92781
+        }
+      },
+      "reproduction": {
+        "run_on": "2026-08-26",
+        "engine_version": "3.8.6-17100-x64",
+        "database_sha256": "3640e62aee63a118f800b115b46a2760576e63e05e1792022315a28f75dbe9bb",
+        "app_results": {
+          "water_activity": 0.7579162008,
+          "osmotic_coefficient": 1.2625356427,
+          "ionic_strength_mol_per_kg_H2O": 6.0932720183,
+          "mean_activity_coefficients": {
+            "NaCl": 0.9136458156
+          }
+        },
+        "app_minus_reference": {
+          "water_activity": 0.0002162008,
+          "osmotic_coefficient": -0.0015643573,
+          "ionic_strength_mol_per_kg_H2O": -0.0000279817,
+          "mean_activity_coefficients": {
+            "NaCl": -0.0141641844
+          }
+        }
+      },
+      "comparison_tolerance": null,
+      "caveats": [
+        "This is a published software benchmark rather than an independent experiment.",
+        "The app re-enters the published final aqueous state and does not calculate halite solubility."
+      ]
+    },
+    {
+      "id": "usgs_1988_tp4_halite_saturation_25c",
+      "status": "reproduced_pending_tolerance_review",
+      "source_reuse_cleared": true,
+      "release_eligible": false,
+      "validation_category": "implementation_benchmark",
+      "title": "Halite-saturated NaCl solution at 25 degrees C",
+      "source": {
+        "source_id": "usgs-phrqpitz-1988",
+        "test_problem": 4,
+        "table": 13,
+        "printed_pages": "90-91",
+        "pdf_pages": "96-97"
+      },
+      "app_input": {
+        "temperature_c": 25.0,
+        "pressure_atm": 1.0,
+        "known_ph": 6.5971,
+        "composition_unit": "mol/kg_H2O",
+        "components": {
+          "Na": 6.099676,
+          "Cl": 6.099676
+        }
+      },
+      "reference_results": {
+        "water_activity": 0.7546,
+        "osmotic_coefficient": 1.2813,
+        "ionic_strength_mol_per_kg_H2O": 6.0997,
+        "mean_activity_coefficients": {
+          "NaCl": 0.99929
+        }
+      },
+      "reproduction": {
+        "run_on": "2026-08-26",
+        "engine_version": "3.8.6-17100-x64",
+        "database_sha256": "3640e62aee63a118f800b115b46a2760576e63e05e1792022315a28f75dbe9bb",
+        "app_results": {
+          "water_activity": 0.7543301465,
+          "osmotic_coefficient": 1.2827898765,
+          "ionic_strength_mol_per_kg_H2O": 6.099676062,
+          "mean_activity_coefficients": {
+            "NaCl": 1.0039294064
+          }
+        },
+        "app_minus_reference": {
+          "water_activity": -0.0002698535,
+          "osmotic_coefficient": 0.0014898765,
+          "ionic_strength_mol_per_kg_H2O": -0.000023938,
+          "mean_activity_coefficients": {
+            "NaCl": 0.0046394064
+          }
+        }
+      },
+      "comparison_tolerance": null,
+      "caveats": [
+        "This is a published software benchmark rather than an independent experiment.",
+        "The app re-enters the published final aqueous state and does not calculate halite solubility."
+      ]
+    },
+    {
+      "id": "usgs_1988_tp4_halite_saturation_100c",
+      "status": "reproduced_pending_tolerance_review",
+      "source_reuse_cleared": true,
+      "release_eligible": false,
+      "validation_category": "implementation_benchmark",
+      "title": "Halite-saturated NaCl solution at 100 degrees C",
+      "source": {
+        "source_id": "usgs-phrqpitz-1988",
+        "test_problem": 4,
+        "table": 13,
+        "printed_pages": "92-93",
+        "pdf_pages": "98-99"
+      },
+      "app_input": {
+        "temperature_c": 100.0,
+        "pressure_atm": 1.0,
+        "known_ph": 5.6149,
+        "composition_unit": "mol/kg_H2O",
+        "components": {
+          "Na": 6.624753,
+          "Cl": 6.624753
+        }
+      },
+      "reference_results": {
+        "water_activity": 0.7442,
+        "osmotic_coefficient": 1.2375,
+        "ionic_strength_mol_per_kg_H2O": 6.6248,
+        "mean_activity_coefficients": {
+          "NaCl": 0.91012
+        }
+      },
+      "reproduction": {
+        "run_on": "2026-08-26",
+        "engine_version": "3.8.6-17100-x64",
+        "database_sha256": "3640e62aee63a118f800b115b46a2760576e63e05e1792022315a28f75dbe9bb",
+        "app_results": {
+          "water_activity": 0.7438994537,
+          "osmotic_coefficient": 1.2394512241,
+          "ionic_strength_mol_per_kg_H2O": 6.6247535348,
+          "mean_activity_coefficients": {
+            "NaCl": 0.9128035504
+          }
+        },
+        "app_minus_reference": {
+          "water_activity": -0.0003005463,
+          "osmotic_coefficient": 0.0019512241,
+          "ionic_strength_mol_per_kg_H2O": -0.0000464652,
+          "mean_activity_coefficients": {
+            "NaCl": 0.0026835504
+          }
+        }
+      },
+      "comparison_tolerance": null,
+      "caveats": [
+        "This is a published software benchmark rather than an independent experiment.",
+        "The app re-enters the published final aqueous state and does not calculate halite solubility.",
+        "The 100 degrees C boundary requires careful deployment-environment reproduction."
+      ]
+    },
+    {
+      "id": "hamer_wu_1972_nacl_25c_candidates",
+      "status": "blocked_rights_and_pH_convention",
+      "release_eligible": false,
+      "validation_category": "independent_evaluated_reference",
+      "title": "NaCl evaluated reference values at 25 degrees C",
+      "source": {
+        "source_id": "hamer-wu-1972",
+        "table": 16
+      },
+      "source_input": {
+        "temperature_c": 25.0,
+        "composition_unit": "mol/kg_H2O",
+        "electrolyte": "NaCl",
+        "pH": null
+      },
+      "reference_points": [
+        {"molality": 0.1, "osmotic_coefficient": 0.933, "mean_activity_coefficient": 0.779},
+        {"molality": 0.5, "osmotic_coefficient": 0.921, "mean_activity_coefficient": 0.681},
+        {"molality": 1.0, "osmotic_coefficient": 0.936, "mean_activity_coefficient": 0.657},
+        {"molality": 2.0, "osmotic_coefficient": 0.984, "mean_activity_coefficient": 0.668},
+        {"molality": 4.0, "osmotic_coefficient": 1.116, "mean_activity_coefficient": 0.783},
+        {"molality": 6.0, "osmotic_coefficient": 1.27, "mean_activity_coefficient": 0.986}
+      ],
+      "comparison_tolerance": null,
+      "blockers": [
+        "Confirm permission to redistribute the selected values in a public application.",
+        "Define and test the fixed-pH convention needed to map a binary salt-water reference to the app input model."
+      ]
+    },
+    {
+      "id": "hamer_wu_1972_kcl_25c_candidates",
+      "status": "blocked_rights_and_pH_convention",
+      "release_eligible": false,
+      "validation_category": "independent_evaluated_reference",
+      "title": "KCl evaluated reference values at 25 degrees C",
+      "source": {
+        "source_id": "hamer-wu-1972",
+        "table": 28
+      },
+      "source_input": {
+        "temperature_c": 25.0,
+        "composition_unit": "mol/kg_H2O",
+        "electrolyte": "KCl",
+        "pH": null
+      },
+      "reference_points": [
+        {"molality": 0.1, "osmotic_coefficient": 0.927, "mean_activity_coefficient": 0.768},
+        {"molality": 0.5, "osmotic_coefficient": 0.9, "mean_activity_coefficient": 0.649},
+        {"molality": 1.0, "osmotic_coefficient": 0.898, "mean_activity_coefficient": 0.604},
+        {"molality": 2.0, "osmotic_coefficient": 0.912, "mean_activity_coefficient": 0.573},
+        {"molality": 4.0, "osmotic_coefficient": 0.965, "mean_activity_coefficient": 0.576},
+        {"molality": 4.803, "osmotic_coefficient": 0.99, "mean_activity_coefficient": 0.589, "state": "reported_saturation"}
+      ],
+      "comparison_tolerance": null,
+      "blockers": [
+        "Confirm permission to redistribute the selected values in a public application.",
+        "Define and test the fixed-pH convention needed to map a binary salt-water reference to the app input model."
+      ]
+    }
+  ]
+}
