@@ -44,5 +44,28 @@ def validate_solution(solution: SolutionInput) -> ValidationReport:
     if not 0 <= solution.ph <= 14:
         warnings.append("The selected pH is outside the conventional 0–14 range.")
 
-    return ValidationReport(tuple(warnings))
+    conditional = {
+        "Li": "Li",
+        "Sr": "Sr",
+        "Ba": "Ba",
+        "Fe2": "Fe(II)",
+        "Br": "Br",
+    }
+    present_conditional = [
+        label
+        for key, label in conditional.items()
+        if solution.components_molal.get(key, 0.0) > 0
+    ]
+    if present_conditional:
+        warnings.append(
+            "Conditional database coverage for "
+            f"{', '.join(present_conditional)}: some mixtures lack explicit Pitzer "
+            "interaction parameters. Treat this early result as unvalidated."
+        )
+    if solution.components_molal.get("Fe2", 0.0) > 0:
+        warnings.append(
+            "Redox assumption: iron is fixed Fe(II) total. This Pitzer database contains "
+            "no redox couples and does not calculate Fe(II)/Fe(III) conversion."
+        )
 
+    return ValidationReport(tuple(warnings))

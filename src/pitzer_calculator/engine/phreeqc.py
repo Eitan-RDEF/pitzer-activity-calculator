@@ -38,8 +38,14 @@ def calculate_h_activity(
         from phreeqc import Phreeqc
 
         phreeqc = Phreeqc()
-        phreeqc.LoadDatabase(str(database_path))
-        phreeqc.RunString(input_text)
+        load_status = phreeqc.LoadDatabase(str(database_path))
+        if load_status != 0:
+            raise CalculationError(
+                f"PHREEQC could not load the database: {phreeqc.GetErrorString()}"
+            )
+        run_status = phreeqc.RunString(input_text)
+        if run_status != 0:
+            raise CalculationError(f"PHREEQC rejected the calculation: {phreeqc.GetErrorString()}")
         output = phreeqc.GetSelectedOutput()
     except ImportError as exc:
         raise CalculationError(

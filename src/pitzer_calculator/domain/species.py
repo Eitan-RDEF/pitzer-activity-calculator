@@ -19,9 +19,9 @@ COMPONENTS: tuple[ComponentDefinition, ...] = (
     ComponentDefinition("Mg", "Mg²⁺", "Mg", "Cations"),
     ComponentDefinition("Sr", "Sr²⁺", "Sr", "Cations"),
     ComponentDefinition("Ba", "Ba²⁺", "Ba", "Cations"),
-    ComponentDefinition("Fe2", "Fe²⁺", "Fe(2)", "Cations"),
-    ComponentDefinition("Fe3", "Fe³⁺", "Fe(3)", "Cations"),
-    ComponentDefinition("Al", "Al³⁺", "Al", "Cations"),
+    # pitzer.dat defines the master component as "Fe" with Fe+2 as its master
+    # species. It contains no iron redox couple, so this input is fixed Fe(II).
+    ComponentDefinition("Fe2", "Fe(II) total", "Fe", "Cations"),
     ComponentDefinition("Cl", "Cl⁻", "Cl", "Anions and totals"),
     ComponentDefinition("Br", "Br⁻", "Br", "Anions and totals"),
     ComponentDefinition("SO4", "Total S(VI)", "S(6)", "Anions and totals"),
@@ -29,4 +29,3 @@ COMPONENTS: tuple[ComponentDefinition, ...] = (
 )
 
 COMPONENT_BY_KEY = {component.key: component for component in COMPONENTS}
-

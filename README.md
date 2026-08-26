@@ -66,7 +66,11 @@ pytest tests/integration
 └── .github/workflows/         # Automated quality checks
 ```
 
-See [Architecture](docs/architecture.md) for boundaries and design decisions.
+See [Architecture](docs/architecture.md) for code boundaries and
+[Version 1 product definition](docs/version-1-product-definition.md) for the approved
+scientific and product behavior. The reproducible
+[Pitzer database audit](docs/pitzer-database-audit.md) records provenance, parameter
+coverage, redox constraints, and the initial support matrix.
 
 ## Scientific scope
 
@@ -91,4 +95,3 @@ The application license has not yet been selected. Do not publish the repository
 application license and third-party notices have been reviewed and added. PHREEQC, its
 Python binding, and the bundled database each require accurate attribution; see
 [Third-party notices](docs/third-party-notices.md).
-

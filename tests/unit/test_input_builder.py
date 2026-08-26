@@ -20,16 +20,14 @@ def test_builds_deterministic_solution_and_selected_output() -> None:
     assert '-headings loga_H logm_H loggamma_H gamma_H mol_H act_H' in text
 
 
-def test_uses_valence_specific_phreeqc_names() -> None:
+def test_uses_database_supported_phreeqc_names() -> None:
     text = build_phreeqc_input(
         SolutionInput(
             ph=7.0,
             temperature_c=25.0,
-            components_molal={"Fe2": 0.01, "Fe3": 0.02, "C4": 0.03},
+            components_molal={"Fe2": 0.01, "C4": 0.03},
         )
     )
 
-    assert "    Fe(2) 0.01" in text
-    assert "    Fe(3) 0.02" in text
+    assert "    Fe 0.01" in text
     assert "    C(4) 0.03" in text
-

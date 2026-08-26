@@ -26,14 +26,23 @@ definitions.
 - Sulfur(VI) and inorganic carbon totals are allowed to speciate among database species.
 - A successful numerical solve does not guarantee a chemically plausible input.
 
+## Redox boundary
+
+The bundled `pitzer.dat` contains no redox couples. It cannot calculate redox reactions or
+convert between entered oxidation states. The only audited iron master component is `Fe`,
+with `Fe+2` as its master species, so any exposed iron input is fixed **Fe(II) total**.
+Fe(III), pe/Eh controls, and implied redox equilibration are outside version 1.
+
 ## Limitations to disclose
 
 - Results depend on database species and interaction-parameter coverage.
 - Database validity varies with species, temperature, and concentration.
 - Charge imbalance can indicate missing ions, unit errors, or inconsistent analyses.
-- Redox-sensitive components require careful interpretation.
+- Fixed Fe(II) and Mn(II), if exposed, require prominent no-redox warnings.
 - Calculations outside the validated envelope must be clearly flagged.
 
 Specific numerical claims and validity ranges will be added only after the validation work
 described in `validation-plan.md` is complete.
 
+See the [database audit](pitzer-database-audit.md) for provenance, parameter coverage, and
+the component support classification.
