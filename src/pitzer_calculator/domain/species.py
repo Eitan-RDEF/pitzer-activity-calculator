@@ -23,7 +23,6 @@ class ComponentDefinition:
     label: str
     phreeqc_name: str
     group: str
-    default_molal: float = 0.0
     included_forms: tuple[str, ...] = ()
     support: ComponentSupport = ComponentSupport.CORE
     limitation: str | None = None
@@ -50,11 +49,11 @@ class MeanElectrolyteDefinition:
 # Core inputs are shown by default. Conditional inputs are exposed in a separate advanced
 # section with their audited database limitations repeated in calculation warnings.
 COMPONENTS: tuple[ComponentDefinition, ...] = (
-    ComponentDefinition("Na", "Na⁺", "Na", CATION_GROUP, 0.1),
+    ComponentDefinition("Na", "Na⁺", "Na", CATION_GROUP),
     ComponentDefinition("K", "K⁺", "K", CATION_GROUP),
     ComponentDefinition("Ca", "Ca²⁺", "Ca", CATION_GROUP),
     ComponentDefinition("Mg", "Mg²⁺", "Mg", CATION_GROUP),
-    ComponentDefinition("Cl", "Cl⁻", "Cl", ANION_ACID_BASE_GROUP, 0.1),
+    ComponentDefinition("Cl", "Cl⁻", "Cl", ANION_ACID_BASE_GROUP),
     ComponentDefinition(
         "SO4",
         "Total S(VI)",

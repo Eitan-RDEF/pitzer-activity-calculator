@@ -12,7 +12,7 @@ pytestmark = pytest.mark.skipif(
 )
 
 
-def test_default_nacl_workflow_renders_complete_results() -> None:
+def test_entered_nacl_workflow_renders_complete_results() -> None:
     app = AppTest.from_file(Path(__file__).parents[2] / "streamlit_app.py")
     app.run(timeout=20)
 
@@ -37,6 +37,12 @@ def test_default_nacl_workflow_renders_complete_results() -> None:
     assert any(
         item.label == "Anions and acid–base components" for item in app.expander
     )
+    component_inputs = [
+        item for item in app.number_input if item.key.startswith("component_")
+    ]
+    assert component_inputs and all(item.value == 0.0 for item in component_inputs)
+    app.number_input(key="component_MOL_PER_KGW_Na").set_value(0.1)
+    app.number_input(key="component_MOL_PER_KGW_Cl").set_value(0.1)
     app.button[0].click().run(timeout=20)
 
     assert not app.exception

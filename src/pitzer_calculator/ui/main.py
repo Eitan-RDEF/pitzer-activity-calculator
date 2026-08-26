@@ -177,10 +177,9 @@ def _component_grid(
             strict=False,
         ):
             with column:
-                default = component.default_molal / unit.to_molal_factor
                 widget_key = f"component_{unit.name}_{component.key}"
                 default_arguments = (
-                    {"value": default} if widget_key not in st.session_state else {}
+                    {"value": 0.0} if widget_key not in st.session_state else {}
                 )
                 values[component.key] = st.number_input(
                     f"{component.label} [{unit.display_label}]",
@@ -530,7 +529,7 @@ def render_app() -> None:
         return
 
     if not submitted:
-        st.caption("A balanced 0.1 mol/kg NaCl example is prefilled to get you started.")
+        st.caption("Enter a composition or load a published reference case to get started.")
         return
 
     solution = SolutionInput(

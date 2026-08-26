@@ -7,6 +7,11 @@ uses semantic versioning.
 
 ## [Unreleased]
 
+### Changed
+
+- Start every analytical component at zero; examples remain available through the explicit
+  published reference-case selector.
+
 ### Removed
 
 - Retired the obsolete Tkinter prototype so the repository has one maintained application
