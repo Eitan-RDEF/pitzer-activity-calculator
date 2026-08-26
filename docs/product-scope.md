@@ -16,6 +16,9 @@ the conventions used, and download enough information to reproduce the result.
 
 - Molality-based composition input.
 - Clearly enumerated supported components.
+- A collapsed extended-component section for Br, Li, Sr, Ba, B, Si, fixed Fe(II), and
+  fixed Mn(II), each with an audited limitation shown before calculation.
+- Dynamic warnings for known mixture, pH, redox, and precipitation-related limitations.
 - pH and temperature input within a validated envelope.
 - Ionic strength, charge-balance diagnostics, activities, and activity coefficients.
 - Mean activity coefficients for explicitly selected electrolytes.
@@ -28,6 +31,7 @@ the conventions used, and download enough information to reproduce the result.
 - Arbitrary user-supplied PHREEQC programs.
 - Confidential composition storage or user accounts.
 - Claims of validity outside tested species, temperature, pressure, or concentration ranges.
+- Fe(III), Al, arbitrary redox equilibration, and unreviewed database master components.
 - Replacing professional judgment or validated commercial process simulation.
 
 ## Positioning
@@ -35,4 +39,3 @@ the conventions used, and download enough information to reproduce the result.
 The defensible promise is a modern, free, transparent, engineer-friendly Pitzer calculator.
 The product should not claim to be the first online implementation because earlier
 interactive Pitzer tools exist.
-

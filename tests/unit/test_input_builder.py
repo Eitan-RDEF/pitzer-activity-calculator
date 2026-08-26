@@ -37,3 +37,34 @@ def test_uses_analytical_total_phreeqc_names() -> None:
 
     assert "    S(6) 0.01" in text
     assert "    C(4) 0.03" in text
+
+
+def test_maps_every_conditional_component_to_its_audited_master_name() -> None:
+    text = build_phreeqc_input(
+        SolutionInput(
+            ph=7.0,
+            temperature_c=25.0,
+            components_molal={
+                "Br": 0.001,
+                "Li": 0.002,
+                "Sr": 0.003,
+                "Ba": 0.004,
+                "B": 0.005,
+                "Si": 0.006,
+                "Fe2": 0.007,
+                "Mn2": 0.008,
+            },
+        )
+    )
+
+    for expected in (
+        "    Br 0.001",
+        "    Li 0.002",
+        "    Sr 0.003",
+        "    Ba 0.004",
+        "    B 0.005",
+        "    Si 0.006",
+        "    Fe 0.007",
+        "    Mn 0.008",
+    ):
+        assert expected in text

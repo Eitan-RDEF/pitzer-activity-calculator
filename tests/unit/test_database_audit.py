@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from pitzer_calculator.domain.species import COMPONENTS
+from pitzer_calculator.domain.species import COMPONENTS, CONDITIONAL_COMPONENTS
 from scripts.audit_pitzer_database import audit_database
 
 DATABASE_PATH = Path("data/databases/pitzer.dat")
@@ -42,6 +42,15 @@ def test_every_exposed_component_exists_in_database_master_components() -> None:
     database_names = {component.name for component in inventory.master_components}
 
     assert {component.phreeqc_name for component in COMPONENTS} <= database_names
+
+
+def test_conditional_product_scope_is_explicit_and_excludes_unsupported_inputs() -> None:
+    conditional_keys = {component.key for component in CONDITIONAL_COMPONENTS}
+
+    assert conditional_keys == {"Br", "Li", "Sr", "Ba", "B", "Si", "Fe2", "Mn2"}
+    assert all(component.limitation for component in CONDITIONAL_COMPONENTS)
+    assert "Al" not in {component.phreeqc_name for component in COMPONENTS}
+    assert "Fe(3)" not in {component.phreeqc_name for component in COMPONENTS}
 
 
 def test_expected_parameter_block_counts() -> None:

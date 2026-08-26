@@ -88,3 +88,42 @@ def test_extracts_complete_core_mixed_solution_species() -> None:
         "Na2SO4",
     }
     assert result.charge_balance_status == "review"
+
+
+def test_extracts_conditional_components_and_their_aqueous_species() -> None:
+    result = calculate_solution(
+        SolutionInput(
+            ph=10.0,
+            temperature_c=25.0,
+            components_molal={
+                "Na": 0.1,
+                "Cl": 0.1,
+                "Br": 0.01,
+                "Li": 0.005,
+                "Sr": 0.001,
+                "Ba": 0.0001,
+                "B": 0.002,
+                "Si": 0.002,
+                "Fe2": 0.0002,
+                "Mn2": 0.0002,
+            },
+        )
+    )
+
+    active_species = {item.name for item in result.species}
+    assert {
+        "Br-",
+        "Li+",
+        "Sr+2",
+        "Ba+2",
+        "Fe+2",
+        "Mn+2",
+        "B(OH)3",
+        "B(OH)4-",
+        "B3O3(OH)4-",
+        "B4O5(OH)4-2",
+        "H4SiO4",
+        "H3SiO4-",
+        "H2SiO4-2",
+    } <= active_species
+    assert "HBr" in {item.key for item in result.mean_activity_coefficients}

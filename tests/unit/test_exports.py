@@ -49,6 +49,13 @@ def test_report_records_assumptions_versions_and_warning() -> None:
     assert "Example warning" in report
 
 
+def test_report_repeats_fixed_redox_assumption_for_iron_and_manganese() -> None:
+    solution = SolutionInput(7.0, 25.0, {"Fe2": 0.001, "Mn2": 0.001})
+    report = calculation_report(solution, _result())
+
+    assert "Total Fe(II), Total Mn(II) remain fixed in the +II oxidation state" in report
+
+
 def test_bundle_contains_all_reproducibility_files() -> None:
     solution = SolutionInput(7.0, 25.0, {"Na": 0.1, "Cl": 0.1})
     bundle = calculation_bundle(solution, _result())
@@ -59,4 +66,3 @@ def test_bundle_contains_all_reproducibility_files() -> None:
             "pitzer-report.md",
             "pitzer-species.csv",
         }
-

@@ -4,7 +4,7 @@ import math
 from dataclasses import dataclass
 
 from pitzer_calculator.domain.models import SolutionInput
-from pitzer_calculator.domain.species import COMPONENT_BY_KEY
+from pitzer_calculator.domain.species import COMPONENT_BY_KEY, CONDITIONAL_COMPONENTS
 
 
 class InputValidationError(ValueError):
@@ -41,8 +41,18 @@ def validate_solution(solution: SolutionInput) -> ValidationReport:
             raise InputValidationError(f"{key} concentration cannot be negative.")
 
     warnings: list[str] = []
+    active = {
+        key for key, concentration in solution.components_molal.items() if concentration > 0
+    }
     if not 0 <= solution.ph <= 14:
         warnings.append("The selected pH is outside the conventional 0–14 range.")
+
+    for component in CONDITIONAL_COMPONENTS:
+        if component.key in active and component.limitation:
+            warnings.append(
+                f"{component.label} has conditional database coverage: "
+                f"{component.limitation} Independently validate this result."
+            )
 
     if solution.components_molal.get("C4", 0.0) > 0 and (
         solution.components_molal.get("Ca", 0.0) > 0
@@ -51,6 +61,43 @@ def validate_solution(solution: SolutionInput) -> ValidationReport:
         warnings.append(
             "Carbonate with Ca or Mg has incomplete explicit binary Pitzer coverage in the "
             "bundled database. Treat this result as conditional and independently validate it."
+        )
+
+    if "Br" in active and len(active) > 2:
+        warnings.append(
+            "This multicomponent bromide mixture has less complete ternary interaction "
+            "coverage than a binary bromide salt."
+        )
+
+    if "Li" in active and ("C4" in active or "SO4" in active):
+        warnings.append(
+            "Li is combined with C(IV) or S(VI), activating known gaps for carbonate, "
+            "bicarbonate, or bisulfate interactions."
+        )
+
+    if "Sr" in active and "C4" in active:
+        warnings.append(
+            "Sr with C(IV) activates incomplete carbonate and bicarbonate interaction coverage."
+        )
+    if "Sr" in active and solution.ph >= 9:
+        warnings.append(
+            "Sr at pH 9 or above may be affected by missing explicit hydroxide interactions."
+        )
+    if "Sr" in active and "SO4" in active and solution.ph <= 4:
+        warnings.append(
+            "Sr with S(VI) at low pH may be affected by missing bisulfate interactions."
+        )
+
+    if "Ba" in active and ("SO4" in active or "C4" in active):
+        warnings.append(
+            "Ba with sulfate or carbonate can be strongly affected by mineral precipitation, "
+            "but this aqueous-only calculation does not equilibrate solids."
+        )
+
+    if "Si" in active and solution.ph >= 9:
+        warnings.append(
+            "At pH 9 or above, deprotonated silicate species become increasingly relevant and "
+            "have sparse explicit Pitzer interaction coverage in this database."
         )
 
     return ValidationReport(tuple(warnings))

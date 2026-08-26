@@ -135,7 +135,7 @@ This is a product-facing baseline, not the final validation verdict.
 | Classification | Components or modes | Required behavior |
 |---|---|---|
 | Core candidates | Na, K, Mg, Ca, Cl, S(VI), C(IV), alkalinity, H/pH | Expose after reference validation; still evaluate mixture-specific gaps |
-| Conditional candidates | Br, Li, Sr, Ba, fixed Fe(II), fixed Mn(II), B, Si | Expose only with targeted validation and condition-specific warnings |
+| Conditional inputs | Br, Li, Sr, Ba, fixed Fe(II), fixed Mn(II), B, Si | Exposed in a collapsed extended section with permanent component limitations and active condition-specific warnings |
 | Explicit boundary | CO₂ | Use only for the user-selected CO₂-equilibrium mode; never assume it silently |
 | Excluded | Al, Fe(III), arbitrary redox/pe/Eh, Hdg/Oxg/Mtg/Sg/Ntg inputs, exchange, surface, and phase controls | Do not expose in version 1 |
 
@@ -160,8 +160,11 @@ Important conditional cases include:
 - Carbonate interactions are strongest for Na and K. Carbonate-rich mixtures containing
   minor divalent metals need explicit coverage warnings.
 
-The future warning engine should inspect relevant equilibrium species and interaction
-combinations. A single static "component supported" flag is too coarse.
+The initial warning engine inspects active analytical-component combinations and pH for the
+documented high-value gaps. Component limitations are also displayed beneath every extended
+input and repeated in successful calculation reports. This is deliberately more informative
+than a single static "component supported" flag; later validation can refine the rules using
+calculated equilibrium-species significance.
 
 ## Redox decision
 
@@ -248,4 +251,3 @@ Those claims require the reference-case program in `docs/validation-plan.md`.
 5. Validate the calculated-pH and explicit CO₂-boundary workflows.
 6. Review the final support classifications and warnings with a qualified geochemist or
    electrolyte-thermodynamics expert before public promotion.
-

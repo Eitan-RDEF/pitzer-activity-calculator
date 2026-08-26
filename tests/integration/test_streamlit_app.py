@@ -52,3 +52,22 @@ def test_reset_clears_composition_and_restores_physical_defaults() -> None:
     ]
     assert component_values and all(value == 0.0 for value in component_values)
     assert not app.metric
+
+
+def test_conditional_component_limitations_and_active_warnings_are_visible() -> None:
+    app = AppTest.from_file(Path(__file__).parents[2] / "streamlit_app.py")
+    app.run(timeout=20)
+
+    assert app.number_input(key="component_MOL_PER_KGW_Ba")
+    assert any(
+        "Sulfate and carbonate coverage is weak" in item.value for item in app.caption
+    )
+
+    app.number_input(key="component_MOL_PER_KGW_Ba").set_value(0.001)
+    app.number_input(key="component_MOL_PER_KGW_SO4").set_value(0.01)
+    app.button[0].click().run(timeout=20)
+
+    assert not app.exception
+    rendered_warnings = "\n".join(item.value for item in app.warning)
+    assert "Ba²⁺ has conditional database coverage" in rendered_warnings
+    assert "does not equilibrate solids" in rendered_warnings

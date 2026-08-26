@@ -10,7 +10,12 @@ from pitzer_calculator.domain.models import (
     SolutionInput,
     convert_composition_to_molal,
 )
-from pitzer_calculator.domain.species import COMPONENTS
+from pitzer_calculator.domain.species import (
+    COMPONENTS,
+    CONDITIONAL_COMPONENTS,
+    CORE_COMPONENTS,
+    ComponentDefinition,
+)
 from pitzer_calculator.engine.exports import (
     calculation_bundle,
     calculation_report,
@@ -36,28 +41,57 @@ def _reset_solution_form() -> None:
             st.session_state[f"component_{unit.name}_{component.key}"] = 0.0
 
 
+def _component_grid(
+    components: tuple[ComponentDefinition, ...], unit: ConcentrationUnit
+) -> dict[str, float]:
+    values: dict[str, float] = {}
+    for row_start in range(0, len(components), 3):
+        columns = st.columns(3)
+        for column, component in zip(
+            columns, components[row_start : row_start + 3], strict=False
+        ):
+            with column:
+                default = component.default_molal / unit.to_molal_factor
+                widget_key = f"component_{unit.name}_{component.key}"
+                default_arguments = (
+                    {"value": default} if widget_key not in st.session_state else {}
+                )
+                values[component.key] = st.number_input(
+                    f"{component.label} [{unit.display_label}]",
+                    min_value=0.0,
+                    format="%.8g",
+                    key=widget_key,
+                    **default_arguments,
+                )
+                if component.included_forms:
+                    st.caption(f"Includes: {', '.join(component.included_forms)}")
+                if component.limitation:
+                    st.caption(f"Conditional: {component.limitation}")
+    return values
+
+
 def _composition_inputs(unit: ConcentrationUnit) -> dict[str, float]:
     values: dict[str, float] = {}
     for group in ("Cations", "Anions and totals"):
         with st.expander(group, expanded=True):
-            columns = st.columns(3)
-            group_components = [item for item in COMPONENTS if item.group == group]
-            for index, component in enumerate(group_components):
-                with columns[index % len(columns)]:
-                    default = component.default_molal / unit.to_molal_factor
-                    widget_key = f"component_{unit.name}_{component.key}"
-                    default_arguments = (
-                        {"value": default} if widget_key not in st.session_state else {}
-                    )
-                    values[component.key] = st.number_input(
-                        f"{component.label} [{unit.display_label}]",
-                        min_value=0.0,
-                        format="%.8g",
-                        key=widget_key,
-                        **default_arguments,
-                    )
-                    if component.included_forms:
-                        st.caption(f"Includes: {', '.join(component.included_forms)}")
+            group_components = tuple(item for item in CORE_COMPONENTS if item.group == group)
+            values.update(_component_grid(group_components, unit))
+
+    with st.expander("Extended components — conditional database coverage"):
+        st.caption(
+            "These components are calculated by the bundled database, but their interaction "
+            "coverage is less complete. Active limitations are repeated with the results."
+        )
+        for group in ("Cations", "Anions and totals"):
+            st.markdown(f"**{group}**")
+            group_components = tuple(
+                item for item in CONDITIONAL_COMPONENTS if item.group == group
+            )
+            values.update(_component_grid(group_components, unit))
+        st.info(
+            "Fe(III) and Al are unavailable because this database does not define safe "
+            "analytical inputs for them."
+        )
     return values
 
 
@@ -197,7 +231,7 @@ def _render_results(solution: SolutionInput, result: Any, warnings: tuple[str, .
             - **Individual-ion convention:** MacInnes scaling
             - **Boundary:** known pH, closed aqueous system
             - **Pressure:** fixed at 1 atm
-            - **Redox:** disabled; no redox-sensitive components are exposed
+            - **Redox:** disabled; Fe and Mn inputs remain fixed as Fe(II) and Mn(II)
             - **Solids and gases:** no phase equilibration or precipitation
             """
         )
@@ -261,7 +295,7 @@ def render_app() -> None:
                 - Known-pH, closed aqueous system
                 - Fixed pressure: 1 atm
                 - MacInnes convention for individual ions
-                - No gas, mineral, or redox equilibrium
+                - No gas, mineral, or redox equilibrium; Fe/Mn remain fixed as +II
                 """
             )
         with st.expander("Learn more"):

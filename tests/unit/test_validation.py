@@ -61,12 +61,56 @@ def test_warns_for_conditional_carbonate_divalent_system() -> None:
     assert "incomplete explicit binary Pitzer coverage" in report.warnings[0]
 
 
-def test_conditional_iron_is_not_exposed_in_core_workflow() -> None:
-    with pytest.raises(InputValidationError, match="Fe2"):
-        validate_solution(
-            SolutionInput(
-                ph=7.0,
-                temperature_c=25.0,
-                components_molal={"Fe2": 0.001, "Cl": 0.002},
-            )
+@pytest.mark.parametrize(
+    ("component", "expected"),
+    [
+        ("Br", "fewer multicomponent"),
+        ("Li", "carbonate, bicarbonate, and bisulfate"),
+        ("Sr", "Carbonate, hydroxide, and bisulfate"),
+        ("Ba", "mineral precipitation is not modeled"),
+        ("B", "interaction coverage is uneven"),
+        ("Si", "Neutral silica is better supported"),
+        ("Fe2", "Fixed Fe(II) only"),
+        ("Mn2", "Fixed Mn(II) only"),
+    ],
+)
+def test_warns_when_a_conditional_component_is_active(
+    component: str, expected: str
+) -> None:
+    report = validate_solution(
+        SolutionInput(
+            ph=7.0,
+            temperature_c=25.0,
+            components_molal={component: 0.001},
         )
+    )
+
+    assert any(expected in warning for warning in report.warnings)
+
+
+def test_warns_for_known_conditional_mixture_gaps() -> None:
+    report = validate_solution(
+        SolutionInput(
+            ph=10.0,
+            temperature_c=25.0,
+            components_molal={
+                "Na": 0.1,
+                "Cl": 0.1,
+                "Br": 0.01,
+                "Li": 0.01,
+                "Sr": 0.001,
+                "Ba": 0.001,
+                "SO4": 0.01,
+                "C4": 0.01,
+                "Si": 0.001,
+            },
+        )
+    )
+
+    combined = "\n".join(report.warnings)
+    assert "multicomponent bromide mixture" in combined
+    assert "Li is combined with C(IV) or S(VI)" in combined
+    assert "Sr with C(IV)" in combined
+    assert "Sr at pH 9 or above" in combined
+    assert "Ba with sulfate or carbonate" in combined
+    assert "deprotonated silicate species" in combined

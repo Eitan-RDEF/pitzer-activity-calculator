@@ -6,9 +6,9 @@
 
 ## Scope
 
-This is the first end-to-end calculation contract. It intentionally implements one narrow,
-useful workflow before calculated-pH, CO₂-equilibrium, charge-correction, and conditional
-component modes are added.
+This is the first end-to-end calculation contract. It implements a focused known-pH
+workflow with a default major-ion core and a clearly separated conditional-component mode.
+Calculated-pH, CO₂-equilibrium, and charge-correction modes remain future work.
 
 The workflow is:
 
@@ -17,7 +17,9 @@ The workflow is:
 - fixed pressure of 1 atm;
 - 0–100 °C;
 - analytical totals in `mol/kg H₂O` or `mmol/kg H₂O`;
-- core inputs Na, K, Mg, Ca, Cl, total S(VI), and total inorganic C(IV);
+- default inputs Na, K, Mg, Ca, Cl, total S(VI), and total inorganic C(IV);
+- conditional inputs Br, Li, Sr, Ba, B, Si, fixed Fe(II), and fixed Mn(II), with static and
+  mixture-aware database-coverage warnings;
 - Pitzer model with MacInnes scaling and electrostatic mixing terms enabled;
 - redox disabled;
 - no minerals, precipitation, exchange, surfaces, or solid solutions.
@@ -33,7 +35,7 @@ PHREEQC always receives `mol/kgw` and exactly 1 kg of water.
 - ionic strength and calculated alkalinity;
 - water mass, water activity, and osmotic coefficient;
 - signed charge balance and percent charge-balance error;
-- every active aqueous solute species possible from the exposed core inputs;
+- every active aqueous solute species possible from the exposed inputs;
 - molality, activity, activity coefficient, and base-10 logarithms for each species;
 - available curated mean activity coefficients;
 - PHREEQC engine version, database SHA-256, and exact PHREEQC input.
@@ -60,7 +62,8 @@ The initial curated set is:
 - KCl;
 - CaCl₂;
 - MgCl₂;
-- Na₂SO₄.
+- Na₂SO₄;
+- HBr.
 
 A mean coefficient is displayed only when both constituent equilibrium ions have active
 molality. Values are calculated with PHREEQC's `MEANG` function and the stoichiometry in the
@@ -98,4 +101,3 @@ and confirms that the complete result interface renders without exceptions.
 These regression cases detect software changes; they are not independent thermodynamic
 validation. The next scientific step is the reference-case program described in
 `docs/validation-plan.md`.
-

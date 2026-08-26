@@ -54,6 +54,18 @@ def calculation_report(
     """Return a concise human-readable Markdown calculation record."""
 
     warning_list = tuple(warnings)
+    fixed_redox_components = [
+        COMPONENT_BY_KEY[key].label
+        for key in ("Fe2", "Mn2")
+        if solution.components_molal.get(key, 0.0) > 0
+    ]
+    if fixed_redox_components:
+        redox_statement = (
+            "- Redox calculation: disabled; "
+            f"{', '.join(fixed_redox_components)} remain fixed in the +II oxidation state"
+        )
+    else:
+        redox_statement = "- Redox calculation: disabled; no redox-sensitive inputs are active"
     lines = [
         "# Pitzer Activity Calculation Report",
         "",
@@ -137,7 +149,7 @@ def calculation_report(
             "- Activity model: Pitzer",
             "- Individual-ion convention: MacInnes scaling",
             "- Electrostatic mixing terms: enabled",
-            "- Redox calculation: disabled; this workflow exposes no redox-sensitive inputs",
+            redox_statement,
             "- Mineral precipitation/equilibration: not modeled",
             f"- PHREEQC engine: {result.engine_version}",
             f"- Database SHA-256: `{result.database_sha256}`",
