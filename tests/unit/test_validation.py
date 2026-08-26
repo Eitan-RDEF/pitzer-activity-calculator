@@ -26,26 +26,47 @@ def test_rejects_unknown_component() -> None:
         )
 
 
-def test_warns_outside_initial_validation_envelope() -> None:
-    report = validate_solution(SolutionInput(ph=15.0, temperature_c=120.0))
+def test_warns_for_extended_but_supported_ph_range() -> None:
+    report = validate_solution(SolutionInput(ph=15.0, temperature_c=25.0))
 
-    assert len(report.warnings) == 2
+    assert len(report.warnings) == 1
+    assert "conventional 0–14 range" in report.warnings[0]
 
 
-def test_warns_for_conditional_database_coverage() -> None:
+def test_rejects_outside_temperature_range() -> None:
+    with pytest.raises(InputValidationError, match="0–100 °C"):
+        validate_solution(SolutionInput(ph=7.0, temperature_c=120.0))
+
+
+def test_rejects_outside_ph_range() -> None:
+    with pytest.raises(InputValidationError, match="−2 to 16"):
+        validate_solution(SolutionInput(ph=17.0, temperature_c=25.0))
+
+
+def test_rejects_variable_pressure() -> None:
+    with pytest.raises(InputValidationError, match="fixed version 1 pressure"):
+        validate_solution(SolutionInput(ph=7.0, temperature_c=25.0, pressure_atm=2.0))
+
+
+def test_warns_for_conditional_carbonate_divalent_system() -> None:
     report = validate_solution(
-        SolutionInput(ph=7.0, temperature_c=25.0, components_molal={"Li": 0.1, "Br": 0.1})
+        SolutionInput(
+            ph=8.0,
+            temperature_c=25.0,
+            components_molal={"Ca": 0.01, "C4": 0.01},
+        )
     )
 
     assert len(report.warnings) == 1
-    assert "Conditional database coverage for Li, Br" in report.warnings[0]
+    assert "incomplete explicit binary Pitzer coverage" in report.warnings[0]
 
 
-def test_states_fixed_iron_redox_assumption() -> None:
-    report = validate_solution(
-        SolutionInput(ph=7.0, temperature_c=25.0, components_molal={"Fe2": 0.001, "Cl": 0.002})
-    )
-
-    assert len(report.warnings) == 2
-    assert "fixed Fe(II) total" in report.warnings[1]
-    assert "no redox couples" in report.warnings[1]
+def test_conditional_iron_is_not_exposed_in_core_workflow() -> None:
+    with pytest.raises(InputValidationError, match="Fe2"):
+        validate_solution(
+            SolutionInput(
+                ph=7.0,
+                temperature_c=25.0,
+                components_molal={"Fe2": 0.001, "Cl": 0.002},
+            )
+        )

@@ -23,8 +23,12 @@ def validate_solution(solution: SolutionInput) -> ValidationReport:
         raise InputValidationError("pH must be a finite number.")
     if not math.isfinite(solution.temperature_c):
         raise InputValidationError("Temperature must be a finite number.")
-    if solution.temperature_c <= -273.15:
-        raise InputValidationError("Temperature must be above absolute zero.")
+    if not 0 <= solution.temperature_c <= 100:
+        raise InputValidationError("Temperature must be within the version 1 range of 0–100 °C.")
+    if not math.isfinite(solution.pressure_atm) or solution.pressure_atm != 1.0:
+        raise InputValidationError("This workflow requires the fixed version 1 pressure of 1 atm.")
+    if not -2 <= solution.ph <= 16:
+        raise InputValidationError("pH must be within the version 1 range of −2 to 16.")
 
     unknown = sorted(set(solution.components_molal) - set(COMPONENT_BY_KEY))
     if unknown:
@@ -37,35 +41,16 @@ def validate_solution(solution: SolutionInput) -> ValidationReport:
             raise InputValidationError(f"{key} concentration cannot be negative.")
 
     warnings: list[str] = []
-    if not 0 <= solution.temperature_c <= 100:
-        warnings.append(
-            "The selected temperature is outside the initial 0–100 °C validation range."
-        )
     if not 0 <= solution.ph <= 14:
         warnings.append("The selected pH is outside the conventional 0–14 range.")
 
-    conditional = {
-        "Li": "Li",
-        "Sr": "Sr",
-        "Ba": "Ba",
-        "Fe2": "Fe(II)",
-        "Br": "Br",
-    }
-    present_conditional = [
-        label
-        for key, label in conditional.items()
-        if solution.components_molal.get(key, 0.0) > 0
-    ]
-    if present_conditional:
+    if solution.components_molal.get("C4", 0.0) > 0 and (
+        solution.components_molal.get("Ca", 0.0) > 0
+        or solution.components_molal.get("Mg", 0.0) > 0
+    ):
         warnings.append(
-            "Conditional database coverage for "
-            f"{', '.join(present_conditional)}: some mixtures lack explicit Pitzer "
-            "interaction parameters. Treat this early result as unvalidated."
-        )
-    if solution.components_molal.get("Fe2", 0.0) > 0:
-        warnings.append(
-            "Redox assumption: iron is fixed Fe(II) total. This Pitzer database contains "
-            "no redox couples and does not calculate Fe(II)/Fe(III) conversion."
+            "Carbonate with Ca or Mg has incomplete explicit binary Pitzer coverage in the "
+            "bundled database. Treat this result as conditional and independently validate it."
         )
 
     return ValidationReport(tuple(warnings))

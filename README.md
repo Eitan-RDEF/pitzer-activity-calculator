@@ -3,8 +3,9 @@
 A free, transparent Streamlit calculator for aqueous-solution activities at high ionic
 strength, powered by PHREEQC and its Pitzer database.
 
-> **Project status:** early foundation. The repository currently contains a tested vertical
-> slice for H⁺ activity. It is not yet validated or released for production engineering use.
+> **Project status:** functional beta foundation. The repository contains a complete,
+> tested known-pH workflow for audited core major ions. It is not yet independently validated
+> or released for production engineering use.
 
 ## Why this project exists
 
@@ -70,14 +71,16 @@ See [Architecture](docs/architecture.md) for code boundaries and
 [Version 1 product definition](docs/version-1-product-definition.md) for the approved
 scientific and product behavior. The reproducible
 [Pitzer database audit](docs/pitzer-database-audit.md) records provenance, parameter
-coverage, redox constraints, and the initial support matrix.
+coverage, redox constraints, and the initial support matrix. The implemented
+[core calculation workflow](docs/core-calculation-workflow.md) defines the current input,
+result, warning, and export contract.
 
 ## Scientific scope
 
-The initial calculator uses molality (`mol/kg H₂O`) and the bundled `pitzer.dat` database.
-Individual-ion activity coefficients, including γ(H⁺), depend on an extrathermodynamic
-convention; PHREEQC applies the MacInnes convention by default for its Pitzer calculations.
-The public app must retain this disclosure near relevant results.
+The current calculator accepts `mol/kg H₂O` and `mmol/kg H₂O`, converts internally to
+molality, and uses the bundled `pitzer.dat` database. Individual-ion activity coefficients
+depend on an extrathermodynamic convention; the generated PHREEQC input explicitly enables
+MacInnes scaling, and the app discloses that convention near the results.
 
 Do not use the current early version as the sole basis for safety-critical, regulatory, or
 commercial engineering decisions. The release criteria are tracked in

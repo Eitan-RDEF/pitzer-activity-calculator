@@ -1,15 +1,36 @@
 """Build deterministic PHREEQC input from validated domain objects."""
 
 from pitzer_calculator.domain.models import SolutionInput
-from pitzer_calculator.domain.species import COMPONENT_BY_KEY, COMPONENTS
+from pitzer_calculator.domain.species import (
+    AQUEOUS_SPECIES,
+    COMPONENT_BY_KEY,
+    COMPONENTS,
+    MEAN_ELECTROLYTES,
+)
+
+
+def species_column(index: int, quantity: str) -> str:
+    """Return a stable selected-output heading for one species quantity."""
+
+    return f"sp_{index:02d}_{quantity}"
+
+
+def mean_gamma_column(key: str) -> str:
+    return f"mean_{key.lower()}"
 
 
 def build_phreeqc_input(solution: SolutionInput) -> str:
-    """Return a PHREEQC input deck for the initial H+ activity calculation."""
+    """Return the complete known-pH, closed-system PHREEQC input deck."""
 
     lines = [
-        "SOLUTION 1",
+        "PITZER",
+        "    -macinnes true",
+        "    -use_etheta true",
+        "    -redox false",
+        "",
+        "SOLUTION 1 Known-pH closed system",
         f"    temp {solution.temperature_c:.12g}",
+        f"    pressure {solution.pressure_atm:.12g}",
         f"    pH {solution.ph:.12g}",
         "    units mol/kgw",
         "    -water 1.0",
@@ -20,29 +41,47 @@ def build_phreeqc_input(solution: SolutionInput) -> str:
         if value:
             lines.append(f"    {component.phreeqc_name} {value:.12g}")
 
-    # Keep output headings stable: the engine adapter treats them as an API contract.
     lines.extend(
         [
             "",
-            "SELECTED_OUTPUT",
+            "SELECTED_OUTPUT 1",
             "    -reset false",
             "    -solution true",
             "    -pH true",
+            "    -temperature true",
+            "    -alkalinity true",
             "    -ionic_strength true",
+            "    -water true",
+            "    -charge_balance true",
             "    -percent_error true",
             "",
-            "USER_PUNCH",
-            "    -headings loga_H logm_H loggamma_H gamma_H mol_H act_H",
-            '    10 PUNCH LA("H+")',
-            '    20 PUNCH LM("H+")',
-            '    30 PUNCH LA("H+") - LM("H+")',
-            '    40 PUNCH 10^(LA("H+") - LM("H+"))',
-            '    50 PUNCH MOL("H+")',
-            '    60 PUNCH 10^LA("H+")',
-            "",
-            "END",
+            "USER_PUNCH 1",
         ]
     )
+
+    headings = ["water_activity", "osmotic_coefficient", "pressure_atm"]
+    for index, _species in enumerate(AQUEOUS_SPECIES):
+        headings.extend(
+            species_column(index, quantity)
+            for quantity in ("m", "a", "gamma", "lm", "la", "lg")
+        )
+    headings.extend(mean_gamma_column(item.key) for item in MEAN_ELECTROLYTES)
+    lines.append(f"    -headings {' '.join(headings)}")
+
+    line_number = 10
+    lines.append(f'    {line_number} PUNCH ACT("H2O"), OSMOTIC, PRESSURE')
+    for species in AQUEOUS_SPECIES:
+        line_number += 10
+        name = species.name
+        lines.append(
+            f'    {line_number} PUNCH MOL("{name}"), ACT("{name}"), '
+            f'GAMMA("{name}"), LM("{name}"), LA("{name}"), LG("{name}")'
+        )
+    for electrolyte in MEAN_ELECTROLYTES:
+        line_number += 10
+        lines.append(f'    {line_number} PUNCH MEANG("{electrolyte.key}")')
+
+    lines.extend(["", "END"])
     return "\n".join(lines) + "\n"
 
 

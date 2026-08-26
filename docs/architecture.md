@@ -38,7 +38,8 @@ are the internal contract shared by all interfaces.
 
 Validates inputs, creates deterministic PHREEQC input, invokes the native binding, and
 parses a deliberately stable set of output headings. Third-party failures are translated
-into application-level `CalculationError` messages.
+into application-level `CalculationError` messages. The export module converts domain
+results into CSV, Markdown, and ZIP artifacts without depending on Streamlit.
 
 ### UI
 
@@ -55,13 +56,11 @@ requires provenance, checksum, release notes, and regression validation.
 Add modules when real behavior requires them, not in anticipation of every possible feature.
 Likely next boundaries are:
 
-- tabular result and CSV/XLSX export services;
 - solution presets with citations and versioning;
-- all-species activity and saturation-index output parsing;
-- comparison modes for Davies and Pitzer;
-- cached, immutable calculation requests;
+- calculated-pH and explicit CO₂-boundary strategies;
+- condition-aware database-coverage warnings;
+- optional, explicit charge-correction strategies;
 - structured observability without storing user compositions.
 
 The initial app intentionally has no account system, persistent database, background worker,
 or custom backend API.
-

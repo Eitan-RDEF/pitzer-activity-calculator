@@ -7,6 +7,11 @@ IPHREEQC through the `phreeqc` Python binding. Inputs are analytical totals expr
 molality (`mol/kg H₂O`) and are evaluated with the versioned database in
 `data/databases/pitzer.dat`.
 
+The implemented core workflow fixes pressure at 1 atm, uses a closed aqueous boundary,
+and explicitly sets Pitzer `-macinnes true`, `-use_etheta true`, and `-redox false` in every
+generated input. No phase-equilibrium keyword is included, so minerals do not precipitate
+or equilibrate with the solution.
+
 ## Individual-ion coefficients
 
 Individual-ion activity coefficients are not independently measurable and require an
@@ -15,8 +20,9 @@ The UI and exports must disclose the convention whenever individual-ion coeffici
 reported.
 
 Mean electrolyte activity coefficients are generally more suitable for comparison with
-experimental measurements. They should be added only with explicit, tested stoichiometric
-definitions.
+experimental measurements. The current curated definitions are NaCl, KCl, CaCl₂, MgCl₂,
+and Na₂SO₄; their extraction is regression tested, while independent comparison with
+published data remains required.
 
 ## Input interpretation
 
