@@ -25,6 +25,7 @@ dependencies = [
 ]
 
 [project.urls]
+Homepage = "https://pitzer-calculator.streamlit.app"
 Repository = "https://github.com/Eitan-RDEF/pitzer-activity-calculator"
 Issues = "https://github.com/Eitan-RDEF/pitzer-activity-calculator/issues"
 Documentation = "https://github.com/Eitan-RDEF/pitzer-activity-calculator/tree/main/docs"

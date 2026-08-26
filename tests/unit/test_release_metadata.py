@@ -13,6 +13,9 @@ def test_release_version_is_consistent() -> None:
     assert metadata["project"]["version"] == "1.0.0"
     assert __version__ == metadata["project"]["version"]
     assert metadata["project"]["license"] == "MIT"
+    assert metadata["project"]["urls"]["Homepage"] == (
+        "https://pitzer-calculator.streamlit.app"
+    )
     assert not any(
         classifier.startswith("License ::")
         for classifier in metadata["project"]["classifiers"]

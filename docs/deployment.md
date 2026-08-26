@@ -8,7 +8,8 @@ through `requirements.txt`.
 
 - Release: `1.0.0`
 - Git tag: `v1.0.0`
-- Public URL: to be recorded immediately after the first deployment
+- Public URL: [https://pitzer-calculator.streamlit.app](https://pitzer-calculator.streamlit.app)
+- First successful cloud smoke test: 27 August 2026
 
 ## Reference environment
 

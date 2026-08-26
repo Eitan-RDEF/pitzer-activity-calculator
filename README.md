@@ -3,6 +3,8 @@
 A free, transparent Streamlit calculator for aqueous-solution activities at high ionic
 strength, powered by PHREEQC and its Pitzer database.
 
+[![Open the Streamlit app](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://pitzer-calculator.streamlit.app)
+
 > **Project status:** Version 1.0.0. The repository contains a complete, tested known-pH
 > workflow for audited core and conditional components. Selected mean activity coefficients
 > and osmotic-coefficient systems have been compared with published USGS and NIST references.
@@ -102,8 +104,8 @@ The root `streamlit_app.py` and `requirements.txt` follow Streamlit Community Cl
 repository layout. Deployment steps and the release checklist are documented in
 [Deployment](docs/deployment.md).
 
-The public application URL will be recorded here and in the deployment document immediately
-after the first Streamlit Community Cloud deployment.
+Open the public calculator at
+[pitzer-calculator.streamlit.app](https://pitzer-calculator.streamlit.app).
 
 ## License, privacy, and contact
 
