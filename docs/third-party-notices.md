@@ -10,9 +10,10 @@ terms, notices, and attribution.
 ## PHREEQC / IPHREEQC and `pitzer.dat`
 
 PHREEQC and IPHREEQC are developed by the U.S. Geological Survey (USGS). The pinned
-`phreeqc==1.1.1` binding reports engine build `3.8.6-17100-x64`. The USGS identifies PHREEQC
-source and usage as public domain. The official project and distribution are available from
-the [USGS PHREEQC page](https://www.usgs.gov/software/phreeqc-version-3).
+`phreeqc==1.1.1` binding reports engine build `3.8.6-17100`; its Windows version string adds
+the platform suffix `-x64`. The USGS identifies PHREEQC source and usage as public domain.
+The official project and distribution are available from the
+[USGS PHREEQC page](https://www.usgs.gov/software/phreeqc-version-3).
 
 The bundled `data/databases/pitzer.dat` is an unmodified copy from the official USGS database
 repository at commit `3ff9be2f12bf44c94b95731c7d8b1ca4a847718c`, verified 26 August

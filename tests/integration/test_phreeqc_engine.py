@@ -24,7 +24,7 @@ def test_calculates_balanced_nacl_solution() -> None:
     assert result.h_activity_coefficient > 0
     assert {item.name for item in result.species} == {"H+", "OH-", "Na+", "Cl-"}
     assert [item.key for item in result.mean_activity_coefficients] == ["NaCl"]
-    assert result.engine_version == "3.8.6-17100-x64"
+    assert result.engine_version in {"3.8.6-17100", "3.8.6-17100-x64"}
     assert result.pressure_atm == pytest.approx(1.0)
 
 
