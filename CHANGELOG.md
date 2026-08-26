@@ -22,7 +22,7 @@ intends to use semantic versioning once public releases begin.
 
 ### Changed
 
-- Restricted the functional beta to the audited core components while conditional ions await
+- Restricted the Version 1 workflow to audited core components while conditional ions await
   targeted validation and warning rules.
 - Made 1 atm pressure and the Pitzer, MacInnes, electrostatic-mixing, and no-redox assumptions
   explicit in generated PHREEQC input.

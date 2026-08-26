@@ -3,9 +3,11 @@
 A free, transparent Streamlit calculator for aqueous-solution activities at high ionic
 strength, powered by PHREEQC and its Pitzer database.
 
-> **Project status:** functional beta foundation. The repository contains a complete,
-> tested known-pH workflow for audited core major ions. It is not yet independently validated
-> or released for production engineering use.
+> **Project status:** functional Version 1 foundation. The repository contains a complete,
+> tested known-pH workflow for audited core major ions. Selected mean activity coefficients
+> and one osmotic-coefficient system have been independently compared with published NIST
+> ThermoML references; the full operating range is not validated, and the app is not yet
+> released for production engineering use.
 
 ## Why this project exists
 
@@ -82,9 +84,11 @@ molality, and uses the bundled `pitzer.dat` database. Individual-ion activity co
 depend on an extrathermodynamic convention; the generated PHREEQC input explicitly enables
 MacInnes scaling, and the app discloses that convention near the results.
 
-Do not use the current early version as the sole basis for safety-critical, regulatory, or
-commercial engineering decisions. The release criteria are tracked in
-[Validation plan](docs/validation-plan.md).
+Selected outputs have been compared with published USGS and NIST reference data. Validation
+does not cover every composition, output, or operating condition. Independently verify
+results used for critical engineering decisions. See the current
+[validation evidence and scope](docs/validation-status.md) and
+[supported components](docs/supported-components.md).
 
 ## Deployment
 

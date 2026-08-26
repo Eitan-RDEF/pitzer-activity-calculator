@@ -160,8 +160,11 @@ Version 1 includes solute speciation and activity results together with:
 - osmotic coefficient.
 
 These water properties are release requirements only if their definitions and extraction
-from PHREEQC are independently validated. If validation fails, the app must omit them rather
-than approximate them without a reviewed scientific basis.
+from PHREEQC are independently validated. The osmotic-coefficient extraction now has a
+first independent comparison for two binary Na2SO4 inputs at 25 degrees C; water activity
+still lacks an independent experimental comparison, and the broader range remains
+unvalidated. If validation fails, the app must omit the affected output rather than
+approximate it without a reviewed scientific basis.
 
 ### 10. Mean electrolyte activity coefficients
 
@@ -387,7 +390,7 @@ The following are explicitly outside this release:
 7. Build reference cases across the approved temperature, pH, and composition envelope.
 8. Run native PHREEQC integration tests in the deployment Linux environment.
 9. Complete public methodology, privacy, licensing, attribution, and limitation wording.
-10. Conduct a small expert beta before promoting the calculator for engineering use.
+10. Conduct a small expert review before broader promotion for engineering use.
 
 ## Change control
 

@@ -1,6 +1,7 @@
 # Validation plan
 
-The app is not ready for public engineering use until the following evidence exists.
+This roadmap tracks evidence beyond the current Version 1 validation scope. Completed
+comparisons are summarized in [validation evidence and scope](validation-status.md).
 
 ## 1. Software correctness
 
@@ -47,4 +48,4 @@ part of the public reference library and must not produce user-facing pass/fail 
 ## 5. Release gate
 
 The first public release requires all critical tests to pass in CI, a completed third-party
-notice, an application license, privacy wording, and a visible beta/limitations statement.
+notice, an application license, privacy wording, and a visible validation-scope statement.

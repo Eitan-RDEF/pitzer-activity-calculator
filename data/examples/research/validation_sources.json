@@ -72,6 +72,66 @@
       "app_compatibility": "to_be_assessed_per_record",
       "app_compatibility_note": "Each candidate record needs component, basis, temperature, pressure, property-definition, and rights checks.",
       "release_eligible": false
+    },
+    {
+      "id": "nist-thermoml-partanen-2016-nacl-kcl",
+      "citation": "Partanen, J. I. (2016), Mean Activity Coefficients and Osmotic Coefficients in Dilute Aqueous Sodium or Potassium Chloride Solutions at Temperatures from (0 to 70) degrees C, Journal of Chemical & Engineering Data, 61(1), 286-306.",
+      "url": "https://trc.nist.gov/ThermoML/10.1021/acs.jced.5b00544.html",
+      "document_url": "https://trc.nist.gov/ThermoML/10.1021/acs.jced.5b00544.json",
+      "publisher": "NIST Thermodynamics Research Center",
+      "source_type": "evaluated_reference_data",
+      "reuse_status": "nist_open_data_with_attribution",
+      "reuse_evidence_url": "https://www.nist.gov/open/license",
+      "reuse_note": "The ThermoML Archive dataset metadata identifies the NIST open-data license. The archived JSON is retained unchanged, and the app must acknowledge NIST/TRC and cite the originating publication.",
+      "scientific_role": "Independent evaluated reference values derived from experimental literature.",
+      "app_compatibility": "compatible_with_declared_mapping",
+      "app_compatibility_note": "The source is a binary salt-water system at 101 kPa with no prescribed pH. Released cases use the exact molality and temperature, map pressure to the app's fixed 1 atm, and explicitly identify pH 7.0 as an app convention.",
+      "release_eligible": true
+    },
+    {
+      "id": "nist-thermoml-partanen-2012-cacl2",
+      "citation": "Partanen, J. I. (2012), Traceable Mean Activity Coefficients and Osmotic Coefficients in Aqueous Calcium Chloride Solutions at 25 degrees C up to a Molality of 3.0 mol/kg, Journal of Chemical & Engineering Data, 57(11), 3247-3257.",
+      "url": "https://trc.nist.gov/ThermoML/10.1021/je300852v.html",
+      "document_url": "https://trc.nist.gov/ThermoML/10.1021/je300852v.json",
+      "publisher": "NIST Thermodynamics Research Center",
+      "source_type": "evaluated_reference_data",
+      "reuse_status": "nist_open_data_with_attribution",
+      "reuse_evidence_url": "https://www.nist.gov/open/license",
+      "reuse_note": "The ThermoML Archive dataset metadata identifies the NIST open-data license. The archived JSON is retained unchanged, and the app must acknowledge NIST/TRC and cite the originating publication.",
+      "scientific_role": "Independent traceable evaluated reference values derived from experimental literature.",
+      "app_compatibility": "compatible_with_declared_mapping",
+      "app_compatibility_note": "The source is a binary CaCl2-water system at 298.15 K and 101 kPa with no prescribed pH. Released cases map CaCl2 molality to Ca=m and Cl=2m and identify pH 7.0 and 1 atm as app conventions.",
+      "release_eligible": true
+    },
+    {
+      "id": "nist-thermoml-rouhi-bagherinia-2015-mgcl2",
+      "citation": "Rouhi, A., and Bagherinia, M. A. (2015), Mean activity coefficient measurement and thermodynamic modelling of the ternary mixed electrolyte (MgCl2 + glucose + water) system at T = 298.15 K, Journal of Chemical Thermodynamics, 91, 286-291.",
+      "url": "https://trc.nist.gov/ThermoML/10.1016/j.jct.2015.07.049.html",
+      "document_url": "https://trc.nist.gov/ThermoML/10.1016/j.jct.2015.07.049.json",
+      "publisher": "NIST Thermodynamics Research Center",
+      "source_type": "experimental_reference_data",
+      "reuse_status": "nist_open_data_with_attribution",
+      "reuse_evidence_url": "https://www.nist.gov/open/license",
+      "reuse_note": "The ThermoML Archive dataset metadata identifies the NIST open-data license. The archived JSON is retained unchanged, and the app must acknowledge NIST/TRC and cite the originating publication.",
+      "scientific_role": "Independent mean activity coefficients calculated from EMF measurements.",
+      "app_compatibility": "compatible_pure_water_subset_with_declared_mapping",
+      "app_compatibility_note": "Only ThermoML pure-or-mixture dataset 2 is released. It is the binary MgCl2-water subset at 298.15 K and 101.325 kPa; no glucose is mapped. MgCl2 molality maps to Mg=m and Cl=2m, with pH 7.0 explicitly identified as an app convention.",
+      "release_eligible": true
+    },
+    {
+      "id": "nist-thermoml-held-2014-na2so4",
+      "citation": "Held, C., Reschke, T., Muller, R., Kunz, W., and Sadowski, G. (2014), Measuring and modeling aqueous electrolyte/amino-acid solutions with ePC-SAFT, Journal of Chemical Thermodynamics, 68, 1-12.",
+      "url": "https://trc.nist.gov/ThermoML/10.1016/j.jct.2013.08.018.html",
+      "document_url": "https://trc.nist.gov/ThermoML/10.1016/j.jct.2013.08.018.json",
+      "publisher": "NIST Thermodynamics Research Center",
+      "source_type": "experimental_reference_data",
+      "reuse_status": "nist_open_data_with_attribution",
+      "reuse_evidence_url": "https://www.nist.gov/open/license",
+      "reuse_note": "The official ThermoML JSON is retained unchanged. The app must acknowledge NIST/TRC and cite the originating publication.",
+      "scientific_role": "Independent direct osmotic-coefficient measurements made by vapor-pressure osmometry.",
+      "app_compatibility": "compatible_binary_subset_with_declared_mapping",
+      "app_compatibility_note": "Only ThermoML pure-or-mixture dataset 81 is released. It is binary Na2SO4-water at 298.15 K and 101 kPa with two measurements at each of two molalities. Na2SO4 molality maps to Na=2m and SO4=m; pH 7.0 and 1 atm are explicit app conventions. Amino-acid datasets are excluded.",
+      "release_eligible": true
     }
   ]
 }

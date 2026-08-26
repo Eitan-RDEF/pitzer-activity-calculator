@@ -22,6 +22,15 @@ The bundled file is an unmodified copy of the official USGS database repository 
 [database audit](pitzer-database-audit.md). Before release, reproduce the applicable USGS
 notice and disclaimer and explain the engine/database version pairing.
 
+## NIST ThermoML reference data
+
+The repository archives selected official ThermoML JSON records used to transcribe
+published reference values. The records are attributed to the NIST Thermodynamics Research
+Center and linked to their originating journal publications. The source manifest and file
+hashes are recorded in `docs/references/validation/README.md`. Before public release, retain
+that attribution and reproduce the applicable
+[NIST open-data notice](https://www.nist.gov/open/license).
+
 ## Streamlit and other dependencies
 
 Generate a dependency inventory before release and preserve all notices required by direct

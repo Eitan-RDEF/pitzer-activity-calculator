@@ -22,6 +22,11 @@ def test_default_nacl_workflow_renders_complete_results() -> None:
         for item in app.markdown
     )
     assert any("Eitan Elfassy" in item.value for item in app.caption)
+    rendered_markdown = "\n".join(item.value for item in app.markdown)
+    assert "Version 1" in rendered_markdown
+    assert "docs/validation-status.md" in rendered_markdown
+    assert "docs/supported-components.md" in rendered_markdown
+    assert "Beta" not in rendered_markdown
     assert any("Includes: SO₄²⁻, HSO₄⁻" in item.value for item in app.caption)
     assert any(
         "Includes: CO₂(aq), HCO₃⁻, CO₃²⁻, MgCO₃(aq)" in item.value

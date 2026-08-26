@@ -69,7 +69,11 @@ def calculation_report(
     lines = [
         "# Pitzer Activity Calculation Report",
         "",
-        "> Beta calculation: use independent validation for engineering decisions.",
+        (
+            "> Selected outputs have been compared with published USGS and NIST reference "
+            "data. Validation does not cover every composition, output, or operating "
+            "condition. Independently verify results used for critical engineering decisions."
+        ),
         "",
         "## Inputs",
         "",

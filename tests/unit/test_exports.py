@@ -47,6 +47,8 @@ def test_report_records_assumptions_versions_and_warning() -> None:
     assert "MacInnes scaling" in report
     assert "PHREEQC engine: 3.8.6-test" in report
     assert "Example warning" in report
+    assert "Selected outputs have been compared with published USGS and NIST" in report
+    assert "Beta" not in report
 
 
 def test_report_repeats_fixed_redox_assumption_for_iron_and_manganese() -> None:

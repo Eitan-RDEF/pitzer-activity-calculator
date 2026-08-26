@@ -13,6 +13,14 @@ Current research records:
 - `research/validation_sources.json`: source provenance, reuse review, and compatibility;
 - `research/validation_library_seed.json`: normalized benchmark and candidate data points.
 
+Current production-shaped library:
+
+- `validation_library.json`: 30 source-cleared cases containing only prefilling inputs,
+  published outputs, source details, and assumptions: four USGS software benchmarks, a
+  16-case NIST ThermoML NaCl/KCl evaluated-reference grid, eight NIST ThermoML CaCl2 and
+  MgCl2 references, and two binary Na2SO4 inputs retaining four experimental osmotic-
+  coefficient observations. The Streamlit app does not load this file yet.
+
 See `docs/validation-data-collection.md` for the collection and release rules.
 
 The public library will not store calculated differences, comparison tolerances, pass/fail

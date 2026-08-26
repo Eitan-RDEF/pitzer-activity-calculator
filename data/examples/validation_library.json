@@ -1,0 +1,913 @@
+{
+  "schema_version": "1.0.0",
+  "library_version": "2026-08-26",
+  "title": "Published reference cases",
+  "cases": [
+    {
+      "id": "usgs_1988_tp3_nacl_caso4_25c",
+      "title": "Concentrated NaCl-CaSO4 solution at 25 degrees C",
+      "description": "Final aqueous state reported for the PHRQPITZ gypsum-anhydrite phase-boundary example.",
+      "evidence_type": "software_benchmark",
+      "source": {
+        "citation": "Plummer, L. N., Parkhurst, D. L., Fleming, G. W., and Dunkle, S. A. (1988), A computer program incorporating Pitzer's equations for calculation of geochemical reactions in brines, U.S. Geological Survey Water-Resources Investigations Report 88-4153.",
+        "url": "https://doi.org/10.3133/wri884153",
+        "local_document": "docs/references/validation/usgs-phrqpitz-1988.pdf",
+        "locator": "Test problem 3, table 11, printed pages 75-82 (PDF pages 81-88)"
+      },
+      "input": {
+        "temperature_c": 25.0,
+        "pressure_atm": 1.0,
+        "known_ph": 6.7203,
+        "composition_unit": "mol/kg_H2O",
+        "components": {
+          "Na": 5.573737,
+          "Cl": 5.573737,
+          "Ca": 0.04801542,
+          "SO4": 0.04801542
+        }
+      },
+      "published_outputs": {
+        "water_activity": 0.7773,
+        "osmotic_coefficient": 1.2436,
+        "ionic_strength_mol_per_kg_H2O": 5.7658,
+        "mean_activity_coefficients": {
+          "NaCl": 0.94228
+        }
+      },
+      "assumptions": [
+        "This is a published software benchmark, not an independent experimental measurement.",
+        "The library re-enters the published final aqueous composition; the app does not reproduce the mineral-equilibrium path.",
+        "The original report used an unscaled single-ion convention. Water activity, osmotic coefficient, ionic strength, and the neutral-salt mean coefficient are the retained published values."
+      ]
+    },
+    {
+      "id": "usgs_1988_tp4_halite_final_0c",
+      "title": "Halite-equilibrated NaCl final state at 0 degrees C",
+      "description": "Final aqueous state reported for the PHRQPITZ halite-water temperature example at 0 degrees C.",
+      "evidence_type": "software_benchmark",
+      "source": {
+        "citation": "Plummer, L. N., Parkhurst, D. L., Fleming, G. W., and Dunkle, S. A. (1988), A computer program incorporating Pitzer's equations for calculation of geochemical reactions in brines, U.S. Geological Survey Water-Resources Investigations Report 88-4153.",
+        "url": "https://doi.org/10.3133/wri884153",
+        "local_document": "docs/references/validation/usgs-phrqpitz-1988.pdf",
+        "locator": "Test problem 4, table 13, printed pages 83-89 (PDF pages 89-95)"
+      },
+      "input": {
+        "temperature_c": 0.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0322,
+        "composition_unit": "mol/kg_H2O",
+        "components": {
+          "Na": 6.093272,
+          "Cl": 6.093272
+        }
+      },
+      "published_outputs": {
+        "water_activity": 0.7577,
+        "osmotic_coefficient": 1.2641,
+        "ionic_strength_mol_per_kg_H2O": 6.0933,
+        "mean_activity_coefficients": {
+          "NaCl": 0.92781
+        }
+      },
+      "assumptions": [
+        "This is a published software benchmark, not an independent experimental measurement.",
+        "The library re-enters the published final aqueous composition; the app does not calculate halite solubility or enable solids."
+      ]
+    },
+    {
+      "id": "usgs_1988_tp4_halite_final_25c",
+      "title": "Halite-equilibrated NaCl final state at 25 degrees C",
+      "description": "Final aqueous state reported for the PHRQPITZ halite-water temperature example at 25 degrees C.",
+      "evidence_type": "software_benchmark",
+      "source": {
+        "citation": "Plummer, L. N., Parkhurst, D. L., Fleming, G. W., and Dunkle, S. A. (1988), A computer program incorporating Pitzer's equations for calculation of geochemical reactions in brines, U.S. Geological Survey Water-Resources Investigations Report 88-4153.",
+        "url": "https://doi.org/10.3133/wri884153",
+        "local_document": "docs/references/validation/usgs-phrqpitz-1988.pdf",
+        "locator": "Test problem 4, table 13, printed pages 90-91 (PDF pages 96-97)"
+      },
+      "input": {
+        "temperature_c": 25.0,
+        "pressure_atm": 1.0,
+        "known_ph": 6.5971,
+        "composition_unit": "mol/kg_H2O",
+        "components": {
+          "Na": 6.099676,
+          "Cl": 6.099676
+        }
+      },
+      "published_outputs": {
+        "water_activity": 0.7546,
+        "osmotic_coefficient": 1.2813,
+        "ionic_strength_mol_per_kg_H2O": 6.0997,
+        "mean_activity_coefficients": {
+          "NaCl": 0.99929
+        }
+      },
+      "assumptions": [
+        "This is a published software benchmark, not an independent experimental measurement.",
+        "The library re-enters the published final aqueous composition; the app does not calculate halite solubility or enable solids."
+      ]
+    },
+    {
+      "id": "usgs_1988_tp4_halite_final_100c",
+      "title": "Halite-equilibrated NaCl final state at 100 degrees C",
+      "description": "Final aqueous state reported for the PHRQPITZ halite-water temperature example at 100 degrees C.",
+      "evidence_type": "software_benchmark",
+      "source": {
+        "citation": "Plummer, L. N., Parkhurst, D. L., Fleming, G. W., and Dunkle, S. A. (1988), A computer program incorporating Pitzer's equations for calculation of geochemical reactions in brines, U.S. Geological Survey Water-Resources Investigations Report 88-4153.",
+        "url": "https://doi.org/10.3133/wri884153",
+        "local_document": "docs/references/validation/usgs-phrqpitz-1988.pdf",
+        "locator": "Test problem 4, table 13, printed pages 92-93 (PDF pages 98-99)"
+      },
+      "input": {
+        "temperature_c": 100.0,
+        "pressure_atm": 1.0,
+        "known_ph": 5.6149,
+        "composition_unit": "mol/kg_H2O",
+        "components": {
+          "Na": 6.624753,
+          "Cl": 6.624753
+        }
+      },
+      "published_outputs": {
+        "water_activity": 0.7442,
+        "osmotic_coefficient": 1.2375,
+        "ionic_strength_mol_per_kg_H2O": 6.6248,
+        "mean_activity_coefficients": {
+          "NaCl": 0.91012
+        }
+      },
+      "assumptions": [
+        "This is a published software benchmark, not an independent experimental measurement.",
+        "The library re-enters the published final aqueous composition; the app does not calculate halite solubility or enable solids.",
+        "This case lies at the app's upper temperature boundary."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2016_kcl_0p1m_0c",
+      "title": "Evaluated KCl at 0.1 mol/kg and 0 degrees C",
+      "description": "Evaluated mean ionic activity coefficient for dilute aqueous KCl from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Partanen, J. I. (2016), Mean Activity Coefficients and Osmotic Coefficients in Dilute Aqueous Sodium or Potassium Chloride Solutions at Temperatures from (0 to 70) degrees C, Journal of Chemical & Engineering Data, 61(1), 286-306.",
+        "url": "https://trc.nist.gov/ThermoML/10.1021/acs.jced.5b00544.html",
+        "local_document": "docs/references/validation/nist-thermoml-partanen-2016-nacl-kcl.json",
+        "locator": "ThermoML pure-or-mixture dataset 1, KCl, T = 273.15 K, m = 0.1 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 0.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"K": 0.1, "Cl": 0.1}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"KCl": 0.7724},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"KCl": 0.05}
+      },
+      "assumptions": [
+        "This is an evaluated reference value derived from experimental literature, not a software benchmark or a direct measurement at every tabulated point.",
+        "The source defines a binary KCl-water system at 101 kPa but does not prescribe pH; the app uses pH 7.0 and 1 atm as explicit mapping conventions.",
+        "Only the KCl mean activity coefficient and its NIST/TRC compiler-estimated 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2016_kcl_0p5m_0c",
+      "title": "Evaluated KCl at 0.5 mol/kg and 0 degrees C",
+      "description": "Evaluated mean ionic activity coefficient for dilute aqueous KCl from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Partanen, J. I. (2016), Mean Activity Coefficients and Osmotic Coefficients in Dilute Aqueous Sodium or Potassium Chloride Solutions at Temperatures from (0 to 70) degrees C, Journal of Chemical & Engineering Data, 61(1), 286-306.",
+        "url": "https://trc.nist.gov/ThermoML/10.1021/acs.jced.5b00544.html",
+        "local_document": "docs/references/validation/nist-thermoml-partanen-2016-nacl-kcl.json",
+        "locator": "ThermoML pure-or-mixture dataset 1, KCl, T = 273.15 K, m = 0.5 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 0.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"K": 0.5, "Cl": 0.5}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"KCl": 0.6429},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"KCl": 0.05}
+      },
+      "assumptions": [
+        "This is an evaluated reference value derived from experimental literature, not a software benchmark or a direct measurement at every tabulated point.",
+        "The source defines a binary KCl-water system at 101 kPa but does not prescribe pH; the app uses pH 7.0 and 1 atm as explicit mapping conventions.",
+        "Only the KCl mean activity coefficient and its NIST/TRC compiler-estimated 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2016_kcl_0p1m_20c",
+      "title": "Evaluated KCl at 0.1 mol/kg and 20 degrees C",
+      "description": "Evaluated mean ionic activity coefficient for dilute aqueous KCl from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Partanen, J. I. (2016), Mean Activity Coefficients and Osmotic Coefficients in Dilute Aqueous Sodium or Potassium Chloride Solutions at Temperatures from (0 to 70) degrees C, Journal of Chemical & Engineering Data, 61(1), 286-306.",
+        "url": "https://trc.nist.gov/ThermoML/10.1021/acs.jced.5b00544.html",
+        "local_document": "docs/references/validation/nist-thermoml-partanen-2016-nacl-kcl.json",
+        "locator": "ThermoML pure-or-mixture dataset 1, KCl, T = 293.15 K, m = 0.1 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 20.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"K": 0.1, "Cl": 0.1}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"KCl": 0.7702},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"KCl": 0.05}
+      },
+      "assumptions": [
+        "This is an evaluated reference value derived from experimental literature, not a software benchmark or a direct measurement at every tabulated point.",
+        "The source defines a binary KCl-water system at 101 kPa but does not prescribe pH; the app uses pH 7.0 and 1 atm as explicit mapping conventions.",
+        "Only the KCl mean activity coefficient and its NIST/TRC compiler-estimated 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2016_kcl_0p5m_20c",
+      "title": "Evaluated KCl at 0.5 mol/kg and 20 degrees C",
+      "description": "Evaluated mean ionic activity coefficient for dilute aqueous KCl from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Partanen, J. I. (2016), Mean Activity Coefficients and Osmotic Coefficients in Dilute Aqueous Sodium or Potassium Chloride Solutions at Temperatures from (0 to 70) degrees C, Journal of Chemical & Engineering Data, 61(1), 286-306.",
+        "url": "https://trc.nist.gov/ThermoML/10.1021/acs.jced.5b00544.html",
+        "local_document": "docs/references/validation/nist-thermoml-partanen-2016-nacl-kcl.json",
+        "locator": "ThermoML pure-or-mixture dataset 1, KCl, T = 293.15 K, m = 0.5 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 20.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"K": 0.5, "Cl": 0.5}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"KCl": 0.6506},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"KCl": 0.05}
+      },
+      "assumptions": [
+        "This is an evaluated reference value derived from experimental literature, not a software benchmark or a direct measurement at every tabulated point.",
+        "The source defines a binary KCl-water system at 101 kPa but does not prescribe pH; the app uses pH 7.0 and 1 atm as explicit mapping conventions.",
+        "Only the KCl mean activity coefficient and its NIST/TRC compiler-estimated 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2016_kcl_0p1m_50c",
+      "title": "Evaluated KCl at 0.1 mol/kg and 50 degrees C",
+      "description": "Evaluated mean ionic activity coefficient for dilute aqueous KCl from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Partanen, J. I. (2016), Mean Activity Coefficients and Osmotic Coefficients in Dilute Aqueous Sodium or Potassium Chloride Solutions at Temperatures from (0 to 70) degrees C, Journal of Chemical & Engineering Data, 61(1), 286-306.",
+        "url": "https://trc.nist.gov/ThermoML/10.1021/acs.jced.5b00544.html",
+        "local_document": "docs/references/validation/nist-thermoml-partanen-2016-nacl-kcl.json",
+        "locator": "ThermoML pure-or-mixture dataset 1, KCl, T = 323.15 K, m = 0.1 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 50.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"K": 0.1, "Cl": 0.1}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"KCl": 0.761},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"KCl": 0.05}
+      },
+      "assumptions": [
+        "This is an evaluated reference value derived from experimental literature, not a software benchmark or a direct measurement at every tabulated point.",
+        "The source defines a binary KCl-water system at 101 kPa but does not prescribe pH; the app uses pH 7.0 and 1 atm as explicit mapping conventions.",
+        "Only the KCl mean activity coefficient and its NIST/TRC compiler-estimated 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2016_kcl_0p5m_50c",
+      "title": "Evaluated KCl at 0.5 mol/kg and 50 degrees C",
+      "description": "Evaluated mean ionic activity coefficient for dilute aqueous KCl from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Partanen, J. I. (2016), Mean Activity Coefficients and Osmotic Coefficients in Dilute Aqueous Sodium or Potassium Chloride Solutions at Temperatures from (0 to 70) degrees C, Journal of Chemical & Engineering Data, 61(1), 286-306.",
+        "url": "https://trc.nist.gov/ThermoML/10.1021/acs.jced.5b00544.html",
+        "local_document": "docs/references/validation/nist-thermoml-partanen-2016-nacl-kcl.json",
+        "locator": "ThermoML pure-or-mixture dataset 1, KCl, T = 323.15 K, m = 0.5 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 50.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"K": 0.5, "Cl": 0.5}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"KCl": 0.644},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"KCl": 0.05}
+      },
+      "assumptions": [
+        "This is an evaluated reference value derived from experimental literature, not a software benchmark or a direct measurement at every tabulated point.",
+        "The source defines a binary KCl-water system at 101 kPa but does not prescribe pH; the app uses pH 7.0 and 1 atm as explicit mapping conventions.",
+        "Only the KCl mean activity coefficient and its NIST/TRC compiler-estimated 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2016_kcl_0p1m_70c",
+      "title": "Evaluated KCl at 0.1 mol/kg and 70 degrees C",
+      "description": "Evaluated mean ionic activity coefficient for dilute aqueous KCl from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Partanen, J. I. (2016), Mean Activity Coefficients and Osmotic Coefficients in Dilute Aqueous Sodium or Potassium Chloride Solutions at Temperatures from (0 to 70) degrees C, Journal of Chemical & Engineering Data, 61(1), 286-306.",
+        "url": "https://trc.nist.gov/ThermoML/10.1021/acs.jced.5b00544.html",
+        "local_document": "docs/references/validation/nist-thermoml-partanen-2016-nacl-kcl.json",
+        "locator": "ThermoML pure-or-mixture dataset 1, KCl, T = 343.15 K, m = 0.1 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 70.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"K": 0.1, "Cl": 0.1}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"KCl": 0.752},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"KCl": 0.05}
+      },
+      "assumptions": [
+        "This is an evaluated reference value derived from experimental literature, not a software benchmark or a direct measurement at every tabulated point.",
+        "The source defines a binary KCl-water system at 101 kPa but does not prescribe pH; the app uses pH 7.0 and 1 atm as explicit mapping conventions.",
+        "Only the KCl mean activity coefficient and its NIST/TRC compiler-estimated 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2016_kcl_0p5m_70c",
+      "title": "Evaluated KCl at 0.5 mol/kg and 70 degrees C",
+      "description": "Evaluated mean ionic activity coefficient for dilute aqueous KCl from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Partanen, J. I. (2016), Mean Activity Coefficients and Osmotic Coefficients in Dilute Aqueous Sodium or Potassium Chloride Solutions at Temperatures from (0 to 70) degrees C, Journal of Chemical & Engineering Data, 61(1), 286-306.",
+        "url": "https://trc.nist.gov/ThermoML/10.1021/acs.jced.5b00544.html",
+        "local_document": "docs/references/validation/nist-thermoml-partanen-2016-nacl-kcl.json",
+        "locator": "ThermoML pure-or-mixture dataset 1, KCl, T = 343.15 K, m = 0.5 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 70.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"K": 0.5, "Cl": 0.5}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"KCl": 0.632},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"KCl": 0.05}
+      },
+      "assumptions": [
+        "This is an evaluated reference value derived from experimental literature, not a software benchmark or a direct measurement at every tabulated point.",
+        "The source defines a binary KCl-water system at 101 kPa but does not prescribe pH; the app uses pH 7.0 and 1 atm as explicit mapping conventions.",
+        "Only the KCl mean activity coefficient and its NIST/TRC compiler-estimated 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2016_nacl_0p1m_0c",
+      "title": "Evaluated NaCl at 0.1 mol/kg and 0 degrees C",
+      "description": "Evaluated mean ionic activity coefficient for dilute aqueous NaCl from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Partanen, J. I. (2016), Mean Activity Coefficients and Osmotic Coefficients in Dilute Aqueous Sodium or Potassium Chloride Solutions at Temperatures from (0 to 70) degrees C, Journal of Chemical & Engineering Data, 61(1), 286-306.",
+        "url": "https://trc.nist.gov/ThermoML/10.1021/acs.jced.5b00544.html",
+        "local_document": "docs/references/validation/nist-thermoml-partanen-2016-nacl-kcl.json",
+        "locator": "ThermoML pure-or-mixture dataset 2, NaCl, T = 273.15 K, m = 0.1 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 0.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"Na": 0.1, "Cl": 0.1}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"NaCl": 0.7813},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"NaCl": 0.05}
+      },
+      "assumptions": [
+        "This is an evaluated reference value derived from experimental literature, not a software benchmark or a direct measurement at every tabulated point.",
+        "The source defines a binary NaCl-water system at 101 kPa but does not prescribe pH; the app uses pH 7.0 and 1 atm as explicit mapping conventions.",
+        "Only the NaCl mean activity coefficient and its NIST/TRC compiler-estimated 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2016_nacl_0p5m_0c",
+      "title": "Evaluated NaCl at 0.5 mol/kg and 0 degrees C",
+      "description": "Evaluated mean ionic activity coefficient for dilute aqueous NaCl from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Partanen, J. I. (2016), Mean Activity Coefficients and Osmotic Coefficients in Dilute Aqueous Sodium or Potassium Chloride Solutions at Temperatures from (0 to 70) degrees C, Journal of Chemical & Engineering Data, 61(1), 286-306.",
+        "url": "https://trc.nist.gov/ThermoML/10.1021/acs.jced.5b00544.html",
+        "local_document": "docs/references/validation/nist-thermoml-partanen-2016-nacl-kcl.json",
+        "locator": "ThermoML pure-or-mixture dataset 2, NaCl, T = 273.15 K, m = 0.5 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 0.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"Na": 0.5, "Cl": 0.5}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"NaCl": 0.672},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"NaCl": 0.05}
+      },
+      "assumptions": [
+        "This is an evaluated reference value derived from experimental literature, not a software benchmark or a direct measurement at every tabulated point.",
+        "The source defines a binary NaCl-water system at 101 kPa but does not prescribe pH; the app uses pH 7.0 and 1 atm as explicit mapping conventions.",
+        "Only the NaCl mean activity coefficient and its NIST/TRC compiler-estimated 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2016_nacl_0p1m_20c",
+      "title": "Evaluated NaCl at 0.1 mol/kg and 20 degrees C",
+      "description": "Evaluated mean ionic activity coefficient for dilute aqueous NaCl from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Partanen, J. I. (2016), Mean Activity Coefficients and Osmotic Coefficients in Dilute Aqueous Sodium or Potassium Chloride Solutions at Temperatures from (0 to 70) degrees C, Journal of Chemical & Engineering Data, 61(1), 286-306.",
+        "url": "https://trc.nist.gov/ThermoML/10.1021/acs.jced.5b00544.html",
+        "local_document": "docs/references/validation/nist-thermoml-partanen-2016-nacl-kcl.json",
+        "locator": "ThermoML pure-or-mixture dataset 2, NaCl, T = 293.15 K, m = 0.1 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 20.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"Na": 0.1, "Cl": 0.1}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"NaCl": 0.7793},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"NaCl": 0.05}
+      },
+      "assumptions": [
+        "This is an evaluated reference value derived from experimental literature, not a software benchmark or a direct measurement at every tabulated point.",
+        "The source defines a binary NaCl-water system at 101 kPa but does not prescribe pH; the app uses pH 7.0 and 1 atm as explicit mapping conventions.",
+        "Only the NaCl mean activity coefficient and its NIST/TRC compiler-estimated 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2016_nacl_0p5m_20c",
+      "title": "Evaluated NaCl at 0.5 mol/kg and 20 degrees C",
+      "description": "Evaluated mean ionic activity coefficient for dilute aqueous NaCl from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Partanen, J. I. (2016), Mean Activity Coefficients and Osmotic Coefficients in Dilute Aqueous Sodium or Potassium Chloride Solutions at Temperatures from (0 to 70) degrees C, Journal of Chemical & Engineering Data, 61(1), 286-306.",
+        "url": "https://trc.nist.gov/ThermoML/10.1021/acs.jced.5b00544.html",
+        "local_document": "docs/references/validation/nist-thermoml-partanen-2016-nacl-kcl.json",
+        "locator": "ThermoML pure-or-mixture dataset 2, NaCl, T = 293.15 K, m = 0.5 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 20.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"Na": 0.5, "Cl": 0.5}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"NaCl": 0.6808},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"NaCl": 0.05}
+      },
+      "assumptions": [
+        "This is an evaluated reference value derived from experimental literature, not a software benchmark or a direct measurement at every tabulated point.",
+        "The source defines a binary NaCl-water system at 101 kPa but does not prescribe pH; the app uses pH 7.0 and 1 atm as explicit mapping conventions.",
+        "Only the NaCl mean activity coefficient and its NIST/TRC compiler-estimated 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2016_nacl_0p1m_50c",
+      "title": "Evaluated NaCl at 0.1 mol/kg and 50 degrees C",
+      "description": "Evaluated mean ionic activity coefficient for dilute aqueous NaCl from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Partanen, J. I. (2016), Mean Activity Coefficients and Osmotic Coefficients in Dilute Aqueous Sodium or Potassium Chloride Solutions at Temperatures from (0 to 70) degrees C, Journal of Chemical & Engineering Data, 61(1), 286-306.",
+        "url": "https://trc.nist.gov/ThermoML/10.1021/acs.jced.5b00544.html",
+        "local_document": "docs/references/validation/nist-thermoml-partanen-2016-nacl-kcl.json",
+        "locator": "ThermoML pure-or-mixture dataset 2, NaCl, T = 323.15 K, m = 0.1 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 50.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"Na": 0.1, "Cl": 0.1}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"NaCl": 0.77},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"NaCl": 0.05}
+      },
+      "assumptions": [
+        "This is an evaluated reference value derived from experimental literature, not a software benchmark or a direct measurement at every tabulated point.",
+        "The source defines a binary NaCl-water system at 101 kPa but does not prescribe pH; the app uses pH 7.0 and 1 atm as explicit mapping conventions.",
+        "Only the NaCl mean activity coefficient and its NIST/TRC compiler-estimated 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2016_nacl_0p5m_50c",
+      "title": "Evaluated NaCl at 0.5 mol/kg and 50 degrees C",
+      "description": "Evaluated mean ionic activity coefficient for dilute aqueous NaCl from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Partanen, J. I. (2016), Mean Activity Coefficients and Osmotic Coefficients in Dilute Aqueous Sodium or Potassium Chloride Solutions at Temperatures from (0 to 70) degrees C, Journal of Chemical & Engineering Data, 61(1), 286-306.",
+        "url": "https://trc.nist.gov/ThermoML/10.1021/acs.jced.5b00544.html",
+        "local_document": "docs/references/validation/nist-thermoml-partanen-2016-nacl-kcl.json",
+        "locator": "ThermoML pure-or-mixture dataset 2, NaCl, T = 323.15 K, m = 0.5 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 50.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"Na": 0.5, "Cl": 0.5}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"NaCl": 0.674},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"NaCl": 0.05}
+      },
+      "assumptions": [
+        "This is an evaluated reference value derived from experimental literature, not a software benchmark or a direct measurement at every tabulated point.",
+        "The source defines a binary NaCl-water system at 101 kPa but does not prescribe pH; the app uses pH 7.0 and 1 atm as explicit mapping conventions.",
+        "Only the NaCl mean activity coefficient and its NIST/TRC compiler-estimated 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2016_nacl_0p1m_70c",
+      "title": "Evaluated NaCl at 0.1 mol/kg and 70 degrees C",
+      "description": "Evaluated mean ionic activity coefficient for dilute aqueous NaCl from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Partanen, J. I. (2016), Mean Activity Coefficients and Osmotic Coefficients in Dilute Aqueous Sodium or Potassium Chloride Solutions at Temperatures from (0 to 70) degrees C, Journal of Chemical & Engineering Data, 61(1), 286-306.",
+        "url": "https://trc.nist.gov/ThermoML/10.1021/acs.jced.5b00544.html",
+        "local_document": "docs/references/validation/nist-thermoml-partanen-2016-nacl-kcl.json",
+        "locator": "ThermoML pure-or-mixture dataset 2, NaCl, T = 343.15 K, m = 0.1 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 70.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"Na": 0.1, "Cl": 0.1}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"NaCl": 0.761},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"NaCl": 0.05}
+      },
+      "assumptions": [
+        "This is an evaluated reference value derived from experimental literature, not a software benchmark or a direct measurement at every tabulated point.",
+        "The source defines a binary NaCl-water system at 101 kPa but does not prescribe pH; the app uses pH 7.0 and 1 atm as explicit mapping conventions.",
+        "Only the NaCl mean activity coefficient and its NIST/TRC compiler-estimated 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2016_nacl_0p5m_70c",
+      "title": "Evaluated NaCl at 0.5 mol/kg and 70 degrees C",
+      "description": "Evaluated mean ionic activity coefficient for dilute aqueous NaCl from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Partanen, J. I. (2016), Mean Activity Coefficients and Osmotic Coefficients in Dilute Aqueous Sodium or Potassium Chloride Solutions at Temperatures from (0 to 70) degrees C, Journal of Chemical & Engineering Data, 61(1), 286-306.",
+        "url": "https://trc.nist.gov/ThermoML/10.1021/acs.jced.5b00544.html",
+        "local_document": "docs/references/validation/nist-thermoml-partanen-2016-nacl-kcl.json",
+        "locator": "ThermoML pure-or-mixture dataset 2, NaCl, T = 343.15 K, m = 0.5 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 70.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"Na": 0.5, "Cl": 0.5}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"NaCl": 0.659},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"NaCl": 0.05}
+      },
+      "assumptions": [
+        "This is an evaluated reference value derived from experimental literature, not a software benchmark or a direct measurement at every tabulated point.",
+        "The source defines a binary NaCl-water system at 101 kPa but does not prescribe pH; the app uses pH 7.0 and 1 atm as explicit mapping conventions.",
+        "Only the NaCl mean activity coefficient and its NIST/TRC compiler-estimated 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2012_cacl2_0p1m_25c",
+      "title": "Evaluated CaCl2 at 0.1 mol/kg and 25 degrees C",
+      "description": "Traceable mean ionic activity coefficient for aqueous CaCl2 from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Partanen, J. I. (2012), Traceable Mean Activity Coefficients and Osmotic Coefficients in Aqueous Calcium Chloride Solutions at 25 degrees C up to a Molality of 3.0 mol/kg, Journal of Chemical & Engineering Data, 57(11), 3247-3257.",
+        "url": "https://trc.nist.gov/ThermoML/10.1021/je300852v.html",
+        "local_document": "docs/references/validation/nist-thermoml-partanen-2012-cacl2.json",
+        "locator": "ThermoML pure-or-mixture dataset 1, CaCl2, T = 298.15 K, P = 101 kPa, m = 0.1 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 25.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"Ca": 0.1, "Cl": 0.2}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"CaCl2": 0.517},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"CaCl2": 0.001}
+      },
+      "assumptions": [
+        "This is a traceable evaluated reference value derived from experimental literature and a two-term Debye-Huckel representation, not a software benchmark or a direct measurement at every tabulated point.",
+        "The source defines a binary CaCl2-water system at 101 kPa but does not prescribe pH; the app uses pH 7.0 and 1 atm as explicit mapping conventions.",
+        "Only the CaCl2 mean activity coefficient and its NIST/TRC compiler-estimated 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2012_cacl2_0p5m_25c",
+      "title": "Evaluated CaCl2 at 0.5 mol/kg and 25 degrees C",
+      "description": "Traceable mean ionic activity coefficient for aqueous CaCl2 from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Partanen, J. I. (2012), Traceable Mean Activity Coefficients and Osmotic Coefficients in Aqueous Calcium Chloride Solutions at 25 degrees C up to a Molality of 3.0 mol/kg, Journal of Chemical & Engineering Data, 57(11), 3247-3257.",
+        "url": "https://trc.nist.gov/ThermoML/10.1021/je300852v.html",
+        "local_document": "docs/references/validation/nist-thermoml-partanen-2012-cacl2.json",
+        "locator": "ThermoML pure-or-mixture dataset 1, CaCl2, T = 298.15 K, P = 101 kPa, m = 0.5 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 25.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"Ca": 0.5, "Cl": 1.0}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"CaCl2": 0.449},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"CaCl2": 0.001}
+      },
+      "assumptions": [
+        "This is a traceable evaluated reference value derived from experimental literature and a two-term Debye-Huckel representation, not a software benchmark or a direct measurement at every tabulated point.",
+        "The source defines a binary CaCl2-water system at 101 kPa but does not prescribe pH; the app uses pH 7.0 and 1 atm as explicit mapping conventions.",
+        "Only the CaCl2 mean activity coefficient and its NIST/TRC compiler-estimated 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2012_cacl2_1m_25c",
+      "title": "Evaluated CaCl2 at 1.0 mol/kg and 25 degrees C",
+      "description": "Traceable mean ionic activity coefficient for aqueous CaCl2 from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Partanen, J. I. (2012), Traceable Mean Activity Coefficients and Osmotic Coefficients in Aqueous Calcium Chloride Solutions at 25 degrees C up to a Molality of 3.0 mol/kg, Journal of Chemical & Engineering Data, 57(11), 3247-3257.",
+        "url": "https://trc.nist.gov/ThermoML/10.1021/je300852v.html",
+        "local_document": "docs/references/validation/nist-thermoml-partanen-2012-cacl2.json",
+        "locator": "ThermoML pure-or-mixture dataset 1, CaCl2, T = 298.15 K, P = 101 kPa, m = 1.0 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 25.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"Ca": 1.0, "Cl": 2.0}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"CaCl2": 0.502},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"CaCl2": 0.001}
+      },
+      "assumptions": [
+        "This is a traceable evaluated reference value derived from experimental literature and a two-term Debye-Huckel representation, not a software benchmark or a direct measurement at every tabulated point.",
+        "The source defines a binary CaCl2-water system at 101 kPa but does not prescribe pH; the app uses pH 7.0 and 1 atm as explicit mapping conventions.",
+        "Only the CaCl2 mean activity coefficient and its NIST/TRC compiler-estimated 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2012_cacl2_3m_25c",
+      "title": "Evaluated CaCl2 at 3.0 mol/kg and 25 degrees C",
+      "description": "Traceable mean ionic activity coefficient for aqueous CaCl2 from the NIST ThermoML archive at the source's upper molality.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Partanen, J. I. (2012), Traceable Mean Activity Coefficients and Osmotic Coefficients in Aqueous Calcium Chloride Solutions at 25 degrees C up to a Molality of 3.0 mol/kg, Journal of Chemical & Engineering Data, 57(11), 3247-3257.",
+        "url": "https://trc.nist.gov/ThermoML/10.1021/je300852v.html",
+        "local_document": "docs/references/validation/nist-thermoml-partanen-2012-cacl2.json",
+        "locator": "ThermoML pure-or-mixture dataset 1, CaCl2, T = 298.15 K, P = 101 kPa, m = 3.0 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 25.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"Ca": 3.0, "Cl": 6.0}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"CaCl2": 1.49},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"CaCl2": 0.001}
+      },
+      "assumptions": [
+        "This is a traceable evaluated reference value derived from experimental literature and a two-term Debye-Huckel representation, not a software benchmark or a direct measurement at every tabulated point.",
+        "The source defines a binary CaCl2-water system at 101 kPa but does not prescribe pH; the app uses pH 7.0 and 1 atm as explicit mapping conventions.",
+        "Only the CaCl2 mean activity coefficient and its NIST/TRC compiler-estimated 95% expanded uncertainty are source values; other app outputs are not reference values from this record.",
+        "This case is the upper molality reported by the source and represents a high-ionic-strength stress case."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2015_mgcl2_0p0833m_25c",
+      "title": "Experimental-derived MgCl2 at 0.0833 mol/kg and 25 degrees C",
+      "description": "Pure-water mean ionic activity coefficient for aqueous MgCl2 calculated from EMF measurements in the NIST ThermoML record.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Rouhi, A., and Bagherinia, M. A. (2015), Mean activity coefficient measurement and thermodynamic modelling of the ternary mixed electrolyte (MgCl2 + glucose + water) system at T = 298.15 K, Journal of Chemical Thermodynamics, 91, 286-291.",
+        "url": "https://trc.nist.gov/ThermoML/10.1016/j.jct.2015.07.049.html",
+        "local_document": "docs/references/validation/nist-thermoml-rouhi-bagherinia-2015-mgcl2.json",
+        "locator": "ThermoML pure-or-mixture dataset 2 (pure-water subset), MgCl2, T = 298.15 K, P = 101.325 kPa, m = 0.0833 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 25.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"Mg": 0.0833, "Cl": 0.1666}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"MgCl2": 0.5485},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"MgCl2": 0.0295}
+      },
+      "assumptions": [
+        "This record uses the pure-water binary subset; no glucose is included in the mapped app input.",
+        "The source value was calculated from EMF cell potential measurements and is independent reference evidence, not a software benchmark.",
+        "The source does not prescribe pH; the app uses pH 7.0 as an explicit mapping convention. Source pressure 101.325 kPa is equivalent to the app's 1 atm.",
+        "Only the MgCl2 mean activity coefficient and its reported 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2015_mgcl2_0p3333m_25c",
+      "title": "Experimental-derived MgCl2 at 0.3333 mol/kg and 25 degrees C",
+      "description": "Pure-water mean ionic activity coefficient for aqueous MgCl2 calculated from EMF measurements in the NIST ThermoML record.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Rouhi, A., and Bagherinia, M. A. (2015), Mean activity coefficient measurement and thermodynamic modelling of the ternary mixed electrolyte (MgCl2 + glucose + water) system at T = 298.15 K, Journal of Chemical Thermodynamics, 91, 286-291.",
+        "url": "https://trc.nist.gov/ThermoML/10.1016/j.jct.2015.07.049.html",
+        "local_document": "docs/references/validation/nist-thermoml-rouhi-bagherinia-2015-mgcl2.json",
+        "locator": "ThermoML pure-or-mixture dataset 2 (pure-water subset), MgCl2, T = 298.15 K, P = 101.325 kPa, m = 0.3333 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 25.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"Mg": 0.3333, "Cl": 0.6666}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"MgCl2": 0.4796},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"MgCl2": 0.0297}
+      },
+      "assumptions": [
+        "This record uses the pure-water binary subset; no glucose is included in the mapped app input.",
+        "The source value was calculated from EMF cell potential measurements and is independent reference evidence, not a software benchmark.",
+        "The source does not prescribe pH; the app uses pH 7.0 as an explicit mapping convention. Source pressure 101.325 kPa is equivalent to the app's 1 atm.",
+        "Only the MgCl2 mean activity coefficient and its reported 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2015_mgcl2_1m_25c",
+      "title": "Experimental-derived MgCl2 at 1.0 mol/kg and 25 degrees C",
+      "description": "Pure-water mean ionic activity coefficient for aqueous MgCl2 calculated from EMF measurements in the NIST ThermoML record.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Rouhi, A., and Bagherinia, M. A. (2015), Mean activity coefficient measurement and thermodynamic modelling of the ternary mixed electrolyte (MgCl2 + glucose + water) system at T = 298.15 K, Journal of Chemical Thermodynamics, 91, 286-291.",
+        "url": "https://trc.nist.gov/ThermoML/10.1016/j.jct.2015.07.049.html",
+        "local_document": "docs/references/validation/nist-thermoml-rouhi-bagherinia-2015-mgcl2.json",
+        "locator": "ThermoML pure-or-mixture dataset 2 (pure-water subset), MgCl2, T = 298.15 K, P = 101.325 kPa, m = 1.0 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 25.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"Mg": 1.0, "Cl": 2.0}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"MgCl2": 0.5776},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"MgCl2": 0.0333}
+      },
+      "assumptions": [
+        "This record uses the pure-water binary subset; no glucose is included in the mapped app input.",
+        "The source value was calculated from EMF cell potential measurements and is independent reference evidence, not a software benchmark.",
+        "The source does not prescribe pH; the app uses pH 7.0 as an explicit mapping convention. Source pressure 101.325 kPa is equivalent to the app's 1 atm.",
+        "Only the MgCl2 mean activity coefficient and its reported 95% expanded uncertainty are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2015_mgcl2_2m_25c",
+      "title": "Experimental-derived MgCl2 at 2.0 mol/kg and 25 degrees C",
+      "description": "Pure-water mean ionic activity coefficient for aqueous MgCl2 calculated from EMF measurements in the NIST ThermoML record at the source's upper molality.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Rouhi, A., and Bagherinia, M. A. (2015), Mean activity coefficient measurement and thermodynamic modelling of the ternary mixed electrolyte (MgCl2 + glucose + water) system at T = 298.15 K, Journal of Chemical Thermodynamics, 91, 286-291.",
+        "url": "https://trc.nist.gov/ThermoML/10.1016/j.jct.2015.07.049.html",
+        "local_document": "docs/references/validation/nist-thermoml-rouhi-bagherinia-2015-mgcl2.json",
+        "locator": "ThermoML pure-or-mixture dataset 2 (pure-water subset), MgCl2, T = 298.15 K, P = 101.325 kPa, m = 2.0 mol/kg",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 25.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"Mg": 2.0, "Cl": 4.0}
+      },
+      "published_outputs": {
+        "mean_activity_coefficients": {"MgCl2": 1.0695},
+        "mean_activity_coefficient_expanded_uncertainty_95": {"MgCl2": 0.0851}
+      },
+      "assumptions": [
+        "This record uses the pure-water binary subset; no glucose is included in the mapped app input.",
+        "The source value was calculated from EMF cell potential measurements and is independent reference evidence, not a software benchmark.",
+        "The source does not prescribe pH; the app uses pH 7.0 as an explicit mapping convention. Source pressure 101.325 kPa is equivalent to the app's 1 atm.",
+        "Only the MgCl2 mean activity coefficient and its reported 95% expanded uncertainty are source values; other app outputs are not reference values from this record.",
+        "This case is the upper molality reported by the source and represents a high-ionic-strength stress case."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2014_na2so4_0p5m_25c",
+      "title": "Experimental Na2SO4 at 0.5 mol/kg and 25 degrees C",
+      "description": "Two measured osmotic coefficients for binary aqueous Na2SO4 from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Held, C., Reschke, T., Muller, R., Kunz, W., and Sadowski, G. (2014), Measuring and modeling aqueous electrolyte/amino-acid solutions with ePC-SAFT, Journal of Chemical Thermodynamics, 68, 1-12.",
+        "url": "https://trc.nist.gov/ThermoML/10.1016/j.jct.2013.08.018.html",
+        "local_document": "docs/references/validation/nist-thermoml-held-2014-na2so4.json",
+        "locator": "ThermoML pure-or-mixture dataset 81 (binary Na2SO4-water subset), T = 298.15 K, P = 101 kPa, m = 0.5 mol/kg; two reported measurements",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 25.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"Na": 1.0, "SO4": 0.5}
+      },
+      "published_outputs": {
+        "osmotic_coefficient_measurements": [
+          {"value": 0.717, "expanded_uncertainty_95": 0.014},
+          {"value": 0.69, "expanded_uncertainty_95": 0.015}
+        ]
+      },
+      "assumptions": [
+        "This case uses only the binary Na2SO4-water dataset; none of the publication's amino-acid mixtures are included.",
+        "The source contains two measurements at this same composition. Both are retained separately; the library does not average them or choose one as preferred.",
+        "The source does not prescribe pH; the app uses pH 7.0 as an explicit mapping convention and maps source pressure 101 kPa to its fixed 1 atm.",
+        "Only the two osmotic-coefficient measurements and their NIST/TRC compiler-estimated 95% expanded uncertainties are source values; other app outputs are not reference values from this record."
+      ]
+    },
+    {
+      "id": "nist_thermoml_2014_na2so4_1m_25c",
+      "title": "Experimental Na2SO4 at 1.0 mol/kg and 25 degrees C",
+      "description": "Two measured osmotic coefficients for binary aqueous Na2SO4 from the NIST ThermoML archive.",
+      "evidence_type": "experimental_or_evaluated_reference",
+      "source": {
+        "citation": "Held, C., Reschke, T., Muller, R., Kunz, W., and Sadowski, G. (2014), Measuring and modeling aqueous electrolyte/amino-acid solutions with ePC-SAFT, Journal of Chemical Thermodynamics, 68, 1-12.",
+        "url": "https://trc.nist.gov/ThermoML/10.1016/j.jct.2013.08.018.html",
+        "local_document": "docs/references/validation/nist-thermoml-held-2014-na2so4.json",
+        "locator": "ThermoML pure-or-mixture dataset 81 (binary Na2SO4-water subset), T = 298.15 K, P = 101 kPa, m = 1.0 mol/kg; two reported measurements",
+        "license_url": "https://www.nist.gov/open/license"
+      },
+      "input": {
+        "temperature_c": 25.0,
+        "pressure_atm": 1.0,
+        "known_ph": 7.0,
+        "composition_unit": "mol/kg_H2O",
+        "components": {"Na": 2.0, "SO4": 1.0}
+      },
+      "published_outputs": {
+        "osmotic_coefficient_measurements": [
+          {"value": 0.658, "expanded_uncertainty_95": 0.016},
+          {"value": 0.642, "expanded_uncertainty_95": 0.016}
+        ]
+      },
+      "assumptions": [
+        "This case uses only the binary Na2SO4-water dataset; none of the publication's amino-acid mixtures are included.",
+        "The source contains two measurements at this same composition. Both are retained separately; the library does not average them or choose one as preferred.",
+        "The source does not prescribe pH; the app uses pH 7.0 as an explicit mapping convention and maps source pressure 101 kPa to its fixed 1 atm.",
+        "Only the two osmotic-coefficient measurements and their NIST/TRC compiler-estimated 95% expanded uncertainties are source values; other app outputs are not reference values from this record."
+      ]
+    }
+  ]
+}

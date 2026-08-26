@@ -37,6 +37,94 @@ separate release gates. The public library will not implement tolerances or pass
   because it provides theoretical charge-type tables rather than salt-specific experimental
   observations.
 
+## Archived machine-readable data
+
+### NIST ThermoML NaCl/KCl record (2016)
+
+- Local file:
+  [`nist-thermoml-partanen-2016-nacl-kcl.json`](nist-thermoml-partanen-2016-nacl-kcl.json)
+- Title: *Mean Activity Coefficients and Osmotic Coefficients in Dilute Aqueous Sodium or
+  Potassium Chloride Solutions at Temperatures from (0 to 70) degrees C*
+- Author: J. I. Partanen
+- Journal: *Journal of Chemical & Engineering Data* 61(1), 286-306
+- DOI: <https://doi.org/10.1021/acs.jced.5b00544>
+- ThermoML record: <https://trc.nist.gov/ThermoML/10.1021/acs.jced.5b00544.html>
+- Official JSON:
+  <https://trc.nist.gov/ThermoML/10.1021/acs.jced.5b00544.json>
+- File size: 64,662 bytes
+- SHA-256: `e426d0e08cb9d798bbe850a27a24b47a635b0b364173da62faf8c41fa0fac20b`
+- Archive decision: included unchanged. The ThermoML dataset metadata identifies the
+  [NIST open-data license](https://www.nist.gov/open/license), which permits reuse with
+  appropriate acknowledgment.
+- Research use: exact transcription source for 16 released evaluated-reference cases:
+  NaCl and KCl at 0.1 and 0.5 mol/kg, each at 0, 20, 50, and 70 degrees C.
+- Scientific boundary: the values are evaluated mean ionic activity coefficients derived
+  from experimental literature. They are independent reference data, not direct
+  measurements at every tabulated point and not software benchmarks.
+
+### NIST ThermoML CaCl2 record (2012)
+
+- Local file: [`nist-thermoml-partanen-2012-cacl2.json`](nist-thermoml-partanen-2012-cacl2.json)
+- Title: *Traceable Mean Activity Coefficients and Osmotic Coefficients in Aqueous Calcium
+  Chloride Solutions at 25 degrees C up to a Molality of 3.0 mol/kg*
+- Author: J. I. Partanen
+- Journal: *Journal of Chemical & Engineering Data* 57(11), 3247-3257
+- DOI: <https://doi.org/10.1021/je300852v>
+- ThermoML record: <https://trc.nist.gov/ThermoML/10.1021/je300852v.html>
+- Official JSON: <https://trc.nist.gov/ThermoML/10.1021/je300852v.json>
+- File size: 13,846 bytes
+- SHA-256: `dc86b4f07590ef0257fa8133c8a143fb202a997b5f7a1fd0b11b38a09659dce0`
+- Archive decision: included unchanged under the NIST open-data license with attribution.
+- Research use: exact transcription source for four released CaCl2 cases at 0.1, 0.5,
+  1.0, and 3.0 mol/kg H2O and 25 degrees C.
+- Scientific boundary: the ThermoML values use a two-term Debye-Huckel representation of
+  traceable experimental literature. They are evaluated reference data rather than direct
+  measurements at every selected point.
+
+### NIST ThermoML MgCl2 record (2015)
+
+- Local file:
+  [`nist-thermoml-rouhi-bagherinia-2015-mgcl2.json`](nist-thermoml-rouhi-bagherinia-2015-mgcl2.json)
+- Title: *Mean activity coefficient measurement and thermodynamic modelling of the ternary
+  mixed electrolyte (MgCl2 + glucose + water) system at T = 298.15 K*
+- Authors: A. Rouhi and M. A. Bagherinia
+- Journal: *Journal of Chemical Thermodynamics* 91, 286-291
+- DOI: <https://doi.org/10.1016/j.jct.2015.07.049>
+- ThermoML record:
+  <https://trc.nist.gov/ThermoML/10.1016/j.jct.2015.07.049.html>
+- Official JSON:
+  <https://trc.nist.gov/ThermoML/10.1016/j.jct.2015.07.049.json>
+- File size: 60,294 bytes
+- SHA-256: `74a58b82a5fa377752171d1c6899300bc3fd7295ada228cbaee87b23bf82d9ef`
+- Archive decision: included unchanged under the NIST open-data license with attribution.
+- Research use: only pure-or-mixture dataset 2, the 15-point binary MgCl2-water subset, is
+  eligible for the current app. Four exact points are released at 0.0833, 0.3333, 1.0, and
+  2.0 mol/kg H2O and 25 degrees C.
+- Scientific boundary: the selected values were calculated from EMF cell-potential
+  measurements. The glucose-containing dataset 1 is not mapped or released.
+
+### NIST ThermoML Na2SO4 record (2014)
+
+- Local file:
+  [`nist-thermoml-held-2014-na2so4.json`](nist-thermoml-held-2014-na2so4.json)
+- Title: *Measuring and modeling aqueous electrolyte/amino-acid solutions with ePC-SAFT*
+- Authors: C. Held, T. Reschke, R. Muller, W. Kunz, and G. Sadowski
+- Journal: *Journal of Chemical Thermodynamics* 68, 1-12
+- DOI: <https://doi.org/10.1016/j.jct.2013.08.018>
+- ThermoML record:
+  <https://trc.nist.gov/ThermoML/10.1016/j.jct.2013.08.018.html>
+- Official JSON:
+  <https://trc.nist.gov/ThermoML/10.1016/j.jct.2013.08.018.json>
+- File size: 654,223 bytes
+- SHA-256: `df1402688908113ef7bd9f6a0103badcb5a111eb04254a175228c015e4338a08`
+- Archive decision: included unchanged under the NIST open-data license with attribution.
+- Research use: only pure-or-mixture dataset 81, the binary Na2SO4-water subset, is
+  eligible for the current app. It supplies two selectable inputs at 0.5 and 1.0 mol/kg
+  H2O and two measured osmotic coefficients at each input.
+- Scientific boundary: all amino-acid mixtures and other salts in the record are excluded.
+  The four measurements represent two unique compositions and are preserved without
+  averaging or selecting a preferred replicate.
+
 ## Externally pinned PDF
 
 ### NASA/NBS Electrochemical Data Part XIII (1969)
@@ -69,6 +157,7 @@ From PowerShell, hashes can be checked with:
 
 ```powershell
 Get-FileHash -Algorithm SHA256 docs/references/validation/*.pdf
+Get-FileHash -Algorithm SHA256 docs/references/validation/*.json
 ```
 
 The expected hashes above are also the provenance check for future maintainers. If an

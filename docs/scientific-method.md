@@ -2,7 +2,7 @@
 
 ## Calculation basis
 
-The initial implementation delegates aqueous speciation and Pitzer activity calculations to
+The Version 1 implementation delegates aqueous speciation and Pitzer activity calculations to
 IPHREEQC through the `phreeqc` Python binding. Inputs are analytical totals expressed as
 molality (`mol/kg H₂O`) and are evaluated with the versioned database in
 `data/databases/pitzer.dat`.
@@ -21,8 +21,10 @@ reported.
 
 Mean electrolyte activity coefficients are generally more suitable for comparison with
 experimental measurements. The current curated definitions are NaCl, KCl, CaCl₂, MgCl₂,
-and Na₂SO₄; their extraction is regression tested, while independent comparison with
-published data remains required.
+and Na₂SO₄; their extraction is regression tested. Selected NaCl, KCl, CaCl₂, and MgCl₂
+mean coefficients and selected Na₂SO₄ osmotic coefficients have been independently compared
+with NIST ThermoML experimental or evaluated references. These comparisons cover only their
+documented cases and do not validate the full operating range.
 
 ## Input interpretation
 
@@ -47,8 +49,9 @@ Fe(III), pe/Eh controls, and implied redox equilibration are outside version 1.
 - Fixed Fe(II) and Mn(II), if exposed, require prominent no-redox warnings.
 - Calculations outside the validated envelope must be clearly flagged.
 
-Specific numerical claims and validity ranges will be added only after the validation work
-described in `validation-plan.md` is complete.
+Current numerical evidence and its exact applicability boundaries are summarized in
+[validation evidence and scope](validation-status.md). Future work remains tracked in the
+[validation plan](validation-plan.md).
 
-See the [database audit](pitzer-database-audit.md) for provenance, parameter coverage, and
-the component support classification.
+See [supported components](supported-components.md) for the user-facing classification and
+the [database audit](pitzer-database-audit.md) for provenance and parameter-level coverage.

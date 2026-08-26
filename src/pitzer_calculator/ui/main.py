@@ -289,17 +289,25 @@ def render_app() -> None:
         st.header("Quick start")
         st.markdown(
             """
-            1. Enter analytical component totals.
-            2. Set the known pH and temperature.
-            3. Calculate and review the charge balance.
-            4. Explore or download the results.
-            """
+            <div class="quick-start-list">
+              <ol>
+                <li>Enter analytical component totals.</li>
+                <li>Set the known pH and temperature.</li>
+                <li>Calculate and review the charge balance.</li>
+                <li>Explore or download the results.</li>
+              </ol>
+            </div>
+            """,
+            unsafe_allow_html=True,
         )
         st.markdown(
             """
-            <div class="beta-note">
-              <strong>Beta</strong>
-              <span>Independently verify results used for critical engineering decisions.</span>
+            <div class="validation-note">
+              <strong>Version 1</strong>
+              <span>
+                Selected outputs have been compared with published USGS and NIST reference
+                data. Independently verify results used for critical engineering decisions.
+              </span>
             </div>
             """,
             unsafe_allow_html=True,
@@ -318,10 +326,10 @@ def render_app() -> None:
         with st.expander("Learn more"):
             st.markdown(
                 """
-                - [Methodology](https://github.com/Eitan-RDEF/pitzer-activity-calculator/blob/main/docs/scientific-method.md)
-                - [Supported components](https://github.com/Eitan-RDEF/pitzer-activity-calculator/blob/main/docs/pitzer-database-audit.md)
-                - [Validation status](https://github.com/Eitan-RDEF/pitzer-activity-calculator/blob/main/docs/validation-plan.md)
-                - [GitHub repository](https://github.com/Eitan-RDEF/pitzer-activity-calculator)
+                - [Scientific method](https://github.com/Eitan-RDEF/pitzer-activity-calculator/blob/main/docs/scientific-method.md)
+                - [Supported components](https://github.com/Eitan-RDEF/pitzer-activity-calculator/blob/main/docs/supported-components.md)
+                - [Validation evidence](https://github.com/Eitan-RDEF/pitzer-activity-calculator/blob/main/docs/validation-status.md)
+                - [Source code on GitHub](https://github.com/Eitan-RDEF/pitzer-activity-calculator)
                 """
             )
         st.divider()

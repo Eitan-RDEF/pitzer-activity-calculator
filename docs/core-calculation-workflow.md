@@ -1,12 +1,14 @@
 # Core Known-pH Calculation Workflow
 
-**Implementation status:** complete beta workflow  
-**Implemented:** 2026-08-26  
-**Validation status:** software regression tested; independent scientific validation pending
+**Implementation status:** complete Version 1 workflow
+
+**Implemented:** 2026-08-26
+
+**Validation status:** software regression tested; selected properties independently compared
 
 ## Scope
 
-This is the first end-to-end calculation contract. It implements a focused known-pH
+This is the Version 1 end-to-end calculation contract. It implements a focused known-pH
 workflow with a default major-ion core and a clearly separated conditional-component mode.
 Calculated-pH, CO₂-equilibrium, and charge-correction modes remain future work.
 
@@ -98,6 +100,8 @@ The integration suite pins a 1 molal NaCl result at 25 °C and exercises a mixed
 chloride/sulfate/carbonate system at 60 °C. The Streamlit test submits the default NaCl case
 and confirms that the complete result interface renders without exceptions.
 
-These regression cases detect software changes; they are not independent thermodynamic
-validation. The next scientific step is the reference-case program described in
-`docs/validation-plan.md`.
+These regression cases detect software changes. Separate NIST ThermoML comparisons now
+provide independent evidence for selected NaCl, KCl, CaCl2, MgCl2, and Na2SO4 properties;
+USGS cases provide implementation benchmarks. See
+[validation evidence and scope](validation-status.md) for the current results and the
+[validation plan](validation-plan.md) for remaining priorities.

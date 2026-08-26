@@ -207,8 +207,9 @@ The current engine/database pairing successfully exposes:
 
 For a 1 mol/kg water NaCl solution at 25 °C, the integration test currently pins
 approximately `γ± = 0.657220`, water activity `0.966825`, and osmotic coefficient
-`0.936359`. These are regression values from this exact engine/database pair, not yet an
-independent validation against experimental data.
+`0.936359`. These particular values are software-regression targets. Separate independent
+comparisons now cover selected NaCl, KCl, CaCl2, MgCl2, and Na2SO4 properties under the
+conditions summarized in `docs/validation-status.md`.
 
 The database contains 21 `MEAN_GAMMAS` definitions:
 
@@ -239,14 +240,16 @@ This inventory does not establish:
 - compatibility of every database feature with the deployed native engine;
 - suitability of a component merely because PHREEQC returns a numerical answer.
 
-Those claims require the reference-case program in `docs/validation-plan.md`.
+The completed and remaining evidence is separated in `docs/validation-status.md` and
+`docs/validation-plan.md`.
 
 ## Required next scientific work
 
 1. Select or formally approve the engine/database version-pairing policy.
-2. Build reference cases for core chloride, sulfate, carbonate, acid, and mixed systems over
-   the intended temperature and concentration envelope.
-3. Independently validate water activity, osmotic coefficient, and the curated mean-γ list.
+2. Extend the current chloride and sulfate reference cases to carbonate, acid, and mixed
+   systems over the intended temperature and concentration envelope.
+3. Independently validate water activity and extend osmotic-coefficient and curated mean-γ
+   coverage beyond the currently documented cases.
 4. Encode the interaction-aware warning rules described above.
 5. Validate the calculated-pH and explicit CO₂-boundary workflows.
 6. Review the final support classifications and warnings with a qualified geochemist or
