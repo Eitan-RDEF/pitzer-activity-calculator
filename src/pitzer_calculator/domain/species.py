@@ -11,6 +11,10 @@ class ComponentSupport(str, Enum):
     CONDITIONAL = "conditional"
 
 
+CATION_GROUP = "Cations"
+ANION_ACID_BASE_GROUP = "Anions and acid–base components"
+
+
 @dataclass(frozen=True, slots=True)
 class ComponentDefinition:
     key: str
@@ -40,30 +44,30 @@ class MeanElectrolyteDefinition:
 # Core inputs are shown by default. Conditional inputs are exposed in a separate advanced
 # section with their audited database limitations repeated in calculation warnings.
 COMPONENTS: tuple[ComponentDefinition, ...] = (
-    ComponentDefinition("Na", "Na⁺", "Na", "Cations", 0.1),
-    ComponentDefinition("K", "K⁺", "K", "Cations"),
-    ComponentDefinition("Ca", "Ca²⁺", "Ca", "Cations"),
-    ComponentDefinition("Mg", "Mg²⁺", "Mg", "Cations"),
-    ComponentDefinition("Cl", "Cl⁻", "Cl", "Anions and totals", 0.1),
+    ComponentDefinition("Na", "Na⁺", "Na", CATION_GROUP, 0.1),
+    ComponentDefinition("K", "K⁺", "K", CATION_GROUP),
+    ComponentDefinition("Ca", "Ca²⁺", "Ca", CATION_GROUP),
+    ComponentDefinition("Mg", "Mg²⁺", "Mg", CATION_GROUP),
+    ComponentDefinition("Cl", "Cl⁻", "Cl", ANION_ACID_BASE_GROUP, 0.1),
     ComponentDefinition(
         "SO4",
         "Total S(VI)",
         "S(6)",
-        "Anions and totals",
+        ANION_ACID_BASE_GROUP,
         included_forms=("SO₄²⁻", "HSO₄⁻"),
     ),
     ComponentDefinition(
         "C4",
         "Total inorganic C(IV)",
         "C(4)",
-        "Anions and totals",
+        ANION_ACID_BASE_GROUP,
         included_forms=("CO₂(aq)", "HCO₃⁻", "CO₃²⁻", "MgCO₃(aq)"),
     ),
     ComponentDefinition(
         "Li",
         "Li⁺",
         "Li",
-        "Cations",
+        CATION_GROUP,
         support=ComponentSupport.CONDITIONAL,
         limitation=(
             "Useful for brines, but carbonate, bicarbonate, and bisulfate interactions "
@@ -74,7 +78,7 @@ COMPONENTS: tuple[ComponentDefinition, ...] = (
         "Sr",
         "Sr²⁺",
         "Sr",
-        "Cations",
+        CATION_GROUP,
         support=ComponentSupport.CONDITIONAL,
         limitation="Carbonate, hydroxide, and bisulfate interactions are incomplete.",
     ),
@@ -82,7 +86,7 @@ COMPONENTS: tuple[ComponentDefinition, ...] = (
         "Ba",
         "Ba²⁺",
         "Ba",
-        "Cations",
+        CATION_GROUP,
         support=ComponentSupport.CONDITIONAL,
         limitation=(
             "Sulfate and carbonate coverage is weak; mineral precipitation is not modeled."
@@ -92,7 +96,7 @@ COMPONENTS: tuple[ComponentDefinition, ...] = (
         "Fe2",
         "Total Fe(II)",
         "Fe",
-        "Cations",
+        CATION_GROUP,
         support=ComponentSupport.CONDITIONAL,
         limitation="Fixed Fe(II) only; no redox calculation or Fe(III) conversion is performed.",
     ),
@@ -100,7 +104,7 @@ COMPONENTS: tuple[ComponentDefinition, ...] = (
         "Mn2",
         "Total Mn(II)",
         "Mn",
-        "Cations",
+        CATION_GROUP,
         support=ComponentSupport.CONDITIONAL,
         limitation="Fixed Mn(II) only; no redox calculation is performed.",
     ),
@@ -108,7 +112,7 @@ COMPONENTS: tuple[ComponentDefinition, ...] = (
         "Br",
         "Br⁻",
         "Br",
-        "Anions and totals",
+        ANION_ACID_BASE_GROUP,
         support=ComponentSupport.CONDITIONAL,
         limitation="Good binary coverage, but fewer multicomponent interaction parameters.",
     ),
@@ -116,7 +120,7 @@ COMPONENTS: tuple[ComponentDefinition, ...] = (
         "B",
         "Total B",
         "B",
-        "Anions and totals",
+        ANION_ACID_BASE_GROUP,
         support=ComponentSupport.CONDITIONAL,
         limitation="Several borate species are represented, but interaction coverage is uneven.",
     ),
@@ -124,7 +128,7 @@ COMPONENTS: tuple[ComponentDefinition, ...] = (
         "Si",
         "Total Si",
         "Si",
-        "Anions and totals",
+        ANION_ACID_BASE_GROUP,
         support=ComponentSupport.CONDITIONAL,
         limitation=(
             "Neutral silica is better supported than deprotonated silicate species, "

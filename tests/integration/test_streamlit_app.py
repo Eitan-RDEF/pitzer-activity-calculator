@@ -27,11 +27,23 @@ def test_default_nacl_workflow_renders_complete_results() -> None:
         "Includes: CO₂(aq), HCO₃⁻, CO₃²⁻, MgCO₃(aq)" in item.value
         for item in app.caption
     )
+    assert any(
+        item.label == "Anions and acid–base components" for item in app.expander
+    )
     app.button[0].click().run(timeout=20)
 
     assert not app.exception
     assert len(app.metric) == 4
+    assert app.metric[1].label == "Ionic strength (mol/kg H₂O)"
+    assert "mol/kg" not in app.metric[1].value
     assert len(app.dataframe) == 3
+    assert any("Explore results" in item.value for item in app.markdown)
+    assert [tab.label for tab in app.tabs] == [
+        "Mean coefficients",
+        "Aqueous species",
+        "Conditions & balance",
+        "Method & versions",
+    ]
 
 
 def test_reset_clears_composition_and_restores_physical_defaults() -> None:

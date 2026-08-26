@@ -1,26 +1,65 @@
+:root {
+  --color-accent: #0f766e;
+  --color-accent-dark: #0b5f59;
+  --color-accent-soft: #e8f4f2;
+  --color-canvas: #f6f8fb;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f8fafc;
+  --color-sidebar: #f2f7f6;
+  --color-border: #d7e0e8;
+  --color-border-strong: #c7d2dd;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 24px rgba(15, 23, 42, 0.035);
+}
+
+[data-testid="stAppViewContainer"] {
+  background: var(--color-canvas);
+}
+
+[data-testid="stSidebar"] {
+  background: var(--color-sidebar);
+  border-right: 1px solid #dde8e6;
+}
+
+[data-testid="stSidebar"] [data-testid="stExpander"] {
+  background: rgba(255, 255, 255, 0.58);
+}
+
 .block-container {
   max-width: 1180px;
   padding-top: 2.25rem;
   padding-bottom: 4rem;
 }
 
+h1,
+h2,
+h3,
+h4 {
+  color: var(--color-text);
+  letter-spacing: -0.015em;
+}
+
 .app-tagline {
-  color: #475569;
+  color: var(--color-text-muted);
   font-size: 1.08rem;
   margin-top: -0.75rem;
   margin-bottom: 1.25rem;
 }
 
 .app-introduction {
-  background: linear-gradient(135deg, #f4fbf9 0%, #f8fafc 100%);
-  border: 1px solid #dbe7e4;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-accent);
   border-radius: 0.9rem;
+  box-shadow: var(--shadow-card);
   margin-bottom: 1.5rem;
   padding: 1.25rem 1.4rem;
 }
 
 .app-introduction h2 {
-  color: #153c3a;
+  color: var(--color-text);
   font-size: 1.35rem;
   margin: 0 0 0.45rem;
 }
@@ -41,8 +80,8 @@
 
 .workflow-steps > div {
   align-items: center;
-  background: rgba(255, 255, 255, 0.78);
-  border: 1px solid #dbe7e4;
+  background: var(--color-surface-subtle);
+  border: 1px solid var(--color-border);
   border-radius: 0.65rem;
   display: grid;
   grid-template-columns: auto 1fr;
@@ -51,7 +90,7 @@
 
 .workflow-steps span {
   align-items: center;
-  background: #0f625b;
+  background: var(--color-accent);
   border-radius: 999px;
   color: white;
   display: flex;
@@ -65,18 +104,18 @@
 }
 
 .workflow-steps strong {
-  color: #153c3a;
+  color: var(--color-text);
   font-size: 0.9rem;
 }
 
 .workflow-steps small {
-  color: #64748b;
+  color: var(--color-text-muted);
   font-size: 0.76rem;
 }
 
 .beta-note {
-  background: #fff8e6;
-  border: 1px solid #f0d98c;
+  background: #fff8e8;
+  border: 1px solid #ebcf82;
   border-radius: 0.65rem;
   color: #684f00;
   display: flex;
@@ -98,8 +137,191 @@
 }
 
 [data-testid="stMetric"] {
-  background: #ffffff;
-  border: 1px solid #dbe7e4;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 0.75rem;
-  padding: 0.8rem 1rem;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.035);
+  padding: 0.55rem 0.85rem;
+}
+
+[data-testid="stMetricValue"] {
+  font-size: 1.65rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.15;
+}
+
+[data-testid="stMetricLabel"] {
+  align-items: flex-start;
+  min-height: 1.35rem;
+}
+
+[data-testid="stMetricLabel"] div,
+[data-testid="stMetricLabel"] p {
+  -webkit-line-clamp: unset !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: normal !important;
+}
+
+[data-testid="stForm"] {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.85rem;
+  box-shadow: var(--shadow-card);
+}
+
+[data-testid="stExpander"] {
+  background: var(--color-surface);
+  border-color: var(--color-border) !important;
+  border-radius: 0.65rem;
+}
+
+[data-testid="stExpander"] details summary:hover {
+  background: var(--color-surface-subtle);
+}
+
+[data-testid="stNumberInput"] [data-baseweb="input"],
+[data-testid="stSelectbox"] [data-baseweb="select"] > div {
+  background: var(--color-surface) !important;
+  border-color: var(--color-border-strong) !important;
+}
+
+[data-testid="stNumberInput"],
+[data-testid="stSelectbox"] {
+  max-width: 14rem;
+}
+
+[data-testid="stNumberInput"] [data-baseweb="input"]:focus-within,
+[data-testid="stSelectbox"] [data-baseweb="select"] > div:focus-within {
+  border-color: var(--color-accent) !important;
+  box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.13) !important;
+}
+
+[data-testid="stNumberInput"] input {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+
+[data-testid="stNumberInput"] button {
+  background: var(--color-surface) !important;
+  color: #334155 !important;
+}
+
+/* Streamlit can render this keyboard hint over compact form controls in some browsers. */
+[data-testid="InputInstructions"],
+[data-testid="stInputInstructions"] {
+  display: none !important;
+}
+
+[data-testid="stBaseButton-primary"] {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  box-shadow: 0 1px 2px rgba(15, 118, 110, 0.16);
+}
+
+[data-testid="stBaseButton-primary"]:hover {
+  background: var(--color-accent-dark);
+  border-color: var(--color-accent-dark);
+}
+
+[data-testid="stBaseButton-secondary"] {
+  background: var(--color-surface);
+  border-color: var(--color-border-strong);
+  color: #1e293b;
+}
+
+[data-testid="stBaseButton-secondary"]:hover {
+  background: var(--color-surface-subtle);
+  border-color: #94a3b8;
+  color: var(--color-text);
+}
+
+[data-testid="stDataFrame"],
+[data-testid="stTable"] {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.7rem;
+  overflow: hidden;
+}
+
+[data-testid="stCaptionContainer"] {
+  color: #556377;
+}
+
+[data-testid="stCaptionContainer"] p {
+  color: #556377 !important;
+  opacity: 1;
+}
+
+.results-view-label {
+  color: #475569;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.075em;
+  margin: 1.25rem 0 0.45rem;
+  text-transform: uppercase;
+}
+
+[role="tablist"] {
+  align-items: center;
+  background: #e9eef3;
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  display: inline-flex;
+  gap: 0.25rem;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 0.3rem;
+}
+
+[data-testid="stTab"] {
+  background: transparent;
+  border-radius: 0.5rem;
+  color: #334155;
+  cursor: pointer;
+  font-weight: 600;
+  min-height: 2.45rem;
+  padding: 0.5rem 0.85rem;
+  transition: background-color 120ms ease, color 120ms ease,
+    box-shadow 120ms ease;
+  white-space: nowrap;
+}
+
+[data-testid="stTab"]:hover {
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--color-text);
+}
+
+[data-testid="stTab"][aria-selected="true"] {
+  background: var(--color-accent);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.14);
+  color: #ffffff !important;
+}
+
+[data-testid="stTab"][aria-selected="true"] p {
+  color: #ffffff !important;
+}
+
+.react-aria-SelectionIndicator {
+  display: none;
+}
+
+[data-testid="stTabPanel"] {
+  padding-top: 1rem;
+}
+
+@media (max-width: 760px) {
+  [role="tablist"] {
+    display: flex;
+    width: 100%;
+  }
+
+  [data-testid="stNumberInput"],
+  [data-testid="stSelectbox"] {
+    max-width: none;
+  }
+
+  [data-testid="stMetricLabel"] {
+    min-height: 2.35rem;
+  }
 }

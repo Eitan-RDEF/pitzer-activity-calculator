@@ -11,6 +11,8 @@ from pitzer_calculator.domain.models import (
     convert_composition_to_molal,
 )
 from pitzer_calculator.domain.species import (
+    ANION_ACID_BASE_GROUP,
+    CATION_GROUP,
     COMPONENTS,
     CONDITIONAL_COMPONENTS,
     CORE_COMPONENTS,
@@ -42,13 +44,17 @@ def _reset_solution_form() -> None:
 
 
 def _component_grid(
-    components: tuple[ComponentDefinition, ...], unit: ConcentrationUnit
+    components: tuple[ComponentDefinition, ...],
+    unit: ConcentrationUnit,
+    columns_per_row: int = 4,
 ) -> dict[str, float]:
     values: dict[str, float] = {}
-    for row_start in range(0, len(components), 3):
-        columns = st.columns(3)
+    for row_start in range(0, len(components), columns_per_row):
+        columns = st.columns(columns_per_row)
         for column, component in zip(
-            columns, components[row_start : row_start + 3], strict=False
+            columns,
+            components[row_start : row_start + columns_per_row],
+            strict=False,
         ):
             with column:
                 default = component.default_molal / unit.to_molal_factor
@@ -72,17 +78,19 @@ def _component_grid(
 
 def _composition_inputs(unit: ConcentrationUnit) -> dict[str, float]:
     values: dict[str, float] = {}
-    for group in ("Cations", "Anions and totals"):
+    for group in (CATION_GROUP, ANION_ACID_BASE_GROUP):
         with st.expander(group, expanded=True):
             group_components = tuple(item for item in CORE_COMPONENTS if item.group == group)
-            values.update(_component_grid(group_components, unit))
+            values.update(
+                _component_grid(group_components, unit)
+            )
 
     with st.expander("Extended components — conditional database coverage"):
         st.caption(
             "These components are calculated by the bundled database, but their interaction "
             "coverage is less complete. Active limitations are repeated with the results."
         )
-        for group in ("Cations", "Anions and totals"):
+        for group in (CATION_GROUP, ANION_ACID_BASE_GROUP):
             st.markdown(f"**{group}**")
             group_components = tuple(
                 item for item in CONDITIONAL_COMPONENTS if item.group == group
@@ -161,14 +169,23 @@ def _render_results(solution: SolutionInput, result: Any, warnings: tuple[str, .
     first, second, third, fourth = st.columns(4)
     first.metric("pH", _display_number(result.ph))
     second.metric(
-        "Ionic strength",
-        f"{_display_number(result.ionic_strength_molal)} mol/kg",
+        "Ionic strength (mol/kg H₂O)",
+        _display_number(result.ionic_strength_molal),
     )
     third.metric("Water activity", _display_number(result.water_activity))
     fourth.metric("Osmotic coefficient", _display_number(result.osmotic_coefficient))
 
-    summary_tab, species_tab, mean_tab, method_tab = st.tabs(
-        ["Summary", "Aqueous species", "Mean coefficients", "Method & versions"]
+    st.markdown(
+        '<div class="results-view-label">Explore results</div>',
+        unsafe_allow_html=True,
+    )
+    mean_tab, species_tab, summary_tab, method_tab = st.tabs(
+        [
+            "Mean coefficients",
+            "Aqueous species",
+            "Conditions & balance",
+            "Method & versions",
+        ]
     )
 
     with summary_tab:
@@ -316,7 +333,7 @@ def render_app() -> None:
             "Enter analytical component totals. PHREEQC calculates the equilibrium species "
             "distribution; entered totals are not free-ion concentrations."
         )
-        left, middle, right = st.columns(3)
+        left, middle, right, _physical_spacer = st.columns(4)
         with left:
             ph_default = {"value": 7.0} if "solution_ph" not in st.session_state else {}
             ph = st.number_input(
