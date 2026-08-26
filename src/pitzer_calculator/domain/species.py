@@ -10,6 +10,7 @@ class ComponentDefinition:
     phreeqc_name: str
     group: str
     default_molal: float = 0.0
+    included_forms: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -34,8 +35,20 @@ COMPONENTS: tuple[ComponentDefinition, ...] = (
     ComponentDefinition("Ca", "Ca²⁺", "Ca", "Cations"),
     ComponentDefinition("Mg", "Mg²⁺", "Mg", "Cations"),
     ComponentDefinition("Cl", "Cl⁻", "Cl", "Anions and totals", 0.1),
-    ComponentDefinition("SO4", "Total S(VI)", "S(6)", "Anions and totals"),
-    ComponentDefinition("C4", "Total inorganic C(IV)", "C(4)", "Anions and totals"),
+    ComponentDefinition(
+        "SO4",
+        "Total S(VI)",
+        "S(6)",
+        "Anions and totals",
+        included_forms=("SO₄²⁻", "HSO₄⁻"),
+    ),
+    ComponentDefinition(
+        "C4",
+        "Total inorganic C(IV)",
+        "C(4)",
+        "Anions and totals",
+        included_forms=("CO₂(aq)", "HCO₃⁻", "CO₃²⁻", "MgCO₃(aq)"),
+    ),
 )
 
 COMPONENT_BY_KEY = {component.key: component for component in COMPONENTS}

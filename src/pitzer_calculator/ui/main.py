@@ -25,6 +25,17 @@ def _display_number(value: float, significant_digits: int = 6) -> str:
     return format(value, f".{significant_digits}g")
 
 
+def _reset_solution_form() -> None:
+    """Restore physical inputs and clear every unit-specific composition widget."""
+
+    st.session_state["solution_ph"] = 7.0
+    st.session_state["solution_temperature_c"] = 25.0
+    st.session_state["composition_unit"] = ConcentrationUnit.MOL_PER_KGW
+    for unit in ConcentrationUnit:
+        for component in COMPONENTS:
+            st.session_state[f"component_{unit.name}_{component.key}"] = 0.0
+
+
 def _composition_inputs(unit: ConcentrationUnit) -> dict[str, float]:
     values: dict[str, float] = {}
     for group in ("Cations", "Anions and totals"):
@@ -34,13 +45,19 @@ def _composition_inputs(unit: ConcentrationUnit) -> dict[str, float]:
             for index, component in enumerate(group_components):
                 with columns[index % len(columns)]:
                     default = component.default_molal / unit.to_molal_factor
+                    widget_key = f"component_{unit.name}_{component.key}"
+                    default_arguments = (
+                        {"value": default} if widget_key not in st.session_state else {}
+                    )
                     values[component.key] = st.number_input(
                         f"{component.label} [{unit.display_label}]",
                         min_value=0.0,
-                        value=default,
                         format="%.8g",
-                        key=f"component_{unit.name}_{component.key}",
+                        key=widget_key,
+                        **default_arguments,
                     )
+                    if component.included_forms:
+                        st.caption(f"Includes: {', '.join(component.included_forms)}")
     return values
 
 
@@ -196,21 +213,68 @@ def render_app() -> None:
 
     st.title(APP_NAME)
     st.markdown(f"<p class='app-tagline'>{APP_TAGLINE}</p>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <section class="app-introduction">
+          <h2>Calculate activities in concentrated aqueous solutions</h2>
+          <p>
+            Enter the solution composition, pH, and temperature. The calculator uses the
+            PHREEQC Pitzer model to determine equilibrium species, activities, activity
+            coefficients, water properties, and charge-balance diagnostics.
+          </p>
+          <div class="workflow-steps" aria-label="Calculation workflow">
+            <div><span>1</span><strong>Define</strong><small>Enter the solution</small></div>
+            <div><span>2</span><strong>Calculate</strong><small>Run the Pitzer model</small></div>
+            <div>
+              <span>3</span><strong>Review</strong><small>Explore or download results</small>
+            </div>
+          </div>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
 
     with st.sidebar:
-        st.header("Current scientific scope")
-        st.info(
-            "Beta workflow: known pH, closed aqueous system, core major ions, 0–100 °C, "
-            "and fixed pressure of 1 atm."
+        st.header("Quick start")
+        st.markdown(
+            """
+            1. Enter analytical component totals.
+            2. Set the known pH and temperature.
+            3. Calculate and review the charge balance.
+            4. Explore or download the results.
+            """
         )
-        st.warning(
-            "Results are not yet independently validated across the full range. Do not use "
-            "this beta as the sole basis for safety-critical or regulatory decisions."
+        st.markdown(
+            """
+            <div class="beta-note">
+              <strong>Beta</strong>
+              <span>Independently verify results used for critical engineering decisions.</span>
+            </div>
+            """,
+            unsafe_allow_html=True,
         )
-        st.caption(
-            "Individual-ion activity coefficients use the MacInnes convention and are "
-            "convention-dependent."
-        )
+        with st.expander("Calculation assumptions"):
+            st.markdown(
+                """
+                - Pitzer activity model
+                - Molality concentration basis
+                - Known-pH, closed aqueous system
+                - Fixed pressure: 1 atm
+                - MacInnes convention for individual ions
+                - No gas, mineral, or redox equilibrium
+                """
+            )
+        with st.expander("Learn more"):
+            st.markdown(
+                """
+                - [Methodology](https://github.com/Eitan-RDEF/pitzer-activity-calculator/blob/main/docs/scientific-method.md)
+                - [Supported components](https://github.com/Eitan-RDEF/pitzer-activity-calculator/blob/main/docs/pitzer-database-audit.md)
+                - [Validation status](https://github.com/Eitan-RDEF/pitzer-activity-calculator/blob/main/docs/validation-plan.md)
+                - [GitHub repository](https://github.com/Eitan-RDEF/pitzer-activity-calculator)
+                """
+            )
+        st.divider()
+        st.caption("Free and open-source engineering tool developed by **Eitan Elfassy**.")
 
     with st.form("solution_form"):
         st.subheader("Solution definition")
@@ -220,21 +284,52 @@ def render_app() -> None:
         )
         left, middle, right = st.columns(3)
         with left:
-            ph = st.number_input("Known pH", min_value=-2.0, max_value=16.0, value=7.0)
+            ph_default = {"value": 7.0} if "solution_ph" not in st.session_state else {}
+            ph = st.number_input(
+                "Known pH",
+                min_value=-2.0,
+                max_value=16.0,
+                key="solution_ph",
+                **ph_default,
+            )
         with middle:
+            temperature_default = (
+                {"value": 25.0}
+                if "solution_temperature_c" not in st.session_state
+                else {}
+            )
             temperature_c = st.number_input(
-                "Temperature [°C]", min_value=0.0, max_value=100.0, value=25.0
+                "Temperature [°C]",
+                min_value=0.0,
+                max_value=100.0,
+                key="solution_temperature_c",
+                **temperature_default,
             )
         with right:
             unit = st.selectbox(
                 "Composition unit",
                 options=list(ConcentrationUnit),
                 format_func=lambda item: item.display_label,
+                key="composition_unit",
             )
 
         st.markdown("#### Composition")
         raw_components = _composition_inputs(unit)
-        submitted = st.form_submit_button("Calculate with Pitzer", type="primary")
+        calculate_column, reset_column, _spacer = st.columns([1.35, 0.75, 3.4])
+        with calculate_column:
+            submitted = st.form_submit_button(
+                "Calculate with Pitzer", type="primary", width="stretch"
+            )
+        with reset_column:
+            reset_requested = st.form_submit_button(
+                "Reset",
+                on_click=_reset_solution_form,
+                width="stretch",
+            )
+
+    if reset_requested:
+        st.caption("Inputs cleared. Physical conditions were restored to their defaults.")
+        return
 
     if not submitted:
         st.caption("A balanced 0.1 mol/kg NaCl example is prefilled to get you started.")
