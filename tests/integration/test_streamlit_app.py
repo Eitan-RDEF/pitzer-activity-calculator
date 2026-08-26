@@ -71,6 +71,49 @@ def test_reset_clears_composition_and_restores_physical_defaults() -> None:
     assert not app.metric
 
 
+def test_reference_case_selection_prefills_existing_form_and_shows_source_data() -> None:
+    app = AppTest.from_file(Path(__file__).parents[2] / "streamlit_app.py")
+    app.run(timeout=20)
+
+    app.selectbox(key="reference_case_id").select(
+        "nist_thermoml_2012_cacl2_0p5m_25c"
+    ).run(timeout=20)
+
+    assert not app.exception
+    assert app.number_input(key="solution_ph").value == 7.0
+    assert app.number_input(key="solution_temperature_c").value == 25.0
+    assert app.selectbox(key="composition_unit").value == ConcentrationUnit.MOL_PER_KGW
+    assert app.number_input(key="component_MOL_PER_KGW_Ca").value == 0.5
+    assert app.number_input(key="component_MOL_PER_KGW_Cl").value == 1.0
+    assert app.number_input(key="component_MOL_PER_KGW_Na").value == 0.0
+    assert any(
+        item.label == "Load a published reference case (optional)"
+        for item in app.expander
+    )
+    rendered_markdown = "\n".join(item.value for item in app.markdown)
+    assert "Independent experimental/evaluated reference" in rendered_markdown
+    assert [item.label for item in app.toggle] == [
+        "Show published values and source",
+        "Show mapping assumptions and limitations",
+    ]
+    assert all(not item.value for item in app.toggle)
+    assert "Partanen, J. I. (2012)" not in rendered_markdown
+    assert not app.dataframe
+
+    app.toggle(key="show_reference_source").set_value(True).run(timeout=20)
+
+    assert not app.exception
+    rendered_markdown = "\n".join(item.value for item in app.markdown)
+    assert "Partanen, J. I. (2012)" in rendered_markdown
+    assert len(app.dataframe) == 1
+
+    app.toggle(key="show_reference_assumptions").set_value(True).run(timeout=20)
+
+    assert not app.exception
+    rendered_markdown = "\n".join(item.value for item in app.markdown)
+    assert "source defines a binary CaCl2-water system" in rendered_markdown
+
+
 def test_conditional_component_limitations_and_active_warnings_are_visible() -> None:
     app = AppTest.from_file(Path(__file__).parents[2] / "streamlit_app.py")
     app.run(timeout=20)

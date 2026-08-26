@@ -90,6 +90,12 @@ results used for critical engineering decisions. See the current
 [validation evidence and scope](docs/validation-status.md) and
 [supported components](docs/supported-components.md).
 
+The app includes 30 reviewed reference cases. The collapsed **Load a published reference
+case (optional)** section prefills the normal calculation form and keeps the published
+values, evidence class, citation, source link, and mapping assumptions available while the
+user runs and interprets the calculation. Published source details and mapping limitations
+are each shown only on request.
+
 ## Deployment
 
 The root `streamlit_app.py` and `requirements.txt` follow Streamlit Community Cloud's

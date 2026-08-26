@@ -2,6 +2,7 @@
 
 **Status:** Approved scope baseline  
 **Decision date:** 2026-08-26  
+**Scope amended:** 2026-08-27 (CO₂ equilibrium and charge correction explicitly excluded)
 **Applies to:** First public version of the Pitzer Activity Calculator
 
 ## Purpose
@@ -34,22 +35,22 @@ requiring users to write PHREEQC input or interpret raw solver output.
 | 1 | Product scope | Complete activity calculator for all supported aqueous species |
 | 2 | Composition basis | Analytical component totals |
 | 3 | Concentration units | `mol/kg H₂O` and `mmol/kg H₂O` |
-| 4 | Acid-base modes | Known pH and calculated pH |
+| 4 | Acid-base mode | Known pH only |
 | 5 | Temperature | 0–100 °C |
 | 6 | Pressure | Fixed near atmospheric pressure |
 | 7 | Components | Only components supported by a documented `pitzer.dat` audit |
-| 8 | Charge correction | Optional, explicit, user-selected correction; never silent |
+| 8 | Charge handling | Diagnostics and warnings only; no correction |
 | 9 | Thermodynamic outputs | Solute results plus water activity and osmotic coefficient |
 | 10 | Mean coefficients | Curated, validated electrolyte list |
 | 11 | Single-ion convention | MacInnes convention only |
 | 12 | Redox | Fixed oxidation-state totals with explicit redox assumptions |
-| 13 | Carbonate gas boundary | Closed system or user-specified CO₂ equilibrium |
+| 13 | Carbonate gas boundary | Closed aqueous system only; no CO₂ equilibrium |
 | 14 | Unvalidated coverage | Calculate where technically possible and issue prominent warnings |
 | 15 | Solids | No precipitation or equilibration with solids |
 | 16 | Known-pH range | pH −2 to 16 |
 | 17 | Charge-balance bands | ≤2% good; >2–5% review; >5% significant imbalance |
-| 18 | Balancing components | Curated conservative ions only |
-| 19 | Calculated-pH inputs | Inputs matched to the selected carbonate boundary |
+| 18 | Balancing components | None; the submitted analysis is never modified |
+| 19 | External equilibrium states | Enter externally determined pH and total inorganic carbon |
 | 20 | Result presentation | Layered summary followed by a complete filterable species table |
 | 21 | Downloads | CSV, PHREEQC input, and concise calculation report; optional ZIP |
 | 22 | Presets | Curated and validated examples only |
@@ -95,12 +96,11 @@ Both are molality-based, and their conversion is exact. Version 1 does not accep
 `mg/L`, ppm, or other density-dependent concentration units. Internally, calculations use
 `mol/kg H₂O`.
 
-### 4. Acid-base calculation modes
+### 4. Acid-base calculation mode
 
-The user explicitly selects one of two modes:
-
-1. **Known pH:** pH is imposed as an input.
-2. **Calculated pH:** pH is calculated from the chemically appropriate carbonate inputs.
+Version 1 provides one explicit mode: **known pH**. The user supplies pH on the H⁺ activity
+basis together with analytical component totals. A known pH is required for every
+calculation.
 
 The UI must explain that pH is defined from H⁺ activity rather than H⁺ molality.
 
@@ -136,21 +136,15 @@ The audit determines the final version 1 input list. Components that cannot be m
 safely are blocked. Components that technically run but have incomplete evidence may be
 allowed only under the warning policy in decision 14.
 
-### 8. Charge-balance correction
+### 8. Charge-balance diagnostics
 
-Every calculation begins with the original user analysis. The app reports its signed
-charge-balance error before any adjustment.
+The app calculates and reports the signed charge-balance error for the original user
+analysis. It classifies the magnitude using the documented warning bands, but it does not
+offer automatic or user-selected ion adjustment.
 
-The user may explicitly request charge balancing and choose from the approved balancing
-components. The app must:
-
-- default to no correction;
-- never select or modify an ion silently;
-- retain and display the original composition;
-- show the selected balancing component;
-- show its original value, adjusted value, and absolute change;
-- identify all results calculated from the adjusted composition;
-- include the correction details in downloads.
+The submitted composition is passed to the solver unchanged and retained unchanged in all
+downloads. Diagnosing the source of an imbalance and deciding whether any analytical value
+should be revised remain the user's responsibility.
 
 ### 9. Solute and water outputs
 
@@ -200,16 +194,16 @@ Inputs and reports must clearly state that these totals retain the fixed oxidati
 represented by the database. The detailed evidence and warnings are recorded in
 `docs/pitzer-database-audit.md`.
 
-### 13. Carbonate and CO₂ boundary modes
+### 13. Closed carbonate boundary
 
-The user explicitly selects one of these boundaries:
+Version 1 uses a **closed carbonate system**: entered total inorganic carbon remains fixed
+and no exchange with atmospheric or another gas phase is modeled. The app does not accept
+`pCO₂` or calculate an atmosphere-equilibrated pH or carbon total.
 
-1. **Closed carbonate system:** total inorganic carbon remains fixed and no CO₂ exchange
-   is modeled.
-2. **CO₂ equilibrium:** the solution equilibrates with a user-specified `pCO₂`.
-
-The app must never assume atmospheric equilibrium silently. The calculation report records
-the selected boundary and, when applicable, the specified `pCO₂` and its units.
+Users who need an open-system state may equilibrate the sample experimentally or use an
+appropriate external tool, then enter the resulting pH and total inorganic carbon here.
+Total inorganic carbon—not carbonate ion concentration alone—is required because the app
+calculates the distribution among CO₂(aq), HCO₃⁻, CO₃²⁻, and defined complexes.
 
 ### 14. Outside validated coverage
 
@@ -227,8 +221,7 @@ range remain blocking errors.
 ### 15. No solid-phase equilibration
 
 Version 1 calculates aqueous speciation for the dissolved analytical totals exactly as
-entered or explicitly charge-balanced. It does not add equilibrium phases or precipitate
-minerals and salts.
+entered. It does not add equilibrium phases or precipitate minerals and salts.
 
 A successful result therefore does not prove that the entered composition is physically
 stable against precipitation. This limitation must be disclosed, especially for
@@ -253,25 +246,18 @@ Use the magnitude of the signed PHREEQC charge-balance error for classification:
 The signed numerical value remains visible. These bands do not silently reject or correct a
 solution, and the UI must avoid presenting them as universal laboratory acceptance criteria.
 
-### 18. Curated balancing components
+### 18. No balancing components
 
-Optional charge correction is limited to audited conservative ions suitable for balancing.
-Likely candidates include Na⁺ and Cl⁻, but the final list and rationale must be documented
-after the database audit.
+Version 1 exposes no balancing-ion selector. Na⁺, Cl⁻, and every other analytical total
+remain exactly as entered. Charge-balance diagnostics inform the user without presenting a
+particular correction as chemically justified.
 
-The app does not permit arbitrary adjustment of every charged component and does not choose
-a balancing ion automatically.
+### 19. Externally determined equilibrium states
 
-### 19. Calculated-pH input pairs
-
-Inputs depend on the selected carbon boundary:
-
-- **Closed system:** require alkalinity plus total inorganic carbon; calculate pH.
-- **CO₂ equilibrium:** require alkalinity plus `pCO₂`; calculate pH and dissolved
-  inorganic carbon.
-
-Do not require alkalinity, total inorganic carbon, and `pCO₂` simultaneously in a way that
-overconstrains the carbonate system.
+If pH or total inorganic carbon was established through atmospheric CO₂ equilibration,
+another gas boundary, or a separate equilibrium calculation, the user enters the resulting
+known pH and total inorganic carbon. The app treats these values as a closed-system snapshot
+for aqueous Pitzer calculations; it does not reproduce the preceding equilibration process.
 
 ### 20. Layered results
 
@@ -294,17 +280,23 @@ Version 1 provides:
 - the reproducible PHREEQC input file;
 - a concise human-readable Markdown or plain-text calculation report.
 
-The report contains inputs, units, modes, assumptions, database/model versions, corrections,
-warnings, and key results. The files may also be bundled in a ZIP archive. A formatted Excel
-workbook and structured developer JSON are deferred until user demand justifies them.
+The report contains inputs, units, assumptions, database/model versions, charge-balance
+diagnostics, warnings, and key results. The files may also be bundled in a ZIP archive. A
+formatted Excel workbook and structured developer JSON are deferred until user demand
+justifies them.
 
 ### 22. Curated presets
 
-Include a small set of validated example compositions, potentially covering NaCl brine,
-CaCl₂ brine, a mixed brine, and seawater-like water.
+Version 1 includes 30 reviewed reference cases covering published NaCl, KCl, CaCl₂, MgCl₂,
+Na₂SO₄, and one mixed NaCl-CaSO₄ aqueous state. Selecting a case prefills the standard
+known-pH form; calculation remains under user control and uses the normal result interface.
 
 Every preset must record provenance, purpose, units, applicable validity limits, and expected
-results. Presets are educational starting points, not universal reference compositions.
+results. The collapsed **Load a published reference case (optional)** section presents the
+evidence class, published values, citation, direct source link, locator, and mapping
+assumptions. Published source details and mapping limitations are each hidden until requested.
+The app does not calculate differences or assign pass/fail. Presets are educational starting
+points, not universal reference compositions.
 
 ### 23. Composition entry experience
 
@@ -336,8 +328,8 @@ Keep the main workflow concise while placing explanations where decisions occur.
 expandable help for:
 
 - analytical totals and molality;
-- acid-base and CO₂ boundaries;
-- charge balance and optional correction;
+- known-pH and closed-carbonate assumptions;
+- charge-balance diagnostics;
 - MacInnes scaling;
 - redox assumptions;
 - water properties and mean coefficients;
@@ -369,6 +361,8 @@ The following are explicitly outside this release:
 - arbitrary PHREEQC input submitted by public users;
 - molarity, `mg/L`, ppm, or density-based input conversions;
 - variable pressure and pressurized-process modeling;
+- atmospheric or user-specified CO₂/gas equilibrium;
+- automatic or user-selected charge correction;
 - full user-controlled pe/Eh calculations;
 - arbitrary mean-electrolyte pairing;
 - mineral precipitation or equilibrium-with-solids calculations;
@@ -387,7 +381,9 @@ The following are explicitly outside this release:
 4. Validate water activity and osmotic-coefficient extraction.
 5. Validate the curated mean-electrolyte equations and list.
 6. Define condition-specific coverage warnings.
-7. Build reference cases across the approved temperature, pH, and composition envelope.
+7. ~~Build the first reviewed reference library and connect it to the UI.~~ Completed
+   2026-08-27 with 30 cases; broader composition and property coverage remains future
+   scientific work.
 8. Run native PHREEQC integration tests in the deployment Linux environment.
 9. Complete public methodology, privacy, licensing, attribution, and limitation wording.
 10. Conduct a small expert review before broader promotion for engineering use.

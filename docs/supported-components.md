@@ -51,9 +51,19 @@ Version 1 does not provide:
 - Fe(III) or aluminum analytical inputs;
 - redox, pe, or Eh calculations;
 - mineral precipitation or solid-phase equilibrium;
-- gas-phase or atmospheric equilibrium;
+- gas-phase or atmospheric CO2 equilibrium;
 - ion exchange or surface complexation;
-- automatic charge correction.
+- automatic or user-selected charge correction.
+
+For a solution equilibrated with atmospheric or another specified CO2 pressure, users must
+determine the resulting pH and total inorganic carbon experimentally or with an appropriate
+external equilibrium tool. They may then enter those values here as a closed-system
+snapshot. Enter total inorganic carbon—not carbonate ion alone—so PHREEQC can calculate the
+distribution among CO2(aq), HCO3-, CO3(2-), and defined complexes.
+
+The calculator reports signed charge balance and a clear quality warning, but it never
+changes an ion concentration to force electroneutrality. Investigating and correcting an
+imbalanced analytical dataset remains the user's responsibility.
 
 ## Operating boundary
 

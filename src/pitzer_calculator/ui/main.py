@@ -25,7 +25,14 @@ from pitzer_calculator.engine.exports import (
 )
 from pitzer_calculator.engine.phreeqc import CalculationError, calculate_solution
 from pitzer_calculator.engine.validation import InputValidationError, validate_solution
+from pitzer_calculator.reference_cases import (
+    ReferenceCase,
+    load_reference_cases,
+    published_output_rows,
+)
 from pitzer_calculator.ui.styles import apply_styles
+
+MANUAL_COMPOSITION = ""
 
 
 def _display_number(value: float, significant_digits: int = 6) -> str:
@@ -35,12 +42,118 @@ def _display_number(value: float, significant_digits: int = 6) -> str:
 def _reset_solution_form() -> None:
     """Restore physical inputs and clear every unit-specific composition widget."""
 
+    st.session_state["reference_case_id"] = MANUAL_COMPOSITION
+    st.session_state["show_reference_source"] = False
+    st.session_state["show_reference_assumptions"] = False
     st.session_state["solution_ph"] = 7.0
     st.session_state["solution_temperature_c"] = 25.0
     st.session_state["composition_unit"] = ConcentrationUnit.MOL_PER_KGW
     for unit in ConcentrationUnit:
         for component in COMPONENTS:
             st.session_state[f"component_{unit.name}_{component.key}"] = 0.0
+
+
+def _apply_reference_case(cases_by_id: dict[str, ReferenceCase]) -> None:
+    """Prefill the existing form when the user selects a reviewed reference case."""
+
+    selected_id = st.session_state.get("reference_case_id", MANUAL_COMPOSITION)
+    st.session_state["show_reference_source"] = False
+    st.session_state["show_reference_assumptions"] = False
+    if selected_id == MANUAL_COMPOSITION:
+        return
+
+    case = cases_by_id[selected_id]
+    st.session_state["solution_ph"] = case.known_ph
+    st.session_state["solution_temperature_c"] = case.temperature_c
+    st.session_state["composition_unit"] = ConcentrationUnit.MOL_PER_KGW
+    for unit in ConcentrationUnit:
+        for component in COMPONENTS:
+            st.session_state[f"component_{unit.name}_{component.key}"] = 0.0
+    for component, value in case.components_molal.items():
+        st.session_state[f"component_MOL_PER_KGW_{component}"] = value
+
+
+def _reference_output_table(case: ReferenceCase) -> list[dict[str, Any]]:
+    return [
+        {
+            "Published property": row.property,
+            "Published value": _display_number(row.value),
+            "Expanded uncertainty (95%)": (
+                _display_number(row.expanded_uncertainty_95)
+                if row.expanded_uncertainty_95 is not None
+                else "—"
+            ),
+            "Unit": row.unit,
+        }
+        for row in published_output_rows(case)
+    ]
+
+
+def _render_reference_selector(cases: tuple[ReferenceCase, ...]) -> None:
+    """Render optional case selection and compact source information."""
+
+    cases_by_id = {case.id: case for case in cases}
+    options = [MANUAL_COMPOSITION, *cases_by_id]
+
+    with st.expander("Load a published reference case (optional)"):
+        st.caption(
+            f"Optionally load one of {len(cases)} reviewed compositions. You still run the "
+            "normal calculation and interpret the published values yourself."
+        )
+        selected_id = st.selectbox(
+            "Reference case",
+            options=options,
+            format_func=lambda case_id: (
+                "Manual composition"
+                if case_id == MANUAL_COMPOSITION
+                else f"{cases_by_id[case_id].evidence_label} · {cases_by_id[case_id].title}"
+            ),
+            key="reference_case_id",
+            on_change=_apply_reference_case,
+            args=(cases_by_id,),
+            help="Selecting a case prefills the existing known-pH calculation form.",
+        )
+
+        if selected_id == MANUAL_COMPOSITION:
+            st.caption(
+                "Choose a case to load its composition and inspect its published source "
+                "values."
+            )
+            return
+
+        case = cases_by_id[selected_id]
+        st.markdown(f"**{case.evidence_label}** — {case.description}")
+        st.caption(
+            "You may edit the loaded inputs, but the reference values below always describe "
+            "the original published case."
+        )
+
+        show_source = st.toggle(
+            "Show published values and source",
+            key="show_reference_source",
+        )
+        if show_source:
+            st.dataframe(
+                _reference_output_table(case),
+                hide_index=True,
+                width="stretch",
+            )
+            st.markdown(f"**Citation:** {case.source.citation}")
+            st.markdown(f"**Source location:** {case.source.locator}")
+            st.markdown(f"[Open the published source]({case.source.url})")
+            if case.source.license_url:
+                st.markdown(f"[Source reuse terms]({case.source.license_url})")
+            st.caption(
+                "These are published source values, not automatically calculated "
+                "differences, tolerances, or pass/fail criteria."
+            )
+
+        show_assumptions = st.toggle(
+            "Show mapping assumptions and limitations",
+            key="show_reference_assumptions",
+        )
+        if show_assumptions:
+            st.markdown("\n".join(f"- {item}" for item in case.assumptions))
 
 
 def _component_grid(
@@ -334,6 +447,8 @@ def render_app() -> None:
             )
         st.divider()
         st.caption("Free and open-source engineering tool developed by **Eitan Elfassy**.")
+
+    _render_reference_selector(load_reference_cases())
 
     with st.form("solution_form"):
         st.subheader("Solution definition")

@@ -144,7 +144,7 @@ This evidence does **not** yet establish:
 - a universal validity limit for concentration or ionic strength;
 - validation of KCl, CaCl2, MgCl2, sulfate, carbonate, seawater-like mixtures, or extended
   components;
-- mineral-equilibrium, precipitation, redox, or calculated-pH capabilities;
+- mineral-equilibrium, precipitation, or redox capabilities;
 - complete validation of the entire 0-100 degrees C operating range for arbitrary mixtures.
 
 The next validation priority is source-cleared experimental or evaluated data for NaCl and

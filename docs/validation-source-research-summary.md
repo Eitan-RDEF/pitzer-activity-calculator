@@ -17,7 +17,7 @@ simple for the user:
 2. The app fills the analytical inputs and clearly shows any assumptions.
 3. The user presses **Calculate with Pitzer**.
 4. The normal results appear unchanged. Published values and the direct source link remain
-   available in a compact **Reference data** expander if the user wants to consult them.
+   available in the expandable reference-case section if the user wants to consult them.
 
 Version 1 does not need a comparison screen, calculated differences, tolerances, or pass/fail
 judgments.
@@ -45,9 +45,8 @@ The current source holdings contain 42 normalized reference cases:
 - twelve NaCl and KCl evaluated reference points from Hamer and Wu (1972) that remain
   blocked from public use pending a specific reuse review and a defensible fixed-pH mapping.
 
-The 30 source-cleared records are production-shaped but are not yet loaded by Streamlit.
-The twelve Hamer-Wu candidates remain research-only. Connecting the reviewed records to the
-UI is a separate product step.
+The 30 source-cleared records are loaded by the Streamlit reference-case selector. The
+twelve Hamer-Wu candidates remain research-only and are not available to the runtime.
 
 ## Why source-to-app mapping is not automatic
 
@@ -307,15 +306,16 @@ Two blockers apply to every value above:
 
 ## Product and UX conclusions
 
-The lowest-burden credible implementation is a reference-case selector, not an automatic
-validation engine. Selecting a case should:
+The implemented public workflow is a reference-case selector, not an automatic validation
+engine. Selecting a case:
 
-- fill only the normal calculator fields;
-- leave calculation under the user's control;
-- leave the existing results interface unchanged;
-- provide a compact **Reference data** expander containing the published values, source,
-  evidence class, conditions, and app-added assumptions;
-- link directly to the source.
+- fills only the normal calculator fields;
+- leaves calculation under the user's control;
+- leaves the existing results interface unchanged;
+- provides a collapsed **Load a published reference case (optional)** section containing the
+  evidence class and conditions, with published source details and app-added assumptions
+  available through separate closed-by-default controls;
+- links directly to the source.
 
 The app should not calculate differences, show a side-by-side comparison table, assign
 tolerances, or declare pass/fail. The user decides whether and how to consult the reference
@@ -349,6 +349,9 @@ It is not accurate to say:
 
 ## Required release gate
 
+The 30 production cases satisfy these gates. The same checks remain mandatory before any
+additional record is moved from research into the UI-loaded production library.
+
 Before any case is loaded by the UI, record all of the following:
 
 - full citation and stable URL;
@@ -365,8 +368,8 @@ Before any case is loaded by the UI, record all of the following:
 Internal scientific records may retain engine version, database checksum, and reproduction
 notes. Those fields do not belong in the public case file or user interface.
 
-Until every gate is complete, keep `release_eligible: false` and do not make the runtime load
-the record.
+Until every gate is complete, keep a candidate in the research library and do not make the
+runtime load the record.
 
 ## Recommended next work
 
@@ -386,8 +389,7 @@ the record.
    inorganic carbon, charge-balance, and phase mappings are exact.
 8. Have the final classifications and source-to-app mappings reviewed by a qualified
    electrolyte-thermodynamics or geochemistry specialist.
-9. Only then connect approved records to the Streamlit case selector and compact
-   **Reference data** expander.
+9. Maintain automated loader, prefill, and source-display tests as the public library grows.
 
 ## Repository records
 
@@ -399,7 +401,7 @@ the record.
   `docs/independent-validation-nist-thermoml-divalent-chlorides-2026-08-26.md`
 - First dated sulfate osmotic-coefficient independent-validation result:
   `docs/independent-validation-nist-thermoml-na2so4-osmotic-2026-08-26.md`
-- Production-shaped source cases, not yet loaded by Streamlit:
+- Production source cases loaded by Streamlit:
   `data/examples/validation_library.json`
 - Source metadata and rights review:
   `data/examples/research/validation_sources.json`

@@ -251,6 +251,5 @@ The completed and remaining evidence is separated in `docs/validation-status.md`
 3. Independently validate water activity and extend osmotic-coefficient and curated mean-γ
    coverage beyond the currently documented cases.
 4. Encode the interaction-aware warning rules described above.
-5. Validate the calculated-pH and explicit CO₂-boundary workflows.
-6. Review the final support classifications and warnings with a qualified geochemist or
+5. Review the final support classifications and warnings with a qualified geochemist or
    electrolyte-thermodynamics expert before public promotion.

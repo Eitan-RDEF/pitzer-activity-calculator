@@ -19,13 +19,14 @@ Current production-shaped library:
   published outputs, source details, and assumptions: four USGS software benchmarks, a
   16-case NIST ThermoML NaCl/KCl evaluated-reference grid, eight NIST ThermoML CaCl2 and
   MgCl2 references, and two binary Na2SO4 inputs retaining four experimental osmotic-
-  coefficient observations. The Streamlit app does not load this file yet.
+  coefficient observations. The Streamlit reference-case selector loads this file.
 
 See `docs/validation-data-collection.md` for the collection and release rules.
 
-The public library will not store calculated differences, comparison tolerances, pass/fail
-labels, or research-review status. Selecting a case will only prefill the normal calculator
-inputs and make the source values available in a compact **Reference data** expander. The
-normal calculation and results interface remain unchanged.
+The public library does not store calculated differences, comparison tolerances, pass/fail
+labels, or research-review status. Selecting a case only prefills the normal calculator
+inputs and makes the source values available in the collapsible **Load a published reference
+case (optional)** section. Published source details and mapping assumptions use separate
+closed-by-default controls. The normal calculation and results interface remain unchanged.
 
 Do not add customer or confidential laboratory compositions.

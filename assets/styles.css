@@ -247,6 +247,10 @@ h4 {
   max-width: 14rem;
 }
 
+.st-key-reference_case_id [data-testid="stSelectbox"] {
+  max-width: 42rem;
+}
+
 [data-testid="stNumberInput"] [data-baseweb="input"]:focus-within,
 [data-testid="stSelectbox"] [data-baseweb="select"] > div:focus-within {
   border-color: var(--color-accent) !important;

@@ -11,7 +11,9 @@ operating condition. Independently verify results used for critical engineering 
 ## Evidence summary
 
 The current reference library contains 30 source-cleared cases. Experimental or evaluated
-references are kept separate from software implementation benchmarks.
+references are kept separate from software implementation benchmarks. The app's selector
+can load every case into the normal calculation form and exposes its published source values,
+citation, evidence class, locator, and assumptions in a collapsed optional section.
 
 | Evidence | Cases or observations | Compared property | Conditions | Result summary |
 |---|---:|---|---|---|
@@ -46,8 +48,8 @@ The current evidence does not establish:
 - broad temperature validation for CaCl2, MgCl2, or Na2SO4;
 - independent validation of conditional components such as Li, Sr, Ba, Br, B, Si,
   fixed Fe(II), or fixed Mn(II);
-- mineral precipitation, gas equilibrium, or redox capability, which Version 1 does not
-  model;
+- mineral precipitation, gas equilibrium, charge-correction, or redox capability, which
+  Version 1 intentionally does not model;
 - suitability as the sole basis for a safety-critical, regulatory, or commercial decision.
 
 ## Detailed reports

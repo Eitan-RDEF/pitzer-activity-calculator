@@ -51,16 +51,22 @@ construct PHREEQC syntax or encode hidden scientific rules.
 Databases and reviewed examples are versioned inputs, not source code. Any database update
 requires provenance, checksum, release notes, and regression validation.
 
+The reference-case loader is a typed application-data boundary. It reads only the reviewed
+production library under `data/examples/`; research candidates are never loaded by the UI.
+Selection prefills the existing domain inputs and does not introduce an alternate
+calculation path.
+
 ## Expected growth
 
 Add modules when real behavior requires them, not in anticipation of every possible feature.
 Likely next boundaries are:
 
-- solution presets with citations and versioning;
-- calculated-pH and explicit CO₂-boundary strategies;
 - condition-aware database-coverage warnings;
-- optional, explicit charge-correction strategies;
 - structured observability without storing user compositions.
+
+The engine accepts a user-supplied known-pH, closed-system state and reports charge-balance
+diagnostics without modifying the analysis. Gas-equilibrium and charge-correction strategies
+are intentionally not planned product boundaries.
 
 The initial app intentionally has no account system, persistent database, background worker,
 or custom backend API.

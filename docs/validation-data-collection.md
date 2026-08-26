@@ -2,12 +2,14 @@
 
 ## Purpose
 
-The future reference library will let a user select a sourced composition, load it into the
-calculator, and press **Calculate with Pitzer**. The normal result interface remains
+The reference library lets a user select a sourced composition, load it into the calculator,
+and press **Calculate with Pitzer**. The normal result interface remains
 unchanged. Published values, definitions, assumptions, and a direct source link remain
-available in a compact **Reference data** expander for users who want to consult them.
+available in the collapsed **Load a published reference case (optional)** section for users
+who want to consult them. Separate controls reveal the source details and the mapping
+assumptions only on request.
 
-Version 1 will not add a comparison view, show calculated differences, assign tolerances,
+Version 1 does not add a comparison view, show calculated differences, assign tolerances,
 or declare pass/fail. Interpretation remains with the user.
 
 The research records are stored under `data/examples/research/`. They are not loaded by the
@@ -15,8 +17,8 @@ application until every release gate below is satisfied.
 
 The first production-shaped records are stored in
 `data/examples/validation_library.json`. They contain four USGS software benchmarks and 26
-NIST ThermoML experimental/evaluated-reference cases. They are not connected to the
-Streamlit UI yet.
+NIST ThermoML experimental/evaluated-reference cases. They are loaded by the Streamlit
+reference-case selector.
 
 Their first side-by-side implementation-validation result is recorded in
 `docs/initial-validation-usgs-phrqpitz-2026-08-26.md`.
@@ -106,9 +108,10 @@ A production case should follow this conceptual shape:
 }
 ```
 
-Selecting this case prefills `input`. The **Reference data** expander renders
-`published_outputs`, `source`, and `assumptions`. Pressing **Calculate with Pitzer** follows
-the existing calculation path and renders the existing results interface.
+Selecting this case prefills `input`. The expandable reference-case section renders
+`published_outputs` and `source` behind one show/hide control and `assumptions` behind
+another. Both are closed whenever a case is loaded. Pressing **Calculate with Pitzer**
+follows the existing calculation path and renders the existing results interface.
 
 ## Initial collection (2026-08-26)
 
@@ -211,5 +214,5 @@ applied to the Partanen record.
    components, property definition, and no-solids assumptions map exactly to the app.
 5. Add seawater-like and carbonate-bearing cases only when pH, alkalinity or total carbon,
    charge balance, and phase assumptions map exactly to the app.
-6. Expose only reviewed cases in the selector, with their source values and link in a compact
-   **Reference data** expander.
+6. Expose only reviewed cases in the selector, with their source values and link in the
+   collapsed **Load a published reference case (optional)** section.

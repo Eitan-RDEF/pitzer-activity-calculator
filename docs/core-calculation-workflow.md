@@ -10,7 +10,10 @@
 
 This is the Version 1 end-to-end calculation contract. It implements a focused known-pH
 workflow with a default major-ion core and a clearly separated conditional-component mode.
-Calculated-pH, CO₂-equilibrium, and charge-correction modes remain future work.
+The product scope requires user-supplied known pH. CO₂-equilibrium and charge-correction
+modes are deliberately excluded. Users may determine an equilibrated pH and total inorganic
+carbon experimentally or with another suitable tool, then submit that state to this
+calculator.
 
 The workflow is:
 
@@ -80,6 +83,10 @@ uses the approved absolute-error bands:
 - `≤2%`: good;
 - `>2%` and `≤5%`: review recommended;
 - `>5%`: significant imbalance.
+
+These diagnostics help users identify an inconsistent analysis; they do not alter the
+submitted composition. Resolving an imbalance and deciding which measurement or component
+to revise remain the user's responsibility.
 
 ## Exports
 
