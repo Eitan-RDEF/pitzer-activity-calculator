@@ -12,6 +12,11 @@ def test_release_version_is_consistent() -> None:
 
     assert metadata["project"]["version"] == "1.0.0"
     assert __version__ == metadata["project"]["version"]
+    assert metadata["project"]["license"] == "MIT"
+    assert not any(
+        classifier.startswith("License ::")
+        for classifier in metadata["project"]["classifiers"]
+    )
 
 
 def test_public_release_documents_exist() -> None:
