@@ -1,6 +1,7 @@
 # Privacy statement
 
 **Effective date:** 27 August 2026  
+**Last updated:** 27 August 2026
 **Application owner:** Eitan Elfassy
 
 ## Data handled by the calculator
@@ -15,11 +16,16 @@ statistics are disabled in the repository configuration.
 
 ## Hosting data
 
-The public application is hosted by Streamlit Community Cloud. The hosting provider may
-process technical and network information needed to deliver, secure, and operate the service,
-such as IP addresses, browser or device information, and service logs. That processing is
-controlled by the provider's own policies. See the
-[Streamlit privacy notice](https://www.streamlit.io/privacy-policy).
+The planned public hosting environment is Google Cloud Run. Once deployed, Google may process
+technical and network information needed to deliver, secure, and operate the service, such as
+IP addresses, browser or device information, request metadata, and service logs. That
+processing is controlled by Google's own policies. See the
+[Google Cloud Privacy Notice](https://cloud.google.com/terms/cloud-privacy-notice).
+
+The application is designed to be stateless and does not intentionally write submitted
+compositions or calculation results to Cloud Run storage or application logs. Platform-level
+request and infrastructure logs may still be retained according to the configured Google
+Cloud logging and retention settings.
 
 ## External links and sensitive information
 

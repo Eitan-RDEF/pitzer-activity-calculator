@@ -1,9 +1,7 @@
 # Pitzer Activity Calculator
 
-A free, transparent Streamlit calculator for aqueous-solution activities at high ionic
+A free, transparent browser-based calculator for aqueous-solution activities at high ionic
 strength, powered by PHREEQC and its Pitzer database.
-
-[![Open the Streamlit app](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://pitzer-calculator.streamlit.app)
 
 > **Project status:** Version 1.0.0. The repository contains a complete, tested known-pH
 > workflow for audited core and conditional components. Selected mean activity coefficients
@@ -54,7 +52,8 @@ pytest tests/integration
 
 ```text
 .
-├── streamlit_app.py            # Hosting entry point; intentionally thin
+├── Dockerfile                  # Production image and Cloud Run startup contract
+├── streamlit_app.py            # Application entry point; intentionally thin
 ├── src/pitzer_calculator/
 │   ├── domain/                   # Typed chemistry inputs, outputs, species
 │   ├── engine/                   # Validation, input building, PHREEQC adapter
@@ -100,12 +99,14 @@ are each shown only on request.
 
 ## Deployment
 
-The root `streamlit_app.py` and `requirements.txt` follow Streamlit Community Cloud's
-repository layout. Deployment steps and the release checklist are documented in
-[Deployment](docs/deployment.md).
+The repository includes a non-root production container for Google Cloud Run. It listens on
+Cloud Run's injected `PORT`, disables development file watching and keeps the calculation
+service stateless. CI builds the image and verifies Streamlit's health endpoint.
 
-Open the public calculator at
-[pitzer-calculator.streamlit.app](https://pitzer-calculator.streamlit.app).
+The previous public deployment has been retired. The new Cloud Run URL will be added after
+the owner completes and verifies the deployment. Container checks, recommended service
+settings, deployment boundaries, and the release checklist are documented in
+[Deployment](docs/deployment.md).
 
 ## License, privacy, and contact
 

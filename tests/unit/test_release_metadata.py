@@ -14,7 +14,7 @@ def test_release_version_is_consistent() -> None:
     assert __version__ == metadata["project"]["version"]
     assert metadata["project"]["license"] == "MIT"
     assert metadata["project"]["urls"]["Homepage"] == (
-        "https://pitzer-calculator.streamlit.app"
+        "https://github.com/Eitan-RDEF/pitzer-activity-calculator"
     )
     assert not any(
         classifier.startswith("License ::")
@@ -28,6 +28,9 @@ def test_public_release_documents_exist() -> None:
         "PRIVACY.md",
         "CONTACT.md",
         "SECURITY.md",
+        "Dockerfile",
+        ".dockerignore",
+        "docs/deployment.md",
         "docs/third-party-notices.md",
     ):
         assert (ROOT / relative_path).is_file(), relative_path

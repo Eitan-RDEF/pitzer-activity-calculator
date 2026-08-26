@@ -9,6 +9,12 @@ uses semantic versioning.
 
 ### Changed
 
+- Replace the retired hosted-platform deployment assumptions with a production
+  Cloud Run container, stateless runtime contract, container smoke test, and operator guide.
+- Disable Streamlit's runtime file watcher and run-on-save behavior in production-oriented
+  configuration.
+- Use pytest's importlib mode so unit and integration modules with the same descriptive file
+  name can be collected together in one full-suite run.
 - Start every analytical component at zero; examples remain available through the explicit
   published reference-case selector.
 

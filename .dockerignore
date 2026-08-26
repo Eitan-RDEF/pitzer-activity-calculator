@@ -1,0 +1,27 @@
+.git
+.github
+.venv
+venv
+__pycache__
+*.py[cod]
+*.egg-info
+.pytest_cache
+.ruff_cache
+.coverage
+htmlcov
+.idea
+.vscode
+.DS_Store
+Thumbs.db
+
+# Development and research artifacts are not needed by the running service.
+tests
+scripts
+docs
+data/examples/research
+requirements-dev.txt
+uv.lock
+CHANGELOG.md
+CONTACT.md
+PRIVACY.md
+SECURITY.md

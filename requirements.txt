@@ -1,3 +1,2 @@
-# Streamlit Community Cloud installs the local project and its dependencies.
+# Install the local application and the runtime dependencies declared in pyproject.toml.
 -e .
-

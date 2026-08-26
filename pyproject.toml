@@ -25,7 +25,7 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://pitzer-calculator.streamlit.app"
+Homepage = "https://github.com/Eitan-RDEF/pitzer-activity-calculator"
 Repository = "https://github.com/Eitan-RDEF/pitzer-activity-calculator"
 Issues = "https://github.com/Eitan-RDEF/pitzer-activity-calculator/issues"
 Documentation = "https://github.com/Eitan-RDEF/pitzer-activity-calculator/tree/main/docs"
@@ -40,7 +40,7 @@ dev = [
 where = ["src"]
 
 [tool.pytest.ini_options]
-addopts = "-ra"
+addopts = "-ra --import-mode=importlib"
 testpaths = ["tests"]
 pythonpath = ["."]
 

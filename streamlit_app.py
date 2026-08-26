@@ -1,4 +1,4 @@
-"""Streamlit Community Cloud entry point."""
+"""Runtime entry point for local use and the Cloud Run container."""
 
 import streamlit as st
 
@@ -12,4 +12,3 @@ st.set_page_config(
 )
 
 render_app()
-
