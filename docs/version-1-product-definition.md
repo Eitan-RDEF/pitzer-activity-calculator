@@ -319,8 +319,9 @@ The app does not intentionally persist user compositions or calculation results.
 only for the active Streamlit session and downloadable files are generated on demand.
 
 Version 1 has no accounts, saved calculations, composition database, or raw-composition
-analytics. Streamlit's aggregate anonymous viewer analytics may be used. Public privacy
-wording must accurately describe the host and application behavior.
+analytics. Repository-level Streamlit usage statistics are disabled. The hosting provider
+may process technical data required to operate and secure the public service, as described
+in the public privacy statement.
 
 ### 25. Progressive disclosure
 
@@ -385,7 +386,9 @@ The following are explicitly outside this release:
    2026-08-27 with 30 cases; broader composition and property coverage remains future
    scientific work.
 8. Run native PHREEQC integration tests in the deployment Linux environment.
-9. Complete public methodology, privacy, licensing, attribution, and limitation wording.
+9. ~~Complete public methodology, privacy, licensing, attribution, and limitation wording.~~
+   Completed for release 1.0.0 on 2026-08-27; review again when hosting, data handling,
+   dependencies, or scientific scope changes.
 10. Conduct a small expert review before broader promotion for engineering use.
 
 ## Change control

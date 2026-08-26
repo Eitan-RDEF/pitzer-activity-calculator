@@ -3,11 +3,11 @@
 A free, transparent Streamlit calculator for aqueous-solution activities at high ionic
 strength, powered by PHREEQC and its Pitzer database.
 
-> **Project status:** functional Version 1 foundation. The repository contains a complete,
-> tested known-pH workflow for audited core major ions. Selected mean activity coefficients
-> and one osmotic-coefficient system have been independently compared with published NIST
-> ThermoML references; the full operating range is not validated, and the app is not yet
-> released for production engineering use.
+> **Project status:** Version 1.0.0. The repository contains a complete, tested known-pH
+> workflow for audited core and conditional components. Selected mean activity coefficients
+> and osmotic-coefficient systems have been compared with published USGS and NIST references.
+> Validation does not cover every possible composition or condition; independently verify
+> results used for critical engineering decisions.
 
 ## Why this project exists
 
@@ -102,9 +102,16 @@ The root `streamlit_app.py` and `requirements.txt` follow Streamlit Community Cl
 repository layout. Deployment steps and the release checklist are documented in
 [Deployment](docs/deployment.md).
 
-## License status
+The public application URL will be recorded here and in the deployment document immediately
+after the first Streamlit Community Cloud deployment.
 
-The application license has not yet been selected. Do not publish the repository until an
-application license and third-party notices have been reviewed and added. PHREEQC, its
-Python binding, and the bundled database each require accurate attribution; see
-[Third-party notices](docs/third-party-notices.md).
+## License, privacy, and contact
+
+The application source is released under the [MIT License](LICENSE). PHREEQC, its Python
+binding, the bundled database, Streamlit, and the archived scientific source data retain
+their own notices and terms; see [Third-party notices](docs/third-party-notices.md).
+
+Read the [privacy statement](PRIVACY.md) before submitting data to the public host. Contact
+[Eitan Elfassy](CONTACT.md) by email, or use
+[GitHub Issues](https://github.com/Eitan-RDEF/pitzer-activity-calculator/issues) for general
+questions, scientific feedback, and bug reports.

@@ -3,9 +3,11 @@
 All notable changes to this project will be documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project
-intends to use semantic versioning once public releases begin.
+uses semantic versioning.
 
 ## [Unreleased]
+
+## [1.0.0] - 2026-08-27
 
 ### Added
 
@@ -36,3 +38,6 @@ intends to use semantic versioning once public releases begin.
   submitted component concentration to force charge balance.
 - Made 1 atm pressure and the Pitzer, MacInnes, electrostatic-mixing, and no-redox assumptions
   explicit in generated PHREEQC input.
+
+[Unreleased]: https://github.com/Eitan-RDEF/pitzer-activity-calculator/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/Eitan-RDEF/pitzer-activity-calculator/releases/tag/v1.0.0

@@ -15,3 +15,9 @@ Do not add ions, temperature ranges, or outputs merely because PHREEQC accepts t
 capabilities require evidence that the bundled database supports the relevant interactions
 and that the result has been independently checked.
 
+Open general proposals and bug reports in
+[GitHub Issues](https://github.com/Eitan-RDEF/pitzer-activity-calculator/issues). Suspected
+security vulnerabilities must be reported privately according to [SECURITY.md](SECURITY.md).
+
+By contributing, you agree that your contribution may be distributed under the project's
+[MIT License](LICENSE).

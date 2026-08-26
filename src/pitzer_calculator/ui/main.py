@@ -4,6 +4,7 @@ from typing import Any
 
 import streamlit as st
 
+from pitzer_calculator import __version__
 from pitzer_calculator.config import APP_NAME, APP_TAGLINE
 from pitzer_calculator.domain.models import (
     ConcentrationUnit,
@@ -414,9 +415,9 @@ def render_app() -> None:
             unsafe_allow_html=True,
         )
         st.markdown(
-            """
+            f"""
             <div class="validation-note">
-              <strong>Version 1</strong>
+              <strong>Version {__version__}</strong>
               <span>
                 Selected outputs have been compared with published USGS and NIST reference
                 data. Independently verify results used for critical engineering decisions.
@@ -442,11 +443,16 @@ def render_app() -> None:
                 - [Scientific method](https://github.com/Eitan-RDEF/pitzer-activity-calculator/blob/main/docs/scientific-method.md)
                 - [Supported components](https://github.com/Eitan-RDEF/pitzer-activity-calculator/blob/main/docs/supported-components.md)
                 - [Validation evidence](https://github.com/Eitan-RDEF/pitzer-activity-calculator/blob/main/docs/validation-status.md)
+                - [Privacy and contact](https://github.com/Eitan-RDEF/pitzer-activity-calculator/blob/main/PRIVACY.md)
+                - [License and third-party notices](https://github.com/Eitan-RDEF/pitzer-activity-calculator/blob/main/docs/third-party-notices.md)
                 - [Source code on GitHub](https://github.com/Eitan-RDEF/pitzer-activity-calculator)
                 """
             )
         st.divider()
-        st.caption("Free and open-source engineering tool developed by **Eitan Elfassy**.")
+        st.caption(
+            "Free and open-source engineering tool developed by "
+            "[Eitan Elfassy](mailto:eitan.elfassi@gmail.com)."
+        )
 
     _render_reference_selector(load_reference_cases())
 

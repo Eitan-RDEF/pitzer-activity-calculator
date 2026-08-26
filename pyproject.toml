@@ -4,14 +4,31 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pitzer-activity-calculator"
-version = "0.1.0"
+version = "1.0.0"
 description = "A transparent, engineer-friendly Pitzer activity calculator powered by PHREEQC."
 readme = "README.md"
 requires-python = ">=3.10"
+authors = [
+  { name = "Eitan Elfassy", email = "eitan.elfassi@gmail.com" },
+]
+license = "MIT"
+keywords = ["Pitzer", "activity coefficient", "aqueous chemistry", "PHREEQC"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Chemistry",
+]
 dependencies = [
   "phreeqc==1.1.1",
   "streamlit>=1.42,<2",
 ]
+
+[project.urls]
+Repository = "https://github.com/Eitan-RDEF/pitzer-activity-calculator"
+Issues = "https://github.com/Eitan-RDEF/pitzer-activity-calculator/issues"
+Documentation = "https://github.com/Eitan-RDEF/pitzer-activity-calculator/tree/main/docs"
 
 [project.optional-dependencies]
 dev = [
