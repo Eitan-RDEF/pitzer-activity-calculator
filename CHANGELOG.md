@@ -7,6 +7,11 @@ uses semantic versioning.
 
 ## [Unreleased]
 
+### Added
+
+- Add a search-oriented static presentation site with scientific scope, validation evidence,
+  FAQs, social-sharing metadata, and an automated GitHub Pages deployment workflow.
+
 ## [1.0.1] - 2026-08-28
 
 ### Added

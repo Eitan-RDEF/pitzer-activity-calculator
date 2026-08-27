@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pitzer Activity Coefficient Calculator | Free Online Tool</title>
+    <meta
+      name="description"
+      content="Calculate Pitzer activity coefficients, aqueous species, water activity and osmotic coefficients online with a transparent PHREEQC-based workflow."
+    >
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#0f766e">
+    <link rel="canonical" href="https://eitan-rdef.github.io/pitzer-activity-calculator/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Pitzer Activity Calculator">
+    <meta property="og:title" content="Free Online Pitzer Activity Coefficient Calculator">
+    <meta
+      property="og:description"
+      content="Calculate activities in concentrated aqueous solutions with a transparent, PHREEQC-powered workflow."
+    >
+    <meta property="og:url" content="https://eitan-rdef.github.io/pitzer-activity-calculator/">
+    <meta property="og:image" content="https://eitan-rdef.github.io/pitzer-activity-calculator/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Pitzer Activity Calculator — activities in concentrated aqueous solutions">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free Online Pitzer Activity Coefficient Calculator">
+    <meta
+      name="twitter:description"
+      content="Pitzer activities, aqueous speciation and water properties in a transparent browser workflow."
+    >
+    <meta name="twitter:image" content="https://eitan-rdef.github.io/pitzer-activity-calculator/og.png">
+    <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Pitzer Activity Calculator",
+        "applicationCategory": "ScientificApplication",
+        "operatingSystem": "Web browser",
+        "url": "https://pitzer-calculator-584210380580.me-west1.run.app",
+        "description": "A free online calculator for Pitzer activity coefficients, aqueous speciation, water activity and osmotic coefficients in concentrated solutions.",
+        "softwareVersion": "1.0.1",
+        "license": "https://opensource.org/license/mit",
+        "isAccessibleForFree": true,
+        "author": {
+          "@type": "Person",
+          "name": "Eitan Elfassy",
+          "url": "https://github.com/Eitan-RDEF"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="site-header">
+      <a class="brand" href="#main-content" aria-label="Pitzer Activity Calculator home">
+        <span class="brand-mark" aria-hidden="true">P</span>
+        <span>Pitzer Activity Calculator</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#capabilities">Capabilities</a>
+        <a href="#method">Method</a>
+        <a href="#validation">Validation</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="button button-small" href="https://pitzer-calculator-584210380580.me-west1.run.app">
+        Open calculator
+      </a>
+    </header>
+
+    <main id="main-content">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Free · open source · browser based</p>
+          <h1>Pitzer activity coefficients, without the setup overhead.</h1>
+          <p class="hero-summary">
+            Calculate activities in concentrated aqueous solutions with a transparent,
+            PHREEQC-powered workflow designed for engineers and chemists.
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="https://pitzer-calculator-584210380580.me-west1.run.app">
+              Calculate a solution
+            </a>
+            <a class="text-link" href="#method">Review the scientific method <span>→</span></a>
+          </div>
+          <ul class="scope-strip" aria-label="Calculator scope">
+            <li>Known pH</li>
+            <li>0–100 °C</li>
+            <li>Molality basis</li>
+            <li>Reproducible exports</li>
+          </ul>
+        </div>
+
+        <aside class="result-preview" aria-label="Example calculation results">
+          <div class="preview-heading">
+            <div>
+              <span class="preview-kicker">Example result</span>
+              <strong>0.1 mol/kg NaCl</strong>
+            </div>
+            <span class="status">Balanced</span>
+          </div>
+          <div class="metric-grid">
+            <div><span>Ionic strength</span><strong>0.1000</strong><small>mol/kg H₂O</small></div>
+            <div><span>Water activity</span><strong>0.9966</strong><small>dimensionless</small></div>
+          </div>
+          <div class="coefficient-row">
+            <span>Mean activity coefficient γ±</span>
+            <strong>0.778</strong>
+          </div>
+          <div class="preview-note">
+            <span aria-hidden="true">✓</span>
+            Full species table, assumptions and calculation files included
+          </div>
+        </aside>
+      </section>
+
+      <section class="proof-bar" aria-label="Scientific credibility">
+        <p><strong>PHREEQC</strong><span>Pitzer model engine</span></p>
+        <p><strong>30</strong><span>reviewed reference cases</span></p>
+        <p><strong>USGS + NIST</strong><span>published source data</span></p>
+        <p><strong>MIT</strong><span>open-source code</span></p>
+      </section>
+
+      <section id="capabilities" class="section capabilities">
+        <div class="section-heading">
+          <p class="eyebrow">Built for concentrated solutions</p>
+          <h2>The results you need, without writing a PHREEQC input deck.</h2>
+          <p>
+            Enter analytical component totals, known pH and temperature. The calculator
+            determines the equilibrium aqueous distribution and exposes the underlying
+            scientific assumptions with every result.
+          </p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <span class="feature-number">01</span>
+            <h3>Activity coefficients</h3>
+            <p>
+              Inspect individual-ion activities and coefficients, plus curated mean activity
+              coefficients for NaCl, KCl, CaCl₂, MgCl₂ and Na₂SO₄.
+            </p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-number">02</span>
+            <h3>Aqueous speciation</h3>
+            <p>
+              Review active aqueous species, molalities, activities and logarithmic values
+              calculated from your analytical component totals.
+            </p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-number">03</span>
+            <h3>Water and diagnostics</h3>
+            <p>
+              Obtain ionic strength, water activity, osmotic coefficient, alkalinity and a
+              clear signed charge-balance diagnostic.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="workflow section-narrow" aria-labelledby="workflow-title">
+        <div class="section-heading centered">
+          <p class="eyebrow">A focused workflow</p>
+          <h2 id="workflow-title">From composition to reproducible results.</h2>
+        </div>
+        <ol class="workflow-list">
+          <li>
+            <span>1</span>
+            <div><strong>Define</strong><p>Enter component totals, known pH and temperature.</p></div>
+          </li>
+          <li>
+            <span>2</span>
+            <div><strong>Calculate</strong><p>Run the bundled PHREEQC Pitzer model.</p></div>
+          </li>
+          <li>
+            <span>3</span>
+            <div><strong>Review</strong><p>Explore results, warnings and reproducible files.</p></div>
+          </li>
+        </ol>
+      </section>
+
+      <section id="method" class="section method-section">
+        <div class="section-heading">
+          <p class="eyebrow">Transparent by design</p>
+          <h2>A scientific calculator you can inspect.</h2>
+          <p>
+            The numerical engine, database, input construction and validation evidence are
+            public. Results are accompanied by the exact PHREEQC input and database identity.
+          </p>
+          <a class="text-link prominent" href="https://github.com/Eitan-RDEF/pitzer-activity-calculator/blob/main/docs/scientific-method.md">
+            Read the full scientific method <span>→</span>
+          </a>
+        </div>
+        <div class="method-panel">
+          <dl>
+            <div><dt>Activity model</dt><dd>Pitzer</dd></div>
+            <div><dt>Calculation engine</dt><dd>PHREEQC / IPHREEQC</dd></div>
+            <div><dt>Concentration basis</dt><dd>mol/kg H₂O</dd></div>
+            <div><dt>Individual-ion convention</dt><dd>MacInnes scaling</dd></div>
+            <div><dt>System boundary</dt><dd>Known-pH, closed aqueous system</dd></div>
+            <div><dt>Pressure</dt><dd>Fixed at 1 atm</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section id="validation" class="validation-section">
+        <div class="validation-inner">
+          <div class="validation-copy">
+            <p class="eyebrow eyebrow-light">Published evidence</p>
+            <h2>Validation with clearly stated boundaries.</h2>
+            <p>
+              The reference library separates independent NIST ThermoML observations from
+              USGS software implementation benchmarks. Published values, citations,
+              uncertainty where supplied, and mapping assumptions remain visible in the app.
+            </p>
+            <a class="button button-light" href="https://github.com/Eitan-RDEF/pitzer-activity-calculator/blob/main/docs/validation-status.md">
+              Review validation evidence
+            </a>
+          </div>
+          <div class="validation-stats">
+            <div><strong>30</strong><span>source-cleared reference cases</span></div>
+            <div><strong>5</strong><span>independently compared electrolyte systems</span></div>
+            <div><strong>0–70 °C</strong><span>independent temperature evidence represented</span></div>
+            <div><strong>Open</strong><span>source values and assumptions in the app</span></div>
+          </div>
+        </div>
+        <p class="validation-caution">
+          Validation does not cover every composition, output or operating condition.
+          Independently verify results used for critical engineering decisions.
+        </p>
+      </section>
+
+      <section class="section supported-section">
+        <div class="section-heading">
+          <p class="eyebrow">Supported analytical inputs</p>
+          <h2>Broad enough for useful brine calculations. Explicit about the limits.</h2>
+        </div>
+        <div class="support-layout">
+          <div class="support-card core-card">
+            <span class="support-label">Core inputs</span>
+            <h3>Primary calculation form</h3>
+            <ul class="component-list">
+              <li>Na⁺</li><li>K⁺</li><li>Mg²⁺</li><li>Ca²⁺</li><li>Cl⁻</li>
+              <li>Total S(VI)</li><li>Total inorganic C(IV)</li>
+            </ul>
+          </div>
+          <div class="support-card conditional-card">
+            <span class="support-label">Conditional database coverage</span>
+            <h3>Extended components with warnings</h3>
+            <ul class="component-list muted-components">
+              <li>Li⁺</li><li>Sr²⁺</li><li>Ba²⁺</li><li>Br⁻</li><li>Total B</li>
+              <li>Total Si</li><li>Fe(II)</li><li>Mn(II)</li>
+            </ul>
+            <p>
+              Interaction coverage varies by component. Active limitations are repeated with
+              the calculation results.
+            </p>
+          </div>
+        </div>
+        <div class="boundary-note">
+          <strong>Intentionally outside scope</strong>
+          <span>Mineral precipitation · gas equilibrium · redox calculation · automatic charge correction</span>
+          <a href="https://github.com/Eitan-RDEF/pitzer-activity-calculator/blob/main/docs/supported-components.md">View all boundaries →</a>
+        </div>
+      </section>
+
+      <section id="faq" class="section faq-section">
+        <div class="section-heading">
+          <p class="eyebrow">Frequently asked questions</p>
+          <h2>About the online Pitzer calculator.</h2>
+        </div>
+        <div class="faq-list">
+          <details>
+            <summary>What is the Pitzer activity model?</summary>
+            <p>
+              The Pitzer model represents non-ideal interactions in electrolyte solutions and
+              is particularly useful at ionic strengths where simpler Debye–Hückel or Davies
+              approaches become inadequate.
+            </p>
+          </details>
+          <details>
+            <summary>What information do I enter?</summary>
+            <p>
+              Enter analytical component totals in mol/kg H₂O or mmol/kg H₂O, together with
+              known pH and temperature. Component totals are not free-ion concentrations;
+              PHREEQC calculates the equilibrium aqueous species distribution.
+            </p>
+          </details>
+          <details>
+            <summary>Does the calculator determine pH automatically?</summary>
+            <p>
+              No. The current workflow requires a known pH on the hydrogen-ion activity basis.
+              Calculated-pH and atmospheric CO₂-equilibrium modes are intentionally outside its
+              scope.
+            </p>
+          </details>
+          <details>
+            <summary>How has the calculator been validated?</summary>
+            <p>
+              Selected mean activity coefficients and osmotic coefficients have been compared
+              with published NIST ThermoML data, while concentrated implementation cases have
+              been compared with published USGS PHRQPITZ results. The evidence applies only to
+              the documented cases and conditions.
+            </p>
+          </details>
+          <details>
+            <summary>Can it calculate precipitation, gases or redox equilibrium?</summary>
+            <p>
+              No. The application calculates a closed aqueous system at fixed pressure. It does
+              not equilibrate minerals or gases, calculate redox state, or alter inputs to force
+              charge balance.
+            </p>
+          </details>
+          <details>
+            <summary>Is the calculator free to use?</summary>
+            <p>
+              Yes. The browser calculator is free to use and the application source is released
+              under the MIT License. Bundled scientific software and reference data retain their
+              respective notices and terms.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <div>
+          <p class="eyebrow eyebrow-light">Ready to calculate?</p>
+          <h2>Move from composition to activities in your browser.</h2>
+        </div>
+        <a class="button button-light" href="https://pitzer-calculator-584210380580.me-west1.run.app">
+          Open the Pitzer calculator
+        </a>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-main">
+        <div>
+          <a class="brand footer-brand" href="#main-content">
+            <span class="brand-mark" aria-hidden="true">P</span>
+            <span>Pitzer Activity Calculator</span>
+          </a>
+          <p>A free and open-source engineering tool developed by Eitan Elfassy.</p>
+        </div>
+        <div class="footer-links">
+          <a href="https://pitzer-calculator-584210380580.me-west1.run.app">Calculator</a>
+          <a href="https://github.com/Eitan-RDEF/pitzer-activity-calculator">Source code</a>
+          <a href="https://github.com/Eitan-RDEF/pitzer-activity-calculator/blob/main/PRIVACY.md">Privacy</a>
+          <a href="https://github.com/Eitan-RDEF/pitzer-activity-calculator/blob/main/LICENSE">License</a>
+          <a href="https://github.com/Eitan-RDEF">Author</a>
+        </div>
+      </div>
+      <p class="footer-note">Pitzer calculations powered by PHREEQC. Use engineering judgment and verify critical results independently.</p>
+    </footer>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the Pitzer activity model?",
+            "acceptedAnswer": {"@type": "Answer", "text": "The Pitzer model represents non-ideal interactions in electrolyte solutions and is particularly useful at ionic strengths where simpler Debye-Huckel or Davies approaches become inadequate."}
+          },
+          {
+            "@type": "Question",
+            "name": "What information do I enter?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Enter analytical component totals in mol/kg water or mmol/kg water, together with known pH and temperature. PHREEQC calculates the equilibrium aqueous species distribution."}
+          },
+          {
+            "@type": "Question",
+            "name": "Does the calculator determine pH automatically?",
+            "acceptedAnswer": {"@type": "Answer", "text": "No. The current workflow requires a known pH on the hydrogen-ion activity basis."}
+          },
+          {
+            "@type": "Question",
+            "name": "How has the calculator been validated?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Selected outputs have been compared with published NIST ThermoML data and published USGS PHRQPITZ implementation results. The evidence applies only to the documented cases and conditions."}
+          },
+          {
+            "@type": "Question",
+            "name": "Can it calculate precipitation, gases or redox equilibrium?",
+            "acceptedAnswer": {"@type": "Answer", "text": "No. It does not equilibrate minerals or gases, calculate redox state, or alter inputs to force charge balance."}
+          },
+          {
+            "@type": "Question",
+            "name": "Is the calculator free to use?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Yes. The browser calculator is free to use and the application source is released under the MIT License."}
+          }
+        ]
+      }
+    </script>
+  </body>
+</html>

@@ -16,6 +16,18 @@ the repository defines the application container and its continuous-deployment s
 The Cloud Run URL above is the canonical public application; GitHub remains the source-code and
 documentation home.
 
+## Public discovery page
+
+A separate static presentation page is published at
+[https://eitan-rdef.github.io/pitzer-activity-calculator/](https://eitan-rdef.github.io/pitzer-activity-calculator/).
+Its purpose is search discovery and project presentation; calculations continue to run only in
+the Cloud Run application. The source lives in [`site/`](../site/) and includes conventional HTML,
+structured data, a sitemap, robots directives, and social-sharing metadata.
+
+The [GitHub Pages workflow](../.github/workflows/pages.yml) publishes `site/` after relevant pushes
+to `main`. It is intentionally independent of the Cloud Build trigger that creates Cloud Run
+revisions, so editorial changes to the presentation page do not rebuild the scientific application.
+
 ## Container contract
 
 The root [Dockerfile](../Dockerfile) is the production runtime definition. It:

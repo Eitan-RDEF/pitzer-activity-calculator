@@ -5,6 +5,10 @@ strength, powered by PHREEQC and its Pitzer database.
 
 **[Open the live Pitzer Activity Calculator](https://pitzer-calculator-584210380580.me-west1.run.app)**
 
+**[Read the presentation site](https://eitan-rdef.github.io/pitzer-activity-calculator/)** —
+a search-friendly overview of the calculator, its scientific method, validation evidence,
+supported chemistry, and operating boundaries.
+
 > **Project status:** Version 1.0.1. The repository contains a complete, tested known-pH
 > workflow for audited core and conditional components. Selected mean activity coefficients
 > and osmotic-coefficient systems have been compared with published USGS and NIST references.
@@ -110,6 +114,10 @@ The public application is deployed at
 Pushes to `main` are built from the production `Dockerfile` by Google Cloud Build and deployed
 as new Cloud Run revisions. The verified configuration, deployment record, update workflow,
 and smoke-test checklist are documented in [Deployment](docs/deployment.md).
+
+The static presentation site is published separately through GitHub Pages from [`site/`](site/).
+It gives search engines a conventional HTML entry point and links visitors to the live Cloud Run
+application. Changes under `site/` on `main` are deployed by the dedicated Pages workflow.
 
 ## License, privacy, and contact
 
