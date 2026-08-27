@@ -1,5 +1,7 @@
 """Streamlit composition for the complete core calculation workflow."""
 
+import base64
+import html
 from typing import Any
 
 import streamlit as st
@@ -254,42 +256,70 @@ def _render_charge_status(result: Any) -> None:
         st.error(f"Charge balance: significant imbalance ({value:.3g}% absolute error).")
 
 
+def _download_link(
+    label: str,
+    data: str | bytes,
+    *,
+    file_name: str,
+    mime: str,
+) -> str:
+    """Build a browser-local download link for a small generated export.
+
+    Streamlit's download button stores its payload in the memory of one server process. Cloud
+    Run session affinity is best effort, so a separate media request can reach another instance
+    and return 404. These exports are intentionally small; embedding them in the rendered link
+    keeps the download independent of instance routing without persisting user data.
+    """
+
+    payload = data.encode("utf-8") if isinstance(data, str) else data
+    encoded = base64.b64encode(payload).decode("ascii")
+    return (
+        f'<a class="download-link" download="{html.escape(file_name, quote=True)}" '
+        f'href="data:{html.escape(mime, quote=True)};base64,{encoded}">'
+        f"{html.escape(label)}</a>"
+    )
+
+
 def _render_downloads(solution: SolutionInput, result: Any, warnings: tuple[str, ...]) -> None:
     """Expose stateless, reproducible exports for the completed calculation."""
 
     report = calculation_report(solution, result, warnings)
     first, second, third, fourth = st.columns(4)
-    first.download_button(
-        "Species CSV",
-        data=species_csv(result),
-        file_name="pitzer-species.csv",
-        mime="text/csv",
-        on_click="ignore",
-        width="stretch",
+    first.markdown(
+        _download_link(
+            "Species CSV",
+            species_csv(result),
+            file_name="pitzer-species.csv",
+            mime="text/csv",
+        ),
+        unsafe_allow_html=True,
     )
-    second.download_button(
-        "PHREEQC input",
-        data=result.phreeqc_input,
-        file_name="pitzer-calculation.pqi",
-        mime="text/plain",
-        on_click="ignore",
-        width="stretch",
+    second.markdown(
+        _download_link(
+            "PHREEQC input",
+            result.phreeqc_input,
+            file_name="pitzer-calculation.pqi",
+            mime="text/plain",
+        ),
+        unsafe_allow_html=True,
     )
-    third.download_button(
-        "Calculation report",
-        data=report,
-        file_name="pitzer-report.md",
-        mime="text/markdown",
-        on_click="ignore",
-        width="stretch",
+    third.markdown(
+        _download_link(
+            "Calculation report",
+            report,
+            file_name="pitzer-report.md",
+            mime="text/markdown",
+        ),
+        unsafe_allow_html=True,
     )
-    fourth.download_button(
-        "Complete ZIP",
-        data=calculation_bundle(solution, result, warnings),
-        file_name="pitzer-calculation.zip",
-        mime="application/zip",
-        on_click="ignore",
-        width="stretch",
+    fourth.markdown(
+        _download_link(
+            "Complete ZIP",
+            calculation_bundle(solution, result, warnings),
+            file_name="pitzer-calculation.zip",
+            mime="application/zip",
+        ),
+        unsafe_allow_html=True,
     )
 
 

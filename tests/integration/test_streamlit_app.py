@@ -57,14 +57,13 @@ def test_entered_nacl_workflow_renders_complete_results() -> None:
         "Conditions & balance",
         "Method & versions",
     ]
-    download_buttons = app.get("download_button")
-    assert [item.proto.label for item in download_buttons] == [
-        "Species CSV",
-        "PHREEQC input",
-        "Calculation report",
-        "Complete ZIP",
-    ]
-    assert all(item.proto.ignore_rerun for item in download_buttons)
+    rendered_markdown = "\n".join(item.value for item in app.markdown)
+    assert rendered_markdown.count('class="download-link"') == 4
+    assert 'download="pitzer-species.csv"' in rendered_markdown
+    assert 'download="pitzer-calculation.pqi"' in rendered_markdown
+    assert 'download="pitzer-report.md"' in rendered_markdown
+    assert 'download="pitzer-calculation.zip"' in rendered_markdown
+    assert not app.get("download_button")
 
 
 def test_reset_clears_composition_and_restores_physical_defaults() -> None:
