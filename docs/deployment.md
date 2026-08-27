@@ -2,18 +2,19 @@
 
 ## Status and responsibility boundary
 
-The repository is prepared for Google Cloud Run, but deployment is intentionally not part of
-this code change. The owner will create and configure the Google Cloud resources separately,
-verify the resulting service, and then record its public URL and release revision here.
+The production application is deployed as a public Google Cloud Run service. Google Cloud
+resources, billing controls, IAM, and traffic management remain the owner's responsibility;
+the repository defines the application container and its continuous-deployment source.
 
-- Application release: `1.0.0`
-- Deployment target: Google Cloud Run service
-- Public URL: pending owner deployment and smoke test
-- Recommended region: `me-west1` (Tel Aviv)
+- Application release: `1.0.1`
+- Cloud Run service: `pitzer-calculator`
+- Public URL:
+  [https://pitzer-calculator-584210380580.me-west1.run.app](https://pitzer-calculator-584210380580.me-west1.run.app)
+- Region: `me-west1` (Tel Aviv)
 - Runtime port: Cloud Run's injected `PORT` environment variable, defaulting locally to `8080`
 
-No previous-host URL should be presented as live. Until the Cloud Run service is verified, the
-GitHub repository is the canonical project homepage.
+The Cloud Run URL above is the canonical public application; GitHub remains the source-code and
+documentation home.
 
 ## Container contract
 
@@ -61,33 +62,53 @@ Open `http://localhost:8080` and verify the container health endpoint at
 `http://localhost:8080/_stcore/health`. GitHub Actions performs the same image build and health
 check on every push and pull request.
 
-## Recommended first service configuration
+## Verified service configuration
 
-These values suit the calculator's current CPU-bound, single-user calculation model and the
-owner's preference for scale-to-zero hosting:
+The initial production deployment was verified with these values. They are operational choices,
+not scientific requirements:
 
-| Setting | Initial value | Reason |
+| Setting | Deployed value | Reason |
 | --- | --- | --- |
 | Ingress | All | The calculator is a public website. |
 | Authentication | Allow unauthenticated | Visitors should not need a Google account. |
 | Billing | Request-based | CPU is needed while handling requests, not while idle. |
 | Minimum instances | `0` | Permits scale to zero and avoids a permanently warm instance. |
 | Maximum instances | `2` | Provides a simple initial cost and abuse guardrail. |
-| CPU | `0.5` vCPU | Conservative initial allocation; increase if calculations feel slow. |
-| Memory | `512 MiB` | Appropriate starting point; confirm with Cloud Monitoring. |
-| Concurrency | `1` | A Streamlit session can hold state and a PHREEQC calculation is CPU-bound. |
-| Execution environment | First generation | Required when using less than 1 vCPU. |
+| CPU | `1` vCPU | Matches the deployed revision and gives PHREEQC adequate compute capacity. |
+| Memory | `512 MiB` | Matches the deployed revision; review Cloud Monitoring before increasing it. |
+| Concurrency | `4` | Allows several sessions per instance while limiting simultaneous CPU-bound work. |
+| Request timeout | `3600` seconds | Matches the deployed revision; normal calculations should finish far sooner. |
+| Execution environment | First generation | Matches the deployed revision. |
 | Startup CPU boost | Enabled | Helps reduce cold-start time. |
 | Container port | `8080` | Matches the local default; Cloud Run still injects `PORT`. |
+| Runtime service account | `pitzer-calculator-runtime` | Dedicated least-privilege identity; no application cloud permissions are required. |
+| Encryption | Google-managed key | No customer-managed key is required for this public stateless service. |
 
-Treat these as initial operating values rather than scientific requirements. During the
-side-by-side deployment, confirm them against the current Google Cloud console and pricing
-before creating the service. Do not commit Google credentials, service-account keys, project
-IDs, billing-account IDs, or generated deployment URLs into source code.
+The billing account has a separate monthly Cloud Run spend cap. That control is managed in
+Google Cloud and is not encoded in this repository. Do not commit Google credentials,
+service-account keys, billing-account IDs, or other private cloud configuration into source
+code. The public service URL is intentionally documented.
 
-## Post-deployment smoke test
+## Verified deployment record
 
-After the owner deploys the service:
+The first fully smoke-tested production baseline was recorded on 2026-08-28:
+
+| Item | Verified value |
+| --- | --- |
+| Cloud Run revision | `pitzer-calculator-00005-j5d` |
+| Source commit | `8a087c3` (`Make downloads independent of Cloud Run routing`) |
+| Traffic | `100%` to the latest healthy revision |
+| Public access | Application loaded without Google authentication |
+| Calculation | A balanced NaCl calculation completed and rendered all result tabs |
+| Downloads | CSV, PHREEQC input, Markdown report, and ZIP downloaded through browser-local links |
+
+The revision identifier is a historical verification record. Continuous deployment creates a
+new immutable revision after each successful push to `main`; the stable service URL does not
+change.
+
+## Smoke test after each production update
+
+After Cloud Build deploys a new revision:
 
 1. Confirm the assigned `run.app` URL loads in a signed-out browser.
 2. Confirm `/_stcore/health` responds successfully.
@@ -96,21 +117,25 @@ After the owner deploys the service:
 5. Check desktop and mobile layouts and an initial cold start.
 6. Inspect Cloud Logging for startup errors and verify raw compositions are not emitted.
 7. Configure a billing budget and alerts; remember that alerts notify but do not hard-cap cost.
-8. Record the verified URL, Google Cloud region, deployed revision, and test date in this file
-   and in the README.
-9. Tag the verified release commit only after the deployment matches that commit.
+8. Confirm the latest healthy revision receives `100%` of service traffic.
+9. Tag a release commit only after the deployed revision matches that commit.
 
 ## Updating and rollback
 
-Cloud Run does not update merely because GitHub changes unless the owner later configures a
-continuous-deployment trigger. For the initial manual workflow, build and deploy a new revision
-from a reviewed commit, smoke-test the revision, and then direct traffic to it. Cloud Run keeps
-older immutable revisions, allowing traffic to be moved back to the last known-good revision if
-a deployment fails.
+Google Cloud Build is connected to the GitHub repository. A push to the `main` branch triggers
+this production workflow:
 
-Deployment commands and the choice between source deployment, Cloud Build, and Artifact
-Registry will be finalized with the owner during the separate deployment session. This keeps
-cloud mutations, billing choices, and authentication decisions out of repository preparation.
+1. Cloud Build checks out the new `main` commit.
+2. It builds the repository's root `Dockerfile` and stores the image in Artifact Registry.
+3. It deploys the image as a new immutable `pitzer-calculator` Cloud Run revision.
+4. When deployment succeeds, Cloud Run directs production traffic to the new healthy revision.
+
+No separate manual redeployment is normally required after pushing to `main`. A failed build or
+failed revision does not require changing the stable public URL. Cloud Run retains older
+revisions, so the owner can restore service by moving traffic to the last known-good revision.
+
+Changes to cloud settings, IAM, billing, the build trigger, or traffic allocation are separate
+operator actions and are not made by repository code.
 
 ## Current operator references
 

@@ -7,6 +7,13 @@ uses semantic versioning.
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-08-28
+
+### Added
+
+- Publish the verified Google Cloud Run endpoint and record its production configuration,
+  smoke-test baseline, continuous-deployment workflow, and rollback procedure.
+
 ### Changed
 
 - Replace the retired hosted-platform deployment assumptions with a production
@@ -17,6 +24,11 @@ uses semantic versioning.
   name can be collected together in one full-suite run.
 - Start every analytical component at zero; examples remain available through the explicit
   published reference-case selector.
+- Replace the standalone species-only download with one rectangular complete-results CSV
+  containing summary, balance, mean-coefficient, species, and reproducibility records.
+- Embed generated downloads in browser-local links so they remain reliable when Cloud Run
+  routes a follow-up request to a different stateless instance.
+- Link the author's name in the application sidebar to the public GitHub profile.
 
 ### Removed
 
@@ -55,5 +67,6 @@ uses semantic versioning.
 - Made 1 atm pressure and the Pitzer, MacInnes, electrostatic-mixing, and no-redox assumptions
   explicit in generated PHREEQC input.
 
-[Unreleased]: https://github.com/Eitan-RDEF/pitzer-activity-calculator/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/Eitan-RDEF/pitzer-activity-calculator/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/Eitan-RDEF/pitzer-activity-calculator/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/Eitan-RDEF/pitzer-activity-calculator/releases/tag/v1.0.0

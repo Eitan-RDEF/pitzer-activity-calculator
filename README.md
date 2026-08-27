@@ -3,7 +3,9 @@
 A free, transparent browser-based calculator for aqueous-solution activities at high ionic
 strength, powered by PHREEQC and its Pitzer database.
 
-> **Project status:** Version 1.0.0. The repository contains a complete, tested known-pH
+**[Open the live Pitzer Activity Calculator](https://pitzer-calculator-584210380580.me-west1.run.app)**
+
+> **Project status:** Version 1.0.1. The repository contains a complete, tested known-pH
 > workflow for audited core and conditional components. Selected mean activity coefficients
 > and osmotic-coefficient systems have been compared with published USGS and NIST references.
 > Validation does not cover every possible composition or condition; independently verify
@@ -103,10 +105,11 @@ The repository includes a non-root production container for Google Cloud Run. It
 Cloud Run's injected `PORT`, disables development file watching and keeps the calculation
 service stateless. CI builds the image and verifies Streamlit's health endpoint.
 
-The previous public deployment has been retired. The new Cloud Run URL will be added after
-the owner completes and verifies the deployment. Container checks, recommended service
-settings, deployment boundaries, and the release checklist are documented in
-[Deployment](docs/deployment.md).
+The public application is deployed at
+[pitzer-calculator-584210380580.me-west1.run.app](https://pitzer-calculator-584210380580.me-west1.run.app).
+Pushes to `main` are built from the production `Dockerfile` by Google Cloud Build and deployed
+as new Cloud Run revisions. The verified configuration, deployment record, update workflow,
+and smoke-test checklist are documented in [Deployment](docs/deployment.md).
 
 ## License, privacy, and contact
 

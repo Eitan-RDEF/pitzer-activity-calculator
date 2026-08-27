@@ -24,7 +24,7 @@ from pitzer_calculator.domain.species import (
 from pitzer_calculator.engine.exports import (
     calculation_bundle,
     calculation_report,
-    species_csv,
+    complete_results_csv,
 )
 from pitzer_calculator.engine.phreeqc import CalculationError, calculate_solution
 from pitzer_calculator.engine.validation import InputValidationError, validate_solution
@@ -287,9 +287,9 @@ def _render_downloads(solution: SolutionInput, result: Any, warnings: tuple[str,
     first, second, third, fourth = st.columns(4)
     first.markdown(
         _download_link(
-            "Species CSV",
-            species_csv(result),
-            file_name="pitzer-species.csv",
+            "Complete results CSV",
+            complete_results_csv(result),
+            file_name="pitzer-complete-results.csv",
             mime="text/csv",
         ),
         unsafe_allow_html=True,
@@ -502,7 +502,7 @@ def render_app() -> None:
         st.divider()
         st.caption(
             "Free and open-source engineering tool developed by "
-            "[Eitan Elfassy](mailto:eitan.elfassi@gmail.com)."
+            "[Eitan Elfassy](https://github.com/Eitan-RDEF)."
         )
 
     _render_reference_selector(load_reference_cases())

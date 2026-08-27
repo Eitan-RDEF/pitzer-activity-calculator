@@ -7,7 +7,12 @@ from pitzer_calculator.domain.models import (
     SolutionInput,
     SpeciesResult,
 )
-from pitzer_calculator.engine.exports import calculation_bundle, calculation_report, species_csv
+from pitzer_calculator.engine.exports import (
+    calculation_bundle,
+    calculation_report,
+    complete_results_csv,
+    species_csv,
+)
 
 
 def _result() -> CalculationResult:
@@ -37,6 +42,16 @@ def test_species_csv_contains_full_precision_columns() -> None:
 
     assert "molality_mol_per_kg_water" in csv_text
     assert "Na+,1,0.1,0.08,0.8" in csv_text
+
+
+def test_complete_results_csv_contains_every_result_view() -> None:
+    csv_text = complete_results_csv(_result())
+
+    assert "summary,pH,7,dimensionless" in csv_text
+    assert "conditions_and_balance,charge_balance_classification,good" in csv_text
+    assert "mean_activity_coefficients,NaCl,0.78,dimensionless" in csv_text
+    assert "aqueous_species,Na+" in csv_text
+    assert "method_and_versions,PHREEQC_engine_version,3.8.6-test" in csv_text
 
 
 def test_report_records_assumptions_versions_and_warning() -> None:

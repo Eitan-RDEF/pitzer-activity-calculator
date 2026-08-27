@@ -21,9 +21,13 @@ def test_entered_nacl_workflow_renders_complete_results() -> None:
         "Calculate activities in concentrated aqueous solutions" in item.value
         for item in app.markdown
     )
-    assert any("Eitan Elfassy" in item.value for item in app.caption)
+    author_caption = next(
+        item.value for item in app.caption if "Eitan Elfassy" in item.value
+    )
+    assert "[Eitan Elfassy](https://github.com/Eitan-RDEF)" in author_caption
+    assert "mailto:" not in author_caption
     rendered_markdown = "\n".join(item.value for item in app.markdown)
-    assert "Version 1.0.0" in rendered_markdown
+    assert "Version 1.0.1" in rendered_markdown
     assert "docs/validation-status.md" in rendered_markdown
     assert "docs/supported-components.md" in rendered_markdown
     assert "PRIVACY.md" in rendered_markdown
@@ -59,7 +63,7 @@ def test_entered_nacl_workflow_renders_complete_results() -> None:
     ]
     rendered_markdown = "\n".join(item.value for item in app.markdown)
     assert rendered_markdown.count('class="download-link"') == 4
-    assert 'download="pitzer-species.csv"' in rendered_markdown
+    assert 'download="pitzer-complete-results.csv"' in rendered_markdown
     assert 'download="pitzer-calculation.pqi"' in rendered_markdown
     assert 'download="pitzer-report.md"' in rendered_markdown
     assert 'download="pitzer-calculation.zip"' in rendered_markdown

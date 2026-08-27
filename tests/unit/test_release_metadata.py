@@ -10,11 +10,11 @@ ROOT = Path(__file__).parents[2]
 def test_release_version_is_consistent() -> None:
     metadata = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
 
-    assert metadata["project"]["version"] == "1.0.0"
+    assert metadata["project"]["version"] == "1.0.1"
     assert __version__ == metadata["project"]["version"]
     assert metadata["project"]["license"] == "MIT"
     assert metadata["project"]["urls"]["Homepage"] == (
-        "https://github.com/Eitan-RDEF/pitzer-activity-calculator"
+        "https://pitzer-calculator-584210380580.me-west1.run.app"
     )
     assert not any(
         classifier.startswith("License ::")

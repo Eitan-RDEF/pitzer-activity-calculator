@@ -1,6 +1,6 @@
 # Third-party notices
 
-**Release:** 1.0.0
+**Release:** 1.0.1
 **Reviewed:** 27 August 2026
 
 The Pitzer Activity Calculator's original source code is licensed separately under the
