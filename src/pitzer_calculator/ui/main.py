@@ -264,6 +264,7 @@ def _render_downloads(solution: SolutionInput, result: Any, warnings: tuple[str,
         data=species_csv(result),
         file_name="pitzer-species.csv",
         mime="text/csv",
+        on_click="ignore",
         width="stretch",
     )
     second.download_button(
@@ -271,6 +272,7 @@ def _render_downloads(solution: SolutionInput, result: Any, warnings: tuple[str,
         data=result.phreeqc_input,
         file_name="pitzer-calculation.pqi",
         mime="text/plain",
+        on_click="ignore",
         width="stretch",
     )
     third.download_button(
@@ -278,6 +280,7 @@ def _render_downloads(solution: SolutionInput, result: Any, warnings: tuple[str,
         data=report,
         file_name="pitzer-report.md",
         mime="text/markdown",
+        on_click="ignore",
         width="stretch",
     )
     fourth.download_button(
@@ -285,6 +288,7 @@ def _render_downloads(solution: SolutionInput, result: Any, warnings: tuple[str,
         data=calculation_bundle(solution, result, warnings),
         file_name="pitzer-calculation.zip",
         mime="application/zip",
+        on_click="ignore",
         width="stretch",
     )
 

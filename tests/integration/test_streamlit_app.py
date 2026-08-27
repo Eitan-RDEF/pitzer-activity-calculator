@@ -57,6 +57,14 @@ def test_entered_nacl_workflow_renders_complete_results() -> None:
         "Conditions & balance",
         "Method & versions",
     ]
+    download_buttons = app.get("download_button")
+    assert [item.proto.label for item in download_buttons] == [
+        "Species CSV",
+        "PHREEQC input",
+        "Calculation report",
+        "Complete ZIP",
+    ]
+    assert all(item.proto.ignore_rerun for item in download_buttons)
 
 
 def test_reset_clears_composition_and_restores_physical_defaults() -> None:
