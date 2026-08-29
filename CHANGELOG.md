@@ -7,6 +7,11 @@ uses semantic versioning.
 
 ## [Unreleased]
 
+### Fixed
+
+- Gate the public Nginx listener on Streamlit readiness so parallel requests during a Cloud
+  Run cold start cannot receive intermittent `502 Bad Gateway` responses.
+
 ### Added
 
 - Add a search-oriented static presentation site with scientific scope, validation evidence,

@@ -32,3 +32,13 @@ def test_container_uses_gateway_process_supervisor() -> None:
 
     assert "apt-get install --no-install-recommends --yes nginx" in dockerfile
     assert 'CMD ["python", "gateway/run.py"]' in dockerfile
+
+
+def test_gateway_waits_for_streamlit_before_opening_public_port() -> None:
+    supervisor = (ROOT / "gateway/run.py").read_text(encoding="utf-8")
+
+    readiness_call = supervisor.index("_wait_for_streamlit(streamlit)")
+    nginx_start = supervisor.index("nginx = subprocess.Popen")
+
+    assert "http://127.0.0.1:8501/app/_stcore/health" in supervisor
+    assert readiness_call < nginx_start

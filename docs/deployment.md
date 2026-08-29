@@ -46,6 +46,10 @@ The root [Dockerfile](../Dockerfile) is the production runtime definition. It:
 - disables usage statistics, development file watching, and run-on-save behavior; and
 - supervises both processes and forwards termination signals so Cloud Run can stop cleanly.
 
+The supervisor waits for Streamlit's private health endpoint before starting Nginx. Cloud Run's
+startup probe therefore remains closed until both layers are ready, preventing parallel browser
+asset requests from reaching Streamlit during its cold-start window.
+
 The `.dockerignore` file excludes tests, research PDFs, local environments, caches, Git
 metadata, and development-only files from the build context. Scientific runtime assets under
 `data/databases` and the reviewed cases under `data/examples` remain in the image.
