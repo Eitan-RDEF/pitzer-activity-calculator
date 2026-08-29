@@ -11,6 +11,13 @@ uses semantic versioning.
 
 - Add a search-oriented static presentation site with scientific scope, validation evidence,
   FAQs, social-sharing metadata, and an automated GitHub Pages deployment workflow.
+- Add a same-container Nginx gateway that pauses inactive Streamlit sessions after 10 minutes,
+  closes abandoned WebSockets, and restores validated form state from tab-scoped browser storage.
+
+### Changed
+
+- Limit the one-time inactivity-resume cookie to 60 seconds, disable duplicate Nginx access
+  logging, and document controller, processor, retention, transfer, and user-rights information.
 
 ## [1.0.1] - 2026-08-28
 

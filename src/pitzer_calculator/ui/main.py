@@ -2,9 +2,11 @@
 
 import base64
 import html
+import json
 from typing import Any
 
 import streamlit as st
+import streamlit.components.v1 as streamlit_components
 
 from pitzer_calculator import __version__
 from pitzer_calculator.config import APP_NAME, APP_TAGLINE
@@ -33,9 +35,74 @@ from pitzer_calculator.reference_cases import (
     load_reference_cases,
     published_output_rows,
 )
+from pitzer_calculator.ui.browser_state import (
+    RESUME_COOKIE_NAME,
+    decode_resume_cookie,
+    serialise_browser_state,
+)
 from pitzer_calculator.ui.styles import apply_styles
 
 MANUAL_COMPOSITION = ""
+
+
+def _restore_solution_form_from_browser(cases: tuple[ReferenceCase, ...]) -> None:
+    """Hydrate a new Streamlit session from the gateway's one-time resume cookie."""
+
+    if st.session_state.get("_browser_state_checked"):
+        return
+    st.session_state["_browser_state_checked"] = True
+
+    encoded = st.context.cookies.get(RESUME_COOKIE_NAME)
+    restored = decode_resume_cookie(
+        encoded,
+        valid_reference_ids={case.id for case in cases},
+    )
+    if restored is None:
+        return
+
+    calculation_current = bool(restored.pop("_calculation_current", False))
+    st.session_state.update(restored)
+    st.session_state["_calculation_current"] = calculation_current
+    st.session_state["_resume_calculation_once"] = calculation_current
+    st.session_state["_resume_cookie_consumed"] = True
+
+
+def _mark_solution_changed() -> None:
+    """Invalidate a displayed calculation after any editable input changes."""
+
+    st.session_state["_calculation_current"] = False
+
+
+def _render_browser_state_bridge() -> None:
+    """Send current form state to the same-origin inactivity gateway.
+
+    The zero-height component performs browser-only messaging. The gateway stores the payload
+    in tab-scoped ``sessionStorage`` and never forwards it to application logs or a database.
+    """
+
+    payload = serialise_browser_state(st.session_state)
+    encoded_payload = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace(
+        "</", "<\\/"
+    )
+    clear_cookie = bool(st.session_state.pop("_resume_cookie_consumed", False))
+    streamlit_components.html(
+        f"""
+        <script>
+          const message = {{
+            source: "pitzer-calculator",
+            type: "form-state",
+            payload: {encoded_payload},
+            clearResumeCookie: {str(clear_cookie).lower()}
+          }};
+          let targetOrigin = "*";
+          try {{ targetOrigin = window.top.location.origin; }} catch (_error) {{}}
+          window.top.postMessage(message, targetOrigin);
+        </script>
+        """,
+        height=0,
+        width=0,
+        scrolling=False,
+    )
 
 
 def _display_number(value: float, significant_digits: int = 6) -> str:
@@ -53,6 +120,7 @@ def _reset_solution_form() -> None:
     st.session_state["solution_ph"] = 7.0
     st.session_state["solution_temperature_c"] = 25.0
     st.session_state["composition_unit"] = ConcentrationUnit.MOL_PER_KGW
+    st.session_state["_calculation_current"] = False
     for unit in ConcentrationUnit:
         for component in COMPONENTS:
             st.session_state[f"component_{unit.name}_{component.key}"] = 0.0
@@ -64,6 +132,7 @@ def _apply_reference_case(cases_by_id: dict[str, ReferenceCase]) -> None:
     selected_id = st.session_state.get("reference_case_id", MANUAL_COMPOSITION)
     st.session_state["show_reference_source"] = False
     st.session_state["show_reference_assumptions"] = False
+    st.session_state["_calculation_current"] = False
     if selected_id == MANUAL_COMPOSITION:
         return
 
@@ -188,6 +257,7 @@ def _component_grid(
                     min_value=0.0,
                     format="%.8g",
                     key=widget_key,
+                    on_change=_mark_solution_changed,
                     **default_arguments,
                 )
                 if component.included_forms:
@@ -425,6 +495,8 @@ def _render_results(solution: SolutionInput, result: Any, warnings: tuple[str, .
 def render_app() -> None:
     """Compose the complete single-page Streamlit workflow."""
 
+    reference_cases = load_reference_cases()
+    _restore_solution_form_from_browser(reference_cases)
     apply_styles()
 
     st.title(APP_NAME)
@@ -505,9 +577,9 @@ def render_app() -> None:
             "[Eitan Elfassy](https://github.com/Eitan-RDEF)."
         )
 
-    _render_reference_selector(load_reference_cases())
+    _render_reference_selector(reference_cases)
 
-    with st.form("solution_form"):
+    with st.container(border=True):
         st.subheader("Solution definition")
         st.caption(
             "Enter analytical component totals. PHREEQC calculates the equilibrium species "
@@ -521,6 +593,7 @@ def render_app() -> None:
                 min_value=-2.0,
                 max_value=16.0,
                 key="solution_ph",
+                on_change=_mark_solution_changed,
                 **ph_default,
             )
         with middle:
@@ -534,6 +607,7 @@ def render_app() -> None:
                 min_value=0.0,
                 max_value=100.0,
                 key="solution_temperature_c",
+                on_change=_mark_solution_changed,
                 **temperature_default,
             )
         with right:
@@ -542,27 +616,31 @@ def render_app() -> None:
                 options=list(ConcentrationUnit),
                 format_func=lambda item: item.display_label,
                 key="composition_unit",
+                on_change=_mark_solution_changed,
             )
 
         st.markdown("#### Composition")
         raw_components = _composition_inputs(unit)
         calculate_column, reset_column, _spacer = st.columns([1.35, 0.75, 3.4])
         with calculate_column:
-            submitted = st.form_submit_button(
+            submitted = st.button(
                 "Calculate with Pitzer", type="primary", width="stretch"
             )
         with reset_column:
-            reset_requested = st.form_submit_button(
+            reset_requested = st.button(
                 "Reset",
                 on_click=_reset_solution_form,
                 width="stretch",
             )
 
     if reset_requested:
+        _render_browser_state_bridge()
         st.caption("Inputs cleared. Physical conditions were restored to their defaults.")
         return
 
-    if not submitted:
+    resume_requested = bool(st.session_state.pop("_resume_calculation_once", False))
+    if not submitted and not resume_requested:
+        _render_browser_state_bridge()
         st.caption("Enter a composition or load a published reference case to get started.")
         return
 
@@ -579,7 +657,11 @@ def render_app() -> None:
         with st.spinner("Running the PHREEQC Pitzer model…"):
             result = calculate_solution(solution)
     except (InputValidationError, CalculationError) as exc:
+        st.session_state["_calculation_current"] = False
+        _render_browser_state_bridge()
         st.error(str(exc))
         return
 
+    st.session_state["_calculation_current"] = True
     _render_results(solution, result, report.warnings)
+    _render_browser_state_bridge()

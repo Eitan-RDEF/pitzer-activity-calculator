@@ -14,7 +14,8 @@ the repository defines the application container and its continuous-deployment s
 - Runtime port: Cloud Run's injected `PORT` environment variable, defaulting locally to `8080`
 
 The Cloud Run URL above is the canonical public application; GitHub remains the source-code and
-documentation home.
+documentation home. The public root serves an inactivity-aware shell and Streamlit is proxied
+under `/app/` within the same service.
 
 ## Public discovery page
 
@@ -36,20 +37,42 @@ The root [Dockerfile](../Dockerfile) is the production runtime definition. It:
 - installs the same package metadata and pinned PHREEQC binding used by local development;
 - installs an immutable application wheel and sets `PITZER_PROJECT_ROOT=/app` so the installed
   package can locate its versioned runtime data;
-- copies only the application, bundled database, reviewed reference cases, styles, and runtime
-  configuration into the image;
+- copies only the application, bundled database, reviewed reference cases, styles, gateway, and
+  runtime configuration into the image;
 - runs as an unprivileged user;
-- binds Streamlit to `0.0.0.0` and the injected `PORT`;
+- binds Nginx to the injected `PORT` and Streamlit privately to `127.0.0.1:8501/app/`;
+- proxies HTTP, health, and WebSocket traffic without creating a second Cloud Run service;
+- disables duplicate Nginx access logs while retaining Cloud Run's platform request logs;
 - disables usage statistics, development file watching, and run-on-save behavior; and
-- preserves normal process signals so Cloud Run can stop an instance cleanly.
+- supervises both processes and forwards termination signals so Cloud Run can stop cleanly.
 
 The `.dockerignore` file excludes tests, research PDFs, local environments, caches, Git
 metadata, and development-only files from the build context. Scientific runtime assets under
 `data/databases` and the reviewed cases under `data/examples` remain in the image.
 
-The service is stateless. Do not add code that persists raw user compositions or calculation
-results to the container filesystem, Cloud Logging, a database, or analytics without first
-updating the privacy statement and obtaining an explicit product decision.
+The service is server-stateless. The gateway keeps resume data in the browser tab's
+`sessionStorage` and transfers it once through a validated same-origin cookie after an inactivity
+pause. The cookie expires after 60 seconds and is deleted earlier after successful consumption.
+Do not add code that persists raw user compositions or calculation results to the
+container filesystem, Cloud Logging, a database, or analytics without first updating the privacy
+statement and obtaining an explicit product decision.
+
+## Inactivity lifecycle
+
+The runtime gateway solves the cost problem created by Streamlit's persistent WebSocket:
+
+1. The browser shell loads Streamlit in a same-origin iframe.
+2. Pointer, keyboard, scroll, touch, form-rerun, and tab-return activity reset a 10-minute timer.
+3. At expiry the shell replaces the iframe with a pause card, closing the WebSocket.
+4. Returning to a hidden tab reconnects automatically; a visible paused page also provides an
+   explicit **Resume calculator** button.
+5. The new Streamlit session restores validated inputs from browser-tab storage and recalculates
+   the last current result when applicable.
+
+The Cloud Run request timeout remains 3600 seconds. Shortening it is not an inactivity control:
+Streamlit reconnects timed-out WebSockets while the page remains loaded. For a deterministic
+local test, append `?idle_seconds=5` to `http://localhost:8080/`; the override is accepted only on
+`localhost` and `127.0.0.1`.
 
 ## Validate locally before deployment
 
@@ -71,8 +94,9 @@ docker run --rm --publish 8080:8080 --env PORT=8080 pitzer-calculator:local
 ```
 
 Open `http://localhost:8080` and verify the container health endpoint at
-`http://localhost:8080/_stcore/health`. GitHub Actions performs the same image build and health
-check on every push and pull request.
+`http://localhost:8080/_stcore/health`. Confirm pause/resume quickly at
+`http://localhost:8080/?idle_seconds=5`. GitHub Actions performs the same image build and gateway
+health check on every push and pull request.
 
 ## Verified service configuration
 
@@ -88,10 +112,11 @@ not scientific requirements:
 | Maximum instances | `2` | Provides a simple initial cost and abuse guardrail. |
 | CPU | `1` vCPU | Matches the deployed revision and gives PHREEQC adequate compute capacity. |
 | Memory | `512 MiB` | Matches the deployed revision; review Cloud Monitoring before increasing it. |
-| Concurrency | `4` | Allows several sessions per instance while limiting simultaneous CPU-bound work. |
+| Concurrency | `4` | Current deployed value; increase separately after browser and load testing. |
 | Request timeout | `3600` seconds | Matches the deployed revision; normal calculations should finish far sooner. |
 | Execution environment | First generation | Matches the deployed revision. |
 | Startup CPU boost | Enabled | Helps reduce cold-start time. |
+| `_Default` log retention | `30 days` | Confirmed in Cloud Logging; review after material logging changes. |
 | Container port | `8080` | Matches the local default; Cloud Run still injects `PORT`. |
 | Runtime service account | `pitzer-calculator-runtime` | Dedicated least-privilege identity; no application cloud permissions are required. |
 | Encryption | Google-managed key | No customer-managed key is required for this public stateless service. |

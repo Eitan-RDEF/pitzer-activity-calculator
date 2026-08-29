@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#0f766e">
+    <title>Pitzer Activity Calculator</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #0f172a;
+        background: #f6f8fb;
+      }
+
+      * { box-sizing: border-box; }
+      html, body, main { width: 100%; height: 100%; margin: 0; }
+      body { overflow: hidden; }
+
+      #calculator-frame {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: #f6f8fb;
+      }
+
+      .pause-panel {
+        display: grid;
+        min-height: 100%;
+        place-items: center;
+        padding: 1.5rem;
+        background:
+          radial-gradient(circle at 15% 15%, rgba(15, 118, 110, 0.12), transparent 30rem),
+          #f6f8fb;
+      }
+
+      .pause-panel[hidden] { display: none; }
+
+      .pause-card {
+        width: min(32rem, 100%);
+        padding: 2rem;
+        border: 1px solid #cbd5e1;
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.96);
+        box-shadow: 0 1rem 3rem rgba(15, 23, 42, 0.09);
+        text-align: center;
+      }
+
+      .pause-mark {
+        display: inline-grid;
+        width: 3rem;
+        height: 3rem;
+        place-items: center;
+        border-radius: 999px;
+        background: #ccfbf1;
+        color: #0f766e;
+        font-size: 1.25rem;
+        font-weight: 800;
+      }
+
+      h1 { margin: 1rem 0 0.65rem; font-size: clamp(1.5rem, 4vw, 2rem); }
+      p { margin: 0; color: #475569; line-height: 1.6; }
+
+      button {
+        margin-top: 1.5rem;
+        padding: 0.75rem 1.25rem;
+        border: 0;
+        border-radius: 0.55rem;
+        background: #0f766e;
+        color: white;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      button:hover { background: #115e59; }
+      button:focus-visible { outline: 3px solid rgba(15, 118, 110, 0.35); outline-offset: 3px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <iframe
+        id="calculator-frame"
+        src="/app/"
+        title="Pitzer Activity Calculator"
+        allow="clipboard-write"
+      ></iframe>
+      <section id="pause-panel" class="pause-panel" aria-live="polite" hidden>
+        <div class="pause-card">
+          <span class="pause-mark" aria-hidden="true">Ⅱ</span>
+          <h1>Calculator session paused</h1>
+          <p>
+            The connection was closed after 10 minutes without activity. Your entered values
+            are kept only in this browser tab and will be restored when you continue.
+          </p>
+          <button id="resume-button" type="button">Resume calculator</button>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      (() => {
+        "use strict";
+
+        const DEFAULT_IDLE_MS = 10 * 60 * 1000;
+        const LOCAL_TEST_IDLE_SECONDS = Number(
+          new URLSearchParams(window.location.search).get("idle_seconds")
+        );
+        const isLocal = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+        const idleMs = isLocal && Number.isFinite(LOCAL_TEST_IDLE_SECONDS)
+          ? Math.max(1, LOCAL_TEST_IDLE_SECONDS) * 1000
+          : DEFAULT_IDLE_MS;
+        const storageKey = "pitzer-calculator:resume-state:v1";
+        const cookieName = "pitzer_resume_state";
+        const frame = document.getElementById("calculator-frame");
+        const pausePanel = document.getElementById("pause-panel");
+        const resumeButton = document.getElementById("resume-button");
+        const activityEvents = ["pointerdown", "keydown", "wheel", "touchstart"];
+
+        let idleTimer = null;
+        let paused = false;
+        let lastActivity = Date.now();
+
+        function encodeBase64Url(value) {
+          const bytes = new TextEncoder().encode(value);
+          let binary = "";
+          bytes.forEach((byte) => { binary += String.fromCharCode(byte); });
+          return btoa(binary).replaceAll("+", "-").replaceAll("/", "_").replace(/=+$/, "");
+        }
+
+        function clearResumeCookie() {
+          document.cookie = `${cookieName}=; Path=/app/; SameSite=Strict; Max-Age=0`;
+        }
+
+        function prepareResumeCookie() {
+          const state = sessionStorage.getItem(storageKey);
+          if (!state) return;
+          const secure = window.location.protocol === "https:" ? "; Secure" : "";
+          document.cookie = `${cookieName}=${encodeBase64Url(state)}; Path=/app/; SameSite=Strict; Max-Age=60${secure}`;
+        }
+
+        function schedulePause() {
+          window.clearTimeout(idleTimer);
+          if (paused) return;
+          const remaining = Math.max(0, idleMs - (Date.now() - lastActivity));
+          idleTimer = window.setTimeout(checkIdle, remaining);
+        }
+
+        function recordActivity() {
+          if (paused) return;
+          lastActivity = Date.now();
+          schedulePause();
+        }
+
+        function bindFrameActivity() {
+          try {
+            activityEvents.forEach((eventName) => {
+              frame.contentWindow.addEventListener(eventName, recordActivity, {
+                capture: true,
+                passive: true,
+              });
+            });
+          } catch (_error) {
+            // The same-origin gateway normally permits this. The timer still works if a
+            // browser temporarily blocks access while the iframe is navigating.
+          }
+        }
+
+        function pause() {
+          if (paused) return;
+          paused = true;
+          window.clearTimeout(idleTimer);
+          frame.src = "about:blank";
+          frame.hidden = true;
+          pausePanel.hidden = false;
+          resumeButton.focus({ preventScroll: true });
+        }
+
+        function resume() {
+          if (!paused) return;
+          prepareResumeCookie();
+          paused = false;
+          lastActivity = Date.now();
+          pausePanel.hidden = true;
+          frame.hidden = false;
+          frame.src = "/app/";
+          schedulePause();
+        }
+
+        function checkIdle() {
+          if (!paused && Date.now() - lastActivity >= idleMs) pause();
+          else schedulePause();
+        }
+
+        window.addEventListener("message", (event) => {
+          if (event.origin !== window.location.origin) return;
+          if (event.data?.source !== "pitzer-calculator") return;
+          if (event.data.type === "form-state" && event.data.payload) {
+            sessionStorage.setItem(storageKey, JSON.stringify(event.data.payload));
+            if (event.data.clearResumeCookie) clearResumeCookie();
+            recordActivity();
+          }
+        });
+
+        activityEvents.forEach((eventName) => {
+          window.addEventListener(eventName, recordActivity, { capture: true, passive: true });
+        });
+        frame.addEventListener("load", bindFrameActivity);
+        resumeButton.addEventListener("click", resume);
+        document.addEventListener("visibilitychange", () => {
+          if (!document.hidden && paused) resume();
+          else if (!document.hidden) recordActivity();
+        });
+
+        // A narrow diagnostic surface makes the timeout deterministic in local browser tests.
+        window.__pitzerIdleController = Object.freeze({ pause, resume, isPaused: () => paused });
+        schedulePause();
+      })();
+    </script>
+  </body>
+</html>

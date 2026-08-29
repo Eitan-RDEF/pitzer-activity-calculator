@@ -315,8 +315,10 @@ Version 1 does not include a separate CSV-upload workflow.
 
 ### 24. Stateless data handling
 
-The app does not intentionally persist user compositions or calculation results. Data exists
-only for the active Streamlit session and downloadable files are generated on demand.
+The app does not intentionally persist user compositions or calculation results on the server.
+Data exists in the active Streamlit session and, solely to resume an inactivity-paused session,
+in tab-scoped browser session storage until that tab closes. Downloadable files are generated on
+demand.
 
 Version 1 has no accounts, saved calculations, composition database, or raw-composition
 analytics. Repository-level Streamlit usage statistics are disabled. The hosting provider

@@ -59,6 +59,7 @@ pytest tests/integration
 ```text
 .
 ├── Dockerfile                  # Production image and Cloud Run startup contract
+├── gateway/                    # Nginx proxy and inactivity-aware browser shell
 ├── streamlit_app.py            # Application entry point; intentionally thin
 ├── src/pitzer_calculator/
 │   ├── domain/                   # Typed chemistry inputs, outputs, species
@@ -105,9 +106,11 @@ are each shown only on request.
 
 ## Deployment
 
-The repository includes a non-root production container for Google Cloud Run. It listens on
-Cloud Run's injected `PORT`, disables development file watching and keeps the calculation
-service stateless. CI builds the image and verifies Streamlit's health endpoint.
+The repository includes a non-root production container for Google Cloud Run. A lightweight
+Nginx gateway listens on Cloud Run's injected `PORT`, serves the browser shell, and proxies
+Streamlit under `/app/`. After 10 minutes without user activity, the shell closes the Streamlit
+iframe and its billable WebSocket; returning to the tab restores the form from tab-scoped browser
+storage. CI builds the image and verifies the proxied Streamlit health endpoint.
 
 The public application is deployed at
 [pitzer-calculator-584210380580.me-west1.run.app](https://pitzer-calculator-584210380580.me-west1.run.app).

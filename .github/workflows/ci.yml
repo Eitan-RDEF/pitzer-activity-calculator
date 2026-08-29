@@ -34,12 +34,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build production container
         run: docker build --tag pitzer-calculator:ci .
-      - name: Smoke-test Streamlit health endpoint
+      - name: Smoke-test gateway and proxied Streamlit health endpoint
         run: |
           container_id=$(docker run --detach --publish 8080:8080 --env PORT=8080 pitzer-calculator:ci)
           trap 'docker logs "$container_id"; docker rm --force "$container_id"' EXIT
           for attempt in {1..30}; do
-            if curl --fail --silent --show-error http://127.0.0.1:8080/_stcore/health; then
+            if curl --fail --silent --show-error http://127.0.0.1:8080/ | grep --quiet "Calculator session paused" \
+              && curl --fail --silent --show-error http://127.0.0.1:8080/_stcore/health; then
               exit 0
             fi
             sleep 1

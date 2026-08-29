@@ -9,8 +9,14 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-# Install an immutable application wheel, then run it as an unprivileged user. The explicit
-# project root above keeps repository-owned runtime data discoverable after installation.
+# Nginx serves the inactivity-aware shell and proxies the Streamlit WebSocket. It runs inside
+# the same Cloud Run container and does not create another service or billable resource.
+RUN apt-get update \
+    && apt-get install --no-install-recommends --yes nginx \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install an immutable application wheel, then run both processes as an unprivileged user. The
+# explicit project root keeps repository-owned runtime data discoverable after installation.
 RUN useradd --create-home --uid 10001 appuser
 
 COPY --chown=appuser:appuser pyproject.toml README.md LICENSE ./
@@ -22,11 +28,12 @@ COPY --chown=appuser:appuser streamlit_app.py ./
 COPY --chown=appuser:appuser .streamlit ./.streamlit
 COPY --chown=appuser:appuser assets ./assets
 COPY --chown=appuser:appuser data ./data
+COPY --chown=appuser:appuser gateway ./gateway
 
 USER appuser
 
 EXPOSE 8080
 
-# Cloud Run injects PORT. The shell form is intentional so the variable is expanded at
-# container start, while exec preserves correct signal handling for graceful shutdown.
-CMD ["sh", "-c", "exec streamlit run streamlit_app.py --server.address=0.0.0.0 --server.port=${PORT:-8080} --server.headless=true --server.fileWatcherType=none --browser.gatherUsageStats=false"]
+# The supervisor renders Cloud Run's injected PORT into Nginx, starts Streamlit privately on
+# port 8501, and forwards termination signals to both processes.
+CMD ["python", "gateway/run.py"]

@@ -1,0 +1,62 @@
+worker_processes 1;
+pid /tmp/nginx.pid;
+error_log /dev/stderr warn;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+    # Cloud Run already emits request logs. Avoid a duplicate Nginx log containing client
+    # addresses, user agents, and referrers.
+    access_log off;
+    sendfile on;
+
+    client_body_temp_path /tmp/nginx-client-body;
+    proxy_temp_path /tmp/nginx-proxy;
+    fastcgi_temp_path /tmp/nginx-fastcgi;
+    uwsgi_temp_path /tmp/nginx-uwsgi;
+    scgi_temp_path /tmp/nginx-scgi;
+
+    map $http_upgrade $connection_upgrade {
+        default upgrade;
+        "" close;
+    }
+
+    server {
+        listen __PORT__;
+        server_name _;
+        root /app/gateway/static;
+
+        location = / {
+            try_files /index.html =404;
+            add_header Cache-Control "no-store";
+        }
+
+        location = /app {
+            return 308 /app/;
+        }
+
+        location /app/ {
+            proxy_pass http://127.0.0.1:8501;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection $connection_upgrade;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-Host $http_host;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_buffering off;
+            proxy_read_timeout 3600s;
+            proxy_send_timeout 3600s;
+        }
+
+        # Preserve the established health URL while the Streamlit server moves under /app/.
+        location = /_stcore/health {
+            proxy_pass http://127.0.0.1:8501/app/_stcore/health;
+            proxy_set_header Host $http_host;
+        }
+    }
+}

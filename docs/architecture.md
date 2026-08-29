@@ -17,7 +17,8 @@ Future maintainers and coding agents should begin with:
    `src/pitzer_calculator/engine/input_builder.py`, and
    `src/pitzer_calculator/engine/phreeqc.py` for the calculation path;
 5. `src/pitzer_calculator/reference_cases.py` for the reviewed validation-data boundary;
-6. `src/pitzer_calculator/ui/main.py` only after the scientific path is understood.
+6. `src/pitzer_calculator/ui/main.py` only after the scientific path is understood; and
+7. `gateway/` for the Cloud Run request-routing and inactivity lifecycle.
 
 Module and object docstrings explain ownership and non-obvious contracts. Comments are
 reserved for external-library behavior, scientific conventions, or framework workarounds;
@@ -27,7 +28,10 @@ of repetitive docstrings.
 ## Dependency direction
 
 ```text
-streamlit_app.py
+browser -> Nginx gateway -> Streamlit /app/
+                              |
+                              v
+                       streamlit_app.py
         |
         v
        ui  ---> domain
@@ -64,6 +68,21 @@ results into CSV, Markdown, and ZIP artifacts without depending on Streamlit.
 
 Owns layout, help text, accessibility, input widgets, and result presentation. It must not
 construct PHREEQC syntax or encode hidden scientific rules.
+
+### Runtime gateway
+
+Nginx is an operational boundary inside the same container, not a second service. It serves a
+same-origin browser shell at `/`, proxies Streamlit HTTP and WebSocket traffic under `/app/`, and
+preserves the established health URL. The shell removes the Streamlit iframe after 10 minutes
+without pointer, keyboard, scroll, touch, or tab-return activity. Removing the iframe closes the
+WebSocket so Cloud Run can scale to zero.
+
+The shell keeps the latest form state only in the browser tab's `sessionStorage`. On resume it
+uses a one-time, 60-second, same-origin cookie to transfer that state into the new Streamlit
+session; the UI validates the schema and asks the shell to delete the cookie immediately. No
+resume state is written to application storage, URLs, analytics, or logs. Nginx access logging is
+disabled to avoid duplicating Cloud Run's platform request logs. If a completed calculation was
+current when the session paused, it is recalculated from the restored inputs.
 
 ### Data
 
