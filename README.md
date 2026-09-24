@@ -122,6 +122,11 @@ The static presentation site is published separately through GitHub Pages from [
 It gives search engines a conventional HTML entry point and links visitors to the live Cloud Run
 application. Changes under `site/` on `main` are deployed by the dedicated Pages workflow.
 
+The Cloud Run gateway serves `/robots.txt` asking all crawlers to avoid the calculator and
+pointing them to the presentation site's sitemap. The presentation site remains crawlable.
+This is advisory: fetching `/robots.txt` can still start a stopped Cloud Run container, and
+crawlers that ignore these rules can still request the app.
+
 ## License, privacy, and contact
 
 The application source is released under the [MIT License](LICENSE). PHREEQC, its Python

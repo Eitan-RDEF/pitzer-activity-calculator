@@ -35,6 +35,11 @@ http {
             add_header Cache-Control "no-store";
         }
 
+        location = /robots.txt {
+            default_type text/plain;
+            try_files /robots.txt =404;
+        }
+
         location = /app {
             return 308 /app/;
         }
